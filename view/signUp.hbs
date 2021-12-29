@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPoint-Sign Up</title>
+</head>
+<body>
+    <div>
+        <div>
+            {{#if errors}}
+            {{#each errors}}
+                <h1>{{this}}</h1>
+            {{/each}}
+            {{/if}}
+        </div>
+        <form action="/signUp" method="POST">
+
+        <h1>Create a patient account</h1>
+        <label for="name">Full Name</label>
+        <input type="text" name="name" id="name" required> <br> <br>
+
+        <label for="email">Email Address</label>
+        <input type="text" name="email" id="email" required> <br> <br>
+
+        <label for="password">Password</label>
+        <input type="text" name="password" id="password" required> <br> <br>
+
+        <label for="Cpassword">Confirm Password</label>
+        <input type="text" name="Cpassword" id="Cpassword" required> <br> <br>
+
+        <label for="userType">Account Type</label>
+        <input type="text" name="userType" id="userType" value="Patient" readonly> <br> <br>
+
+        <button>Sign Up</button> 
+        <p>Already have an account? <a href="/login">LOG IN</a></p>
+        </form>
+    </div>
+</body>
+</html>

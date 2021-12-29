@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPoint-Login</title>
+</head>
+<body>
+    <h1>Login page</h1>
+    <div>
+            {{#if errors}}
+            {{#each errors}}
+                <h1>{{this}}</h1>
+            {{/each}}
+            {{/if}}
+        </div>
+    <div>
+        <form action="/login" method="POST">
+        <label for="email">Email Address</label>
+        <input type="text" name="email" id="email" required> <br> <br>
+
+        <label for="password">Password</label>
+        <input type="text" name="password" id="password" required> <br> <br>
+
+        <button>Login</button> 
+        <p>Dont have a patient account? <a href="/signUp">SIGN UP HERE</a></p>
+        </form>
+    </div>
+</body>
+</html>
