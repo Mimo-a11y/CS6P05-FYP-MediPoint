@@ -45,6 +45,10 @@ app.set("views", "./view");
 app.use(passport.initialize());
 app.use(passport.session());
 
+// using static files
+//app.use("/tailwindcss" ,Express.static(__dirname + '/node_modules/tailwindcss'));
+app.use(Express.static(__dirname + '/public'));
+
 //routing for home page
 const router = require('./routes/web');
 app.use('/', router);
