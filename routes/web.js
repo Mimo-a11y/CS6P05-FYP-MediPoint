@@ -15,12 +15,11 @@ routes.get('/', (req,res) => {
         res.render('mainHomePage');
 })
 routes.get('/dashboard', loginController.checkLoggedIn, homePageController.getHomePage);
-
 //creating routes for the login page
 routes.get('/login', loginController.checkLoggedOut, loginController.getLoginPage);
 routes.post('/login', passport.authenticate("local", {   //setting local passport strategy
         successRedirect: "/dashboard",
-        failureRedirect: "/login",
+        failureRedirect: "/login", 
         successFlash: true,
         failureFlash: true    
 }));

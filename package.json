@@ -4,20 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "build-css": "postcss css/style.css -o public/stylesheets/style.css"
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@admin-bro/express": "^3.1.0",
-    "@admin-bro/sequelize": "^1.2.1",
-    "admin-bro": "^4.0.1",
-    "admin-bro-expressjs": "^2.1.1",
+    "@adminjs/express": "^4.0.1",
+    "@adminjs/passwords": "^2.0.0",
+    "@adminjs/sequelize": "^2.1.0",
+    "adminjs": "^5.5.1",
+    "argon2": "^0.28.3",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^10.0.0",

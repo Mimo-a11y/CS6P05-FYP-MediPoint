@@ -5,10 +5,12 @@ const cookieParser = require('cookie-parser');
 const connectFlash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
-const AdminBro = require('admin-bro');
-const AdminBroExpress = require('@admin-bro/express');
-const AdminBroSequelize = require('@admin-bro/sequelize');
+let AdminJs = require('adminjs');
+const AdminJsExpress = require('@adminjs/express');
+const AdminJsSequelize = require('@adminjs/sequelize');
 const db = require('./models');
+const passwordFeature = require('@adminjs/passwords');
+const argon2 = require('argon2');
 
 //instanciating express app
 const app = new Express();
@@ -46,35 +48,43 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // using static files
-//app.use("/tailwindcss" ,Express.static(__dirname + '/node_modules/tailwindcss'));
-app.use(Express.static(__dirname + '/public'));
+// app.use(Express.static(__dirname + '/public'));
 
 //routing for home page
 const router = require('./routes/web');
+const users = require('./models/users');
 app.use('/', router);
 
-//admin
-let adminBro = new AdminBro ({
-    Databases: [],
-    rootPath: '/admin',
-});
-const AdminRouter = AdminBroExpress.buildRouter (adminBro);
-//setting up the router as middleware for admin panel
-app.use(adminBro.options.rootPath, AdminRouter);
-
 //regestering the adapter
-AdminBro.registerAdapter(AdminBroSequelize);
+AdminJs.registerAdapter(AdminJsSequelize);
 
-//loading database resources into adminBro
-adminBro = new AdminBro({
+//admin
+const adminJs = new AdminJs({
+  rootPath: '/admin',
   databases: [db], // you can still load an entire database and adjust just one resource
   resources: [{
     resource: db.users,
     options: {
-      //...
-    }
-  }]
-});
+       properties: { Password: { isVisible: false } }
+    },
+    features: [passwordFeature({
+      // PasswordsOptions
+      properties: {
+        // to this field will save the hashed password
+        encryptedPassword: 'Password'
+      },
+      hash: argon2.hash,
+    })],
+    
+  }],
+  branding: {
+    companyName: 'Medipoint - Admin Panel',
+  },
+})
+let AdminRouter = AdminJsExpress.buildRouter (adminJs);
+
+//setting up the router as middleware for admin panel
+app.use(adminJs.options.rootPath, AdminRouter);
 
 //server
 app.listen(process.env.PORT, () => {

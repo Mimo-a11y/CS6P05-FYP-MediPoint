@@ -1,6 +1,7 @@
 //importing
 const db = require('../models');
 const bcrypt = require('bcryptjs');
+const argon2 = require('argon2');
 //create main model
 const User = db.users;
 
@@ -21,7 +22,7 @@ let findUserByEmail = (email) => {
 let compareUserPassword= (user, password) => {
     return new Promise(async (resolve,reject) => {
         try{
-            let isMatch = await bcrypt.compare(password, user.Password);
+            let isMatch = await bcrypt.compare(password, user.Password) || argon2.verify(password, user.Password) ;
             if(isMatch){
                 resolve(true);
             }
