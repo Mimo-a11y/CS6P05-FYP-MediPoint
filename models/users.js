@@ -5,10 +5,6 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true,
         },
-        Full_Name:{
-            type:DataTypes.STRING
-
-        },
         Email:{
             type: DataTypes.STRING,
             unique: true
@@ -23,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     {
 		initialAutoIncrement: 1101
 	})
+    // users.associate = (models) => {
+    //     users.belongsTo(models.doctorUsers, { through: models.doctorUsers, foreignKey: 'U_ID'});
+    // }
     return users;
 
 }

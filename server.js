@@ -61,7 +61,9 @@ const adminJs = new AdminJs({
       },
       hash: argon2.hash
      })],
-  }],
+  },
+  {resource: db.doctors}
+],
   branding: {
     companyName: 'Medipoint',
     softwareBrothers: false,

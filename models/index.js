@@ -29,8 +29,11 @@ db.Sequelize =Sequelize
 db.sequelize = sequelize
 //creating tables
 db.users = require('./users') (sequelize,DataTypes);
+db.doctors = require('./doctors') (sequelize,DataTypes);
+db.users.hasOne(db.doctors);
+db.doctors.belongsTo(db.users);
 
-// //syncing the sequelize i.e. creating tables
+//syncing the sequelize i.e. creating tables
 db.sequelize.sync({force: false})
 .then(() => {
     console.log("Tables created");
