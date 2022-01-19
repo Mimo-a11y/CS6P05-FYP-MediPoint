@@ -10,7 +10,7 @@ const User = db.users;
 
 //1. get signup page
 const getSignUpPage = (req,res) => {
-    res.status(200).render("signUp", {errors: req.flash("errors")});
+    return res.status(200).render("signUp", {errors: req.flash("errors")});
 }
 
 //1. create a new user
@@ -22,19 +22,20 @@ const createNewUser = async (req,res) => {
         let errors = Object.values(validationErrors.mapped());
         errors.forEach((item) => {
             errorsArr.push(item.msg);
-            req.flash("errors", errorsArr);
-            return res.redirect("/signUp");
         });
+        req.flash("errors", errorsArr);
+        return res.redirect("/signUp");
+    }
+    //create new user
+    let newUser = {
+        fullname: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        userType: req.body.userType
     }
     try{
-        let newUser = {
-            fullname: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            userType: req.body.userType
-        }
         await registerService.createNewUser(newUser); //asynchronous process to create a new user
-        res.redirect('/login'); //redirecting back to the login page after the user registers
+        return res.redirect('/login'); //redirecting back to the login page after the user registers
 
     }catch(e){
         req.flash("errors", e);
