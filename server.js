@@ -18,11 +18,6 @@ const app = new Express();
 //configuring dotenv
 dotenv.config();
 
-//middlewares
-app.use(Express.json());
-
-app.use(Express.urlencoded({extended: true}));
-
 //use cookie parser
 app.use(cookieParser("secret"));
 
@@ -35,6 +30,61 @@ app.use(session({
         maxAge:1000 * 60 * 60 * 24 //1 day
     }
 }));
+
+//ADMIN CONFIGURATIONS
+//regestering the adapter
+const admin = {
+  email: process.env.ADMIN_EMAIL,
+  password: process.env.ADMIN_PASSWORD
+}
+AdminJs.registerAdapter(AdminJsSequelize);
+
+//admin
+const adminJs = new AdminJs({
+  rootPath: '/admin',
+  databases: [db], // you can still load an entire database and adjust just one resource
+  resources: [{
+    resource: db.users,
+    options: {
+       properties: { 
+         Password: { isVisible: false },
+         User_Type: {
+           availableValues : [{value:'Doctor', label:'Doctor'}],
+         },
+        },
+  },
+    features: [passwordFeature({
+      // PasswordsOptions
+      properties: {
+        // to this field will save the hashed password
+        encryptedPassword: 'Password'
+      },
+      hash: argon2.hash
+     })],
+  }],
+  branding: {
+    companyName: 'Medipoint',
+    softwareBrothers: false,
+    logo: false
+  },
+})
+//admin authentication
+let AdminRouter = AdminJsExpress.buildAuthenticatedRouter (adminJs,{
+  authenticate: async (email,password) => {
+    if(email === admin.email && password === admin.password){
+      return admin
+    }else{
+      return null
+    }
+  }
+});
+
+//setting up the router as middleware for admin panel
+app.use(adminJs.options.rootPath, AdminRouter);
+
+//middlewares
+app.use(Express.json());
+app.use(Express.urlencoded({extended: true}));
 
 //enable flash
 app.use(connectFlash());
@@ -52,39 +102,9 @@ app.use(passport.session());
 
 //routing for home page
 const router = require('./routes/web');
-const users = require('./models/users');
+//const users = require('./models/users');
+//const { argon2d } = require('argon2');
 app.use('/', router);
-
-//regestering the adapter
-AdminJs.registerAdapter(AdminJsSequelize);
-
-//admin
-const adminJs = new AdminJs({
-  rootPath: '/admin',
-  databases: [db], // you can still load an entire database and adjust just one resource
-  resources: [{
-    resource: db.users,
-    options: {
-       properties: { Password: { isVisible: false } }
-    },
-    features: [passwordFeature({
-      // PasswordsOptions
-      properties: {
-        // to this field will save the hashed password
-        encryptedPassword: 'Password'
-      },
-      hash: argon2.hash,
-    })],
-    
-  }],
-  branding: {
-    companyName: 'Medipoint - Admin Panel',
-  },
-})
-let AdminRouter = AdminJsExpress.buildRouter (adminJs);
-
-//setting up the router as middleware for admin panel
-app.use(adminJs.options.rootPath, AdminRouter);
 
 //server
 app.listen(process.env.PORT, () => {

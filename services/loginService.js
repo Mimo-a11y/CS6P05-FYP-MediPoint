@@ -22,11 +22,21 @@ let findUserByEmail = (email) => {
 let compareUserPassword= (user, password) => {
     return new Promise(async (resolve,reject) => {
         try{
-            let isMatch = await bcrypt.compare(password, user.Password) || argon2.verify(password, user.Password) ;
+            let isMatch = false;
+            if(user.User_Type === "Doctor" || user.User_Type === "Clinic"){ //conditions to compare passwords either with bcryptjs or argon2
+                isMatch = await argon2.verify(user.Password, password);
+            }else{
+                if(user.Password.slice(0, 2) === "$2"){
+                    isMatch = await bcrypt.compare(password, user.Password);
+                }else{
+                isMatch = await argon2.verify(user.Password, password);
+                }
+            }
             if(isMatch){
                 resolve(true);
-            }
+            }else{
             resolve("The password that you have entered is incorrect!");
+            }
 
         }catch(e){
             reject(e);

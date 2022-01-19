@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         },
         User_Type:{
-            type: DataTypes.ENUM('Patient','Doctor','Clinic','Admin')
+            type: DataTypes.ENUM('Patient','Doctor','Clinic')
         }
     },
     {
