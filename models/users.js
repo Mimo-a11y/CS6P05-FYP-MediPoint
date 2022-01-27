@@ -5,23 +5,28 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true,
         },
+        Full_Name:{
+            type:DataTypes.STRING,
+            allowNull:false
+
+        },
         Email:{
             type: DataTypes.STRING,
-            unique: true
+            unique: true,
+            allowNull:false
         },
         Password:{
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull:false
         },
         User_Type:{
-            type: DataTypes.ENUM('Patient','Doctor','Clinic')
+            type: DataTypes.ENUM('Patient','Doctor','Clinic'),
+            allowNull:false
         }
     },
     {
 		initialAutoIncrement: 1101
 	})
-    // users.associate = (models) => {
-    //     users.belongsTo(models.doctorUsers, { through: models.doctorUsers, foreignKey: 'U_ID'});
-    // }
     return users;
 
 }

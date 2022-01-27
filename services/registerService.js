@@ -1,9 +1,12 @@
 //importing
 const db = require('../models');
 const bcryptjs = require('bcryptjs');
+const { request } = require('express');
+const { Result } = require('express-validator');
 
 //create main model
 const User = db.users;
+const Patient = db.patients;
 
 //this function returns a promise
 let createNewUser = (user) => {
@@ -18,17 +21,18 @@ let createNewUser = (user) => {
             else{
                 //hash the users password
                 let salt = bcryptjs.genSaltSync(10);
-                let data = {
+                let Udata = {
                     Full_Name: user.fullname,
                     Email: user.email,
                     Password: bcryptjs.hashSync(user.password, salt),
                     User_Type: user.userType
                 }
-                    User.create(data);
-                    resolve("New user created successfully");
+                User.create(Udata);
+                resolve("New user created successfully");
             }
         }catch(e){
             reject(e);
+            console.log(e);
         }
     });
 };

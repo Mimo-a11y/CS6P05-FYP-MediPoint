@@ -30,8 +30,27 @@ db.sequelize = sequelize
 //creating tables
 db.users = require('./users') (sequelize,DataTypes);
 db.doctors = require('./doctors') (sequelize,DataTypes);
-db.users.hasOne(db.doctors);
-db.doctors.belongsTo(db.users);
+//association between users and doctors table
+db.doctors.belongsTo(db.users,{
+    foreignKey: {
+        allowNull: false,
+        unique: true,
+    },
+     onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+db.patients = require('./patients') (sequelize, DataTypes);
+
+//association between users and patient table
+db.patients.belongsTo(db.users,{
+    foreignKey: {
+        allowNull: true,
+        unique: true,
+    },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+});
+
 
 //syncing the sequelize i.e. creating tables
 db.sequelize.sync({force: false})

@@ -4,6 +4,7 @@ const registerService = require('../services/registerService');
 
 //create main model
 const User = db.users;
+const Patient = db.patients;
 
 
 // making functions for main routing stuffs
@@ -28,12 +29,13 @@ const createNewUser = async (req,res) => {
     }
     //create new user
     let newUser = {
+        fullname: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        userType: req.body.userType
+        userType: req.body.userType,
     }
     try{
-        await registerService.createNewUser(newUser); //asynchronous process to create a new user
+         registerService.createNewUser(newUser); //asynchronous process to create a new user
         return res.redirect('/login'); //redirecting back to the login page after the user registers
 
     }catch(e){

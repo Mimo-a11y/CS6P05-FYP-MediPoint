@@ -15,6 +15,7 @@ routes.get('/', (req,res) => {
         res.render('mainHomePage');
 })
 routes.get('/dashboard', loginController.checkLoggedIn, homePageController.getHomePage);
+routes.post('/addPatient',loginController.checkLoggedIn, homePageController.addNewPatient );
 //creating routes for the login page
 routes.get('/login', loginController.checkLoggedOut, loginController.getLoginPage);
 routes.post('/login', passport.authenticate("local", {   //setting local passport strategy

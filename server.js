@@ -11,6 +11,7 @@ const AdminJsSequelize = require('@adminjs/sequelize');
 const db = require('./models');
 const passwordFeature = require('@adminjs/passwords');
 const argon2 = require('argon2');
+const User = db.users;
 
 //instanciating express app
 const app = new Express();
@@ -31,6 +32,8 @@ app.use(session({
     }
 }));
 
+//app.use(ValidationError());
+
 //ADMIN CONFIGURATIONS
 //regestering the adapter
 const admin = {
@@ -49,8 +52,23 @@ const adminJs = new AdminJs({
        properties: { 
          Password: { isVisible: false },
          User_Type: {
-           availableValues : [{value:'Doctor', label:'Doctor'}],
+           isDisabled: true,
          },
+        },
+        actions: {
+          delete: {
+            isVisible: (context) => context.record.param('User_Type') !== 'Clinic',
+          },
+          bulkDelete: {
+            isVisible: false
+          },
+          new:{
+            before: async (request) => {
+              const {payload} = request;
+              payload.User_Type = "Doctor"
+              return request
+            }
+          }
         },
   },
     features: [passwordFeature({
@@ -62,7 +80,60 @@ const adminJs = new AdminJs({
       hash: argon2.hash
      })],
   },
-  {resource: db.doctors}
+  {resource: db.doctors,
+    options: {
+      actions:{
+        delete:{
+          isVisible: false
+        },
+        bulkDelete:{
+          isVisible: false
+        },
+        new: {
+          before: async (request) => {
+            const {method, payload} = request
+            const users = await User.findAll({
+              attributes: ["U_ID"], 
+              where: {User_Type: 'Patient'} // Your filters here
+          })
+            // const arr = [];
+            // for(let i=0; i<arr.length; i++){
+            //   arr[i] = users.User.U_ID;
+            // }
+            console.log(users);
+            if (method === 'post' && payload.UserUID === '1107') {
+              console.log('patient added as doc');
+              throw new ValidationError({
+                UserUID: {
+                  message: 'cannot be "patient id"',
+                },
+              }, {
+                message: 'something wrong happened',
+              })
+            }
+            return request
+          }
+        }
+      }
+ },
+},
+{
+  resource: db.patients,
+  options:{
+    actions:{
+      new:{
+        isVisible: false
+      },
+      delete:{
+        isVisible:false
+      },
+      bulkDelete:{
+        isVisible:false
+      }
+    }
+
+  }
+}
 ],
   branding: {
     companyName: 'Medipoint',
@@ -104,8 +175,8 @@ app.use(passport.session());
 
 //routing for home page
 const router = require('./routes/web');
-//const users = require('./models/users');
-//const { argon2d } = require('argon2');
+const { ValidationError } = require('adminjs');
+const users = require('./models/users');
 app.use('/', router);
 
 //server

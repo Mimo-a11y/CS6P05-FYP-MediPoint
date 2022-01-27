@@ -6,44 +6,37 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true,
         },
-        Full_Name:{
-            type:DataTypes.STRING
-
-        },
         D_Address:{
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull:false
         },
         Contact:{
-            type: DataTypes.STRING
+            type: DataTypes.BIGINT(20),
+            allowNull:false
         },
-        Avl_Days:{
-            type: DataTypes.STRING
+        Avl_Day:{
+            type: DataTypes.STRING,
+            allowNull:false
         },
         Avl_Time:{
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull:false
         },
         Dept_Name:{
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull:false
         },
-        Reg_No:{
-            type: DataTypes.STRING
+        NMC_No:{
+            type: DataTypes.INTEGER,
+            allowNull:false
         },
         Years_of_Exp:{
-            type: DataTypes.BIGINT(20)
+            type: DataTypes.INTEGER,
+            allowNull:false
         },
-        // U_ID:{
-        //     type: DataTypes.BIGINT(20),
-        //     // references: {
-        //     //     model: 'users',
-        //     //     key: 'U_ID'
-        //     // },
-        // },
     },
     {
 		initialAutoIncrement: 1201
 	})
-    // doctors.associate = (models) => {
-    //     doctors.belongsTo(users, { as: 'UserID'})
-    // }
     return doctors;
 }
