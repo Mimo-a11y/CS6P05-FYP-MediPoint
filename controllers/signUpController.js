@@ -2,10 +2,6 @@ const { validationResult } = require('express-validator');
 const db = require('../models');
 const registerService = require('../services/registerService');
 
-//create main model
-const User = db.users;
-const Patient = db.patients;
-
 
 // making functions for main routing stuffs
 
@@ -32,11 +28,11 @@ const createNewUser = async (req,res) => {
         fullname: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        userType: req.body.userType,
+        userType: "Patient",
     }
     try{
-         registerService.createNewUser(newUser); //asynchronous process to create a new user
-        return res.redirect('/login'); //redirecting back to the login page after the user registers
+    await registerService.createNewUser(newUser); //asynchronous process to create a new user
+    return res.redirect('/login'); //redirecting back to the login page after the user registers
 
     }catch(e){
         req.flash("errors", e);

@@ -6,7 +6,6 @@ const { Result } = require('express-validator');
 
 //create main model
 const User = db.users;
-const Patient = db.patients;
 
 //this function returns a promise
 let createNewUser = (user) => {
@@ -14,7 +13,6 @@ let createNewUser = (user) => {
         try{
             //check if the email exists or not
             let check = await checkUserEmail(user.email);
-            console.log(check);
             if(check){
                 reject(`The email ${user.email} already exists. Please use another email.`);
             }
