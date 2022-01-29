@@ -6,6 +6,7 @@ const auth = require('../validation/authValidation');
 const passport = require('passport');
 const initPassportLocal = require('../controllers/passportLocalController');
 const homePageController = require('../controllers/homePageController');
+const sympRecorderController = require('../controllers/symptomsRecorderController');
 
 //calling the function from passportLocalController
 initPassportLocal();
@@ -30,5 +31,10 @@ routes.get('/signUp', signUpController.getSignUpPage);
 routes.post('/signUp', auth.validateSignUp, signUpController.createNewUser);
 routes.post('/logout', loginController.postLogOut);
 
+//creating routers for symptom recorder
+routes.get('/dashboard/Symptoms',sympRecorderController.getSymptomsRecorderPage);
+routes.post('/dashboard/Symptoms', sympRecorderController.recordSymptoms);
+
+//exporting
 module.exports = routes;
 

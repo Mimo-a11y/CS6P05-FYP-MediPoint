@@ -45,7 +45,6 @@ AdminJs.registerAdapter(AdminJsSequelize);
 //admin
 const adminJs = new AdminJs({
   rootPath: '/admin',
-  databases: [db], // you can still load an entire database and adjust just one resource
   resources: [{
     resource: db.users,
     options: {

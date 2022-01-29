@@ -1,0 +1,48 @@
+const db = require('../models');
+
+// create main model
+const PatientSymptomsDetail = db.Patient_Symptoms_Detail;
+const PatientSymptom = db.Patient_Symptoms;
+const Patient = db.patients;
+
+//get symptoms recorder page
+const getSymptomsRecorderPage = (req,res) => {
+    return res.status(200).render("patientSymptoms");
+}
+
+//post symptoms
+const recordSymptoms = async (req, res) => {
+    try{
+    const patientID = await Patient.findOne({attributes:['P_ID'], where:{UserUID: req.user.U_ID}});
+    let newSymptom = {
+        Symptom_Date: req.body.date,
+        Symptom_Time: req.body.time,
+        Symptom: req.body.symptom,
+    }
+    let sympID = await PatientSymptomsDetail.create(newSymptom).then(result => {return result.Symptom_ID}); //inserting into Patient_Symptoms_Detail table
+    let data ={
+        PatientPID: patientID.P_ID, 
+        PatientSymptomsDetailSymptomID: sympID
+    }
+    await PatientSymptom.create(data); // inserting into Patient_Symptoms table
+    const symptoms = await Patient.findAll({
+        attributes: ['P_ID'],
+        where:{P_ID: patientID.P_ID}, 
+        include:[{
+            model: PatientSymptomsDetail,
+            attributes: ['Symptom_Date', 'Symptom_Time', 'Symptom']
+        }
+        ]
+    });
+    console.log(symptoms);
+    res.status(200).render("patientSymptoms", {mesg: symptoms});
+}catch(e){
+    console.log(e);
+}
+}
+
+//exporting
+module.exports = {
+    getSymptomsRecorderPage,
+    recordSymptoms
+}

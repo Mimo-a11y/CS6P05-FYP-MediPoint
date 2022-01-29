@@ -1,5 +1,6 @@
 const db = require('../models');
 const Patient = db.patients;
+
 let getHomePage = async (req,res) => {
         if(req.user.User_Type === "Patient"){
             const patient = await Patient.findOne({ where: { UserUID: req.user.U_ID } });

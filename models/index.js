@@ -27,7 +27,7 @@ sequelize.authenticate()
 const db = {}
 db.Sequelize =Sequelize
 db.sequelize = sequelize
-//creating tables
+//creating users and doctors tables
 db.users = require('./users') (sequelize,DataTypes);
 db.doctors = require('./doctors') (sequelize,DataTypes);
 //association between users and doctors table
@@ -39,6 +39,8 @@ db.doctors.belongsTo(db.users,{
      onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
+
+//creating patient table
 db.patients = require('./patients') (sequelize, DataTypes);
 
 //association between users and patient table
@@ -50,6 +52,23 @@ db.patients.belongsTo(db.users,{
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
 });
+
+//creating patient symptoms details table
+db.Patient_Symptoms_Detail = require('./patientSymptomsDetail') (sequelize,DataTypes);
+db.Patient_Symptoms = require('./patientSymptoms') (sequelize,DataTypes);
+
+//association between patient and patient symptoms details table
+db.patients.belongsToMany(db.Patient_Symptoms_Detail, {
+    through:{
+        model: db.Patient_Symptoms
+    }
+})
+
+db.Patient_Symptoms_Detail.belongsToMany(db.patients, {
+    through:{
+        model: db.Patient_Symptoms
+    }
+})
 
 
 //syncing the sequelize i.e. creating tables
