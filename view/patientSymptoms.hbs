@@ -8,7 +8,7 @@
 </head>
 <body class="bg-yellow-200">
     <p class=" mt-4 text-xl text-center">Symptoms Recorder</p>
-    <div class="mt-8 ml-8 border border-gray-600 rounded-md">
+    <div class="mt-8 ml-8 border border-gray-600 rounded-md text-center">
         <form action="/dashboard/Symptoms" method="POST">
 
         <label for="date">Date</label>
@@ -25,10 +25,10 @@
     </div>
     <div>
     {{#mesg}}
-    <div>
-        {{Symptom_Date}}
-        {{Symptom_Time}}
-        {{Symptom}}
+    <div class= 'mt-8 ml-8 border border-gray-600 rounded-md bg-blue-200'>
+      <p>Date Recorded: {{date}}</p>  
+      <p>Time Recorded: {{time}}</p> 
+      <p>Symptom: {{symptom}}</p>  
     </div>
     {{/mesg}}
     </div>

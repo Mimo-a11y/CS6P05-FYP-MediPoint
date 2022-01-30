@@ -6,8 +6,33 @@ const PatientSymptom = db.Patient_Symptoms;
 const Patient = db.patients;
 
 //get symptoms recorder page
-const getSymptomsRecorderPage = (req,res) => {
-    return res.status(200).render("patientSymptoms");
+const getSymptomsRecorderPage = async (req,res) => {
+    try{
+    const patientID = await Patient.findOne({attributes:['P_ID'], where:{UserUID: req.user.U_ID}});
+    const symptoms = await Patient.findAll({
+        attributes: ['P_ID'],
+        where:{P_ID: patientID.P_ID}, 
+        include:[{
+            model: PatientSymptomsDetail,
+            attributes: ['Symptom_Date', 'Symptom_Time', 'Symptom']
+        }
+        ]
+    });
+    var symptomsObj = {}
+    var symptomsArr = [];
+    symptoms[0].Patient_Symptoms_Details.forEach((e) => {
+        symptomsObj.date = e.dataValues.Symptom_Date;
+        symptomsObj.time = e.dataValues.Symptom_Time;
+        symptomsObj.symptom = e.dataValues.Symptom;
+        const finalObj = {...symptomsObj};
+        symptomsArr.push(finalObj);
+        
+    });
+    return res.status(200).render("patientSymptoms", {mesg: symptomsArr});
+}catch(e){
+    console.log(e);
+    return res.status(404).render('errorPage');
+}
 }
 
 //post symptoms
@@ -34,10 +59,22 @@ const recordSymptoms = async (req, res) => {
         }
         ]
     });
-    console.log(symptoms);
-    res.status(200).render("patientSymptoms", {mesg: symptoms});
+    var symptomsObj = {}
+    var symptomsArr = [];
+    symptoms[0].Patient_Symptoms_Details.forEach((e) => {
+        symptomsObj.date = e.dataValues.Symptom_Date;
+        symptomsObj.time = e.dataValues.Symptom_Time;
+        symptomsObj.symptom = e.dataValues.Symptom;
+        const finalObj = {...symptomsObj};
+        symptomsArr.push(finalObj);
+        
+    });
+    return res.status(200).render("patientSymptoms", {mesg: symptomsArr});
 }catch(e){
     console.log(e);
+    return res.status(404).render('errorPage');
+
+    
 }
 }
 
