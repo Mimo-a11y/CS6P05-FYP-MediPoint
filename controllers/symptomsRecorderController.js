@@ -14,13 +14,14 @@ const getSymptomsRecorderPage = async (req,res) => {
         where:{P_ID: patientID.P_ID}, 
         include:[{
             model: PatientSymptomsDetail,
-            attributes: ['Symptom_Date', 'Symptom_Time', 'Symptom']
+            attributes: ['Symptom_ID','Symptom_Date', 'Symptom_Time', 'Symptom']
         }
         ]
     });
     var symptomsObj = {}
     var symptomsArr = [];
     symptoms[0].Patient_Symptoms_Details.forEach((e) => {
+        symptomsObj.id = e.dataValues.Symptom_ID;
         symptomsObj.date = e.dataValues.Symptom_Date;
         symptomsObj.time = e.dataValues.Symptom_Time;
         symptomsObj.symptom = e.dataValues.Symptom;
@@ -34,6 +35,7 @@ const getSymptomsRecorderPage = async (req,res) => {
     return res.status(404).render('errorPage');
 }
 }
+//-------------------------------------------------------------------//
 
 //post symptoms
 const recordSymptoms = async (req, res) => {
@@ -55,13 +57,14 @@ const recordSymptoms = async (req, res) => {
         where:{P_ID: patientID.P_ID}, 
         include:[{
             model: PatientSymptomsDetail,
-            attributes: ['Symptom_Date', 'Symptom_Time', 'Symptom']
+            attributes: ['Symptom_ID','Symptom_Date', 'Symptom_Time', 'Symptom']
         }
         ]
     });
     var symptomsObj = {}
     var symptomsArr = [];
     symptoms[0].Patient_Symptoms_Details.forEach((e) => {
+        symptomsObj.id = e.dataValues.Symptom_ID;
         symptomsObj.date = e.dataValues.Symptom_Date;
         symptomsObj.time = e.dataValues.Symptom_Time;
         symptomsObj.symptom = e.dataValues.Symptom;
@@ -77,9 +80,29 @@ const recordSymptoms = async (req, res) => {
     
 }
 }
+//--------------------------------------------------------------------------//
+
+//delete symptoms
+const deleteSymptoms = async (req, res) => {
+    try{
+    const id = req.params.sympID;
+     PatientSymptomsDetail.destroy({where: {Symptom_ID: id}}).then((result) => {
+         console.log('deleted successfully');
+      }).catch((err) => {
+         console.log(err);
+      });
+    return res.redirect(req.get('referer'));
+
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage');
+    }
+}
+//-----------------------------------------------------------//
 
 //exporting
 module.exports = {
     getSymptomsRecorderPage,
-    recordSymptoms
+    recordSymptoms,
+    deleteSymptoms
 }

@@ -34,6 +34,7 @@ routes.post('/logout', loginController.postLogOut);
 //creating routers for symptom recorder
 routes.get('/dashboard/Symptoms',sympRecorderController.getSymptomsRecorderPage);
 routes.post('/dashboard/Symptoms', sympRecorderController.recordSymptoms);
+routes.get('/dashboard/Symptoms/:sympID', sympRecorderController.deleteSymptoms);
 
 //exporting
 module.exports = routes;

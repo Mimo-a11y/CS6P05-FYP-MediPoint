@@ -28,7 +28,8 @@
     <div class= 'mt-8 ml-8 border border-gray-600 rounded-md bg-blue-200'>
       <p>Date Recorded: {{date}}</p>  
       <p>Time Recorded: {{time}}</p> 
-      <p>Symptom: {{symptom}}</p>  
+      <p>Symptom: {{symptom}}</p>
+      <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2" onClick="location.href='/dashboard/Symptoms/{{id}}'">Remove</button>  
     </div>
     {{/mesg}}
     </div>
