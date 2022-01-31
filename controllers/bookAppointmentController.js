@@ -20,9 +20,9 @@ const getBookAppointmentPage = async (req, res) => {
         }
 
 }
+//--------------------------------------------------------------------//
 
 //search doctors
-
 const searchDoctors = async (req, res) => {
     try{
         const doctors = await Doctor.findAll({ 
@@ -30,9 +30,9 @@ const searchDoctors = async (req, res) => {
         include: User
         }
     )
-    // if(doctors.length < 1){
-    //     res.status(200).render('bookAppointment', {mesg: false})
-    // }else{
+    if(doctors.length < 1){
+        res.status(200).render('bookAppointment', {mesg1: true})
+    }else{
     var doctorsObj = {}
     var doctorsArr = [];
     doctors.forEach((e) => {
@@ -48,13 +48,15 @@ const searchDoctors = async (req, res) => {
         doctorsArr.push(finalObj);
         
     });
-    return res.status(200).render('bookAppointment', {mesg: doctorsArr});   
+    return res.status(200).render('bookAppointment', {mesg2: doctorsArr});  
+} 
     }catch(e){
         console.log(e);
         return res.status(400).render('errorPage');
 
     }
 }
+//------------------------------------------------------------------------------//
 
 
 //exporting

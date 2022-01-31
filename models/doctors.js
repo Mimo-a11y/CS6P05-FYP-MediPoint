@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull:false
         },
         Dept_Name:{
-            type: DataTypes.STRING,
+            type: DataTypes.ENUM('Physician','Cardiology','Gynaecology', 'Orthopaedic', 'ENT'),
             allowNull:false
         },
         NMC_No:{

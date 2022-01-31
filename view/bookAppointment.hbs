@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediPoint-Login</title>
+    <title>MediPoint- Book Appointment</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -13,7 +13,8 @@
     <div class="border border-solid border-black mt-6 text-center">
     <form action="/dashboard/bookAppointments/doctors" method="GET">
         <label for="departments">Choose your department</label> <br> <br>
-        <select name="departments" id="departments">
+        <select name="departments" id="departments" required>
+            <option value="" disabled selected>-- Department Name --</option>
             <option value="Physician">Physician</option>
             <option value="Cardiology">Cardiology</option>
             <option value="ENT">ENT</option>
@@ -24,7 +25,13 @@
     </form>
     </div>
 
-    {{#mesg}}
+    {{#mesg1}}
+        <div class= 'mt-8 ml-8 border border-gray-600 rounded-md bg-orange-100'>
+            <p>Sorry! there are no doctors available for this department right now</p>
+        </div>
+    {{/mesg1}}
+
+    {{#mesg2}}
     <div class= 'mt-8 ml-8 border border-gray-600 rounded-md bg-orange-100'>
        <p> Name: {{name}}</p>
        <p>NMC registration number: {{regNo}}</p> 
@@ -34,8 +41,9 @@
        <p>Contact Number: {{contact}}</p> 
        <p>Available Day: {{day}}</p>
        <p>Available Time: {{time}}</p> 
+       <button class="text-gray-50  hover:bg-red-700 bg-red-500 m-5 px-5 py-3">Book</button>
     </div>
-    {{/mesg}}
+    {{/mesg2}}
 </body>
 
 </html>
