@@ -40,6 +40,8 @@ routes.get('/dashboard/Symptoms/:sympID', sympRecorderController.deleteSymptoms)
 //creating routes for booking appointments
 routes.get('/dashboard/bookAppointments', bookAppointmentController.getBookAppointmentPage);
 routes.get('/dashboard/bookAppointments/doctors', bookAppointmentController.searchDoctors);
+routes.get('/dashboard/bookAppointments/doctors/book/:id', bookAppointmentController.getDateChooser);
+routes.post('/dashboard/bookAppointments/doctors/bookingConfirmed', bookAppointmentController.recordAppointment);
 
 //exporting
 module.exports = routes;

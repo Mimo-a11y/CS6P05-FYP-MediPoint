@@ -3,6 +3,9 @@ const db = require('../models');
 //creating main model
 const Doctor = db.doctors;
 const User = db.users;
+const Patient = db.patients;
+const PatientAppDetail = db.Patient_Appointment_Detail;
+const PatientApp = db.Patient_Appointments;
 
 //get the book appointment page
  
@@ -36,6 +39,7 @@ const searchDoctors = async (req, res) => {
     var doctorsObj = {}
     var doctorsArr = [];
     doctors.forEach((e) => {
+        doctorsObj.id = e.dataValues.D_ID;
         doctorsObj.contact = e.dataValues.Contact;
         doctorsObj.address = e.dataValues.D_Address;
         doctorsObj.dept = e.dataValues.Dept_Name;
@@ -58,9 +62,47 @@ const searchDoctors = async (req, res) => {
 }
 //------------------------------------------------------------------------------//
 
+// get date chooser for appointment booking
+
+const getDateChooser = async (req, res) => {
+    try{
+        const doctorDetails = await Doctor.findOne({attributes:['Avl_Time', 'Avl_Day'], where:{D_ID:req.params.id }});
+        return res.status(200).render('fixAppointment', {mesg: doctorDetails});
+    }catch(e){
+        console.log(e);
+        return res.status(400).render('errorPage');
+    }
+}
+
+//insert appointment data
+const recordAppointment = async (req, res) => {
+    try{
+        const patientID = await Patient.findOne({attributes:['P_ID'], where:{UserUID: req.user.U_ID}});
+        let appointment = {
+            App_Date: req.body.appDate,
+            App_Time: req.body.appTime,
+            App_Type: req.body.appType,
+            Payment_Status: 'Unpaid'
+        }
+        let appID = await PatientAppDetail.create(appointment).then(result => {return result.App_ID});
+        let data ={
+            PatientPID: patientID.P_ID, 
+            PatientAppointmentDetailAppID: appID
+        }
+        await PatientApp.create(data); // inserting into Patient_Appointments table
+        return res.status(200).render('bookingConfirmation');
+    }catch(e){
+        console.log(e);
+        return res.status(400).render('errorPage');
+
+    }
+}
+
 
 //exporting
 module.exports = {
     getBookAppointmentPage,
-    searchDoctors
+    searchDoctors,
+    getDateChooser,
+    recordAppointment
 }

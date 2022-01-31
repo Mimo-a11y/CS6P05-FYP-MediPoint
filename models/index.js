@@ -70,6 +70,23 @@ db.Patient_Symptoms_Detail.belongsToMany(db.patients, {
     }
 })
 
+//creating patient appointment details table
+db.Patient_Appointment_Detail = require('./patientAppointmentDetails') (sequelize,DataTypes);
+db.Patient_Appointments = require('./patientAppointment') (sequelize,DataTypes);
+
+//association between patient and patient appointment details table
+db.patients.belongsToMany(db.Patient_Appointment_Detail, {
+    through:{
+        model: db.Patient_Appointments
+    }
+})
+
+db.Patient_Appointment_Detail.belongsToMany(db.patients, {
+    through:{
+        model: db.Patient_Appointments
+    }
+})
+
 
 //syncing the sequelize i.e. creating tables
 db.sequelize.sync({force: false})

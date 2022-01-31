@@ -1,0 +1,36 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPoint- Book Appointment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-blue-200">
+    {{#mesg}}
+        <p>Available day: {{Avl_Day}}</p>
+        <form action="/dashboard/bookAppointments/doctors/bookingConfirmed" method="POST">
+        <label for="appTime">Appointment Time:</label>
+        <input type="text" name="appTime" id="appTime" value="{{Avl_Time}}" readonly> <br> <br>
+
+        <p class="mb-5">Please fill out the details below</p>
+
+        <label for="appDate">Appointment Date:</label>
+        <input type="date" name="appDate" id="appDate" required> <br> <br>
+
+        <label for="appType">Appointment Type</label>
+        <select name="appType" id="appType" required>
+            <option value="" disabled selected>-- Appointment Type --</option>
+            <option value="New">New appointment</option>
+            <option value="Follow-Up">Follow-up visit</option>
+        </select> <br> <br>
+
+         <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">Book</button>
+        </form>
+        <a href="/dashboard/bookAppointments" class="text-black-50  hover:bg-slate-200 bg-slate-50 px-5 py-3">Back</a>
+    {{/mesg}}
+</body>
+
+</html>
