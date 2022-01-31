@@ -1,0 +1,41 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPoint-Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-blue-200">
+    <h1 class="text-center font-bold mt-6">Book Appointments</h1>
+    <div class="border border-solid border-black mt-6 text-center">
+    <form action="/dashboard/bookAppointments/doctors" method="GET">
+        <label for="departments">Choose your department</label> <br> <br>
+        <select name="departments" id="departments">
+            <option value="Physician">Physician</option>
+            <option value="Cardiology">Cardiology</option>
+            <option value="ENT">ENT</option>
+            <option value="Orthopaedic">Orthopaedic</option>
+            <option value="Gynaecology">Gynaecology</option>
+        </select> <br> <br>
+        <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">Search</button>
+    </form>
+    </div>
+
+    {{#mesg}}
+    <div class= 'mt-8 ml-8 border border-gray-600 rounded-md bg-orange-100'>
+       <p> Name: {{name}}</p>
+       <p>NMC registration number: {{regNo}}</p> 
+       <p>Department: {{dept}}</p> 
+       <p>Years Of Experience: {{exp}}</p> 
+       <p>Address: {{address}}</p> 
+       <p>Contact Number: {{contact}}</p> 
+       <p>Available Day: {{day}}</p>
+       <p>Available Time: {{time}}</p> 
+    </div>
+    {{/mesg}}
+</body>
+
+</html>

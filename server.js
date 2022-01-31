@@ -51,7 +51,7 @@ const adminJs = new AdminJs({
        properties: { 
          Password: { isVisible: false },
          User_Type: {
-           isDisabled: true,
+           isDisabled: true
          },
         },
         actions: {
@@ -88,31 +88,31 @@ const adminJs = new AdminJs({
         bulkDelete:{
           isVisible: false
         },
-        new: {
-          before: async (request) => {
-            const {method, payload} = request
-            const users = await User.findAll({
-              attributes: ["U_ID"], 
-              where: {User_Type: 'Patient'} // Your filters here
-          })
-            // const arr = [];
-            // for(let i=0; i<arr.length; i++){
-            //   arr[i] = users.User.U_ID;
-            // }
-            console.log(users);
-            if (method === 'post' && payload.UserUID === '1107') {
-              console.log('patient added as doc');
-              throw new ValidationError({
-                UserUID: {
-                  message: 'cannot be "patient id"',
-                },
-              }, {
-                message: 'something wrong happened',
-              })
-            }
-            return request
-          }
-        }
+        // new: {
+        //   before: async (request) => {
+        //     const {method, payload} = request
+        //     const users = await User.findAll({
+        //       attributes: ["U_ID"], 
+        //       where: {User_Type: 'Patient'} // Your filters here
+        //   })
+        //     // const arr = [];
+        //     // for(let i=0; i<arr.length; i++){
+        //     //   arr[i] = users.User.U_ID;
+        //     // }
+        //     console.log(users);
+        //     if (method === 'post' && payload.UserUID === '1107') {
+        //       console.log('patient added as doc');
+        //       throw new ValidationError({
+        //         UserUID: {
+        //           message: 'cannot be "patient id"',
+        //         },
+        //       }, {
+        //         message: 'something wrong happened',
+        //       })
+        //     }
+        //     return request
+        //   }
+        // }
       }
  },
 },
