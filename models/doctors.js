@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull:false
         },
         Avl_Day:{
-            type: DataTypes.STRING,
+            type: DataTypes.ENUM('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
             allowNull:false
         },
         Avl_Time:{

@@ -7,6 +7,7 @@ const Patient = db.patients;
 const PatientAppDetail = db.Patient_Appointment_Detail;
 const PatientApp = db.Patient_Appointments;
 
+
 //get the book appointment page
  
 const getBookAppointmentPage = async (req, res) => {
@@ -66,13 +67,15 @@ const searchDoctors = async (req, res) => {
 
 const getDateChooser = async (req, res) => {
     try{
-        const doctorDetails = await Doctor.findOne({attributes:['Avl_Time', 'Avl_Day'], where:{D_ID:req.params.id }});
+        const doctorDetails = await Doctor.findOne({attributes:['Avl_Time', 'Avl_Day', 'D_ID'], where:{D_ID:req.params.id }});
         return res.status(200).render('fixAppointment', {mesg: doctorDetails});
     }catch(e){
         console.log(e);
         return res.status(400).render('errorPage');
     }
 }
+
+//------------------------------------------------------------------------//
 
 //insert appointment data
 const recordAppointment = async (req, res) => {
@@ -85,11 +88,12 @@ const recordAppointment = async (req, res) => {
             Payment_Status: 'Unpaid'
         }
         let appID = await PatientAppDetail.create(appointment).then(result => {return result.App_ID});
-        let data ={
+        let pData ={
             PatientPID: patientID.P_ID, 
-            PatientAppointmentDetailAppID: appID
+            PatientAppointmentDetailAppID: appID,
+            Doctor_ID: req.params.id
         }
-        await PatientApp.create(data); // inserting into Patient_Appointments table
+        await PatientApp.create(pData); // inserting into Patient_Appointments table
         return res.status(200).render('bookingConfirmation');
     }catch(e){
         console.log(e);
@@ -98,11 +102,54 @@ const recordAppointment = async (req, res) => {
     }
 }
 
+//----------------------------------------------------------------------------------------//
+
+//upcoming appointments
+const getUpcomingAppointments = async (req, res) => {
+    try{
+    const patientID = await Patient.findOne({attributes:['P_ID'], where:{UserUID: req.user.U_ID}});
+    const appointments = await Patient.findAll({
+        attributes: ['P_ID'],
+        where:{P_ID: patientID.P_ID}, 
+        include:[{
+            model: PatientAppDetail
+        }
+        ]
+    });
+    var appObj = {}
+    var appArr = [];
+    appointments[0].Patient_Appointment_Details.forEach(async (e) => {
+        const doctors = await Doctor.findAll({ 
+            where:{ D_ID: e.dataValues.Patient_Appointments.Doctor_ID },
+            include: User
+            }
+        )
+        appObj.doctorID = e.dataValues.Patient_Appointments.Doctor_ID,
+        appObj.deptName = doctors[0].dataValues.Dept_Name,
+        appObj.docName = doctors[0].dataValues.User.Full_Name,
+        appObj.id = e.dataValues.App_ID;
+        appObj.date = e.dataValues.App_Date;
+        appObj.time = e.dataValues.App_Time;
+        appObj.type = e.dataValues.App_Type;
+        appObj.pay = e.dataValues.Payment_Status;
+        const finalObj = {...appObj};
+        appArr.push(finalObj);
+    });
+    return res.status(200).render("upcomingAppointments", {mesg: appArr});
+}catch(e){
+    console.log(e);
+    return res.status(400).render('errorPage');
+}
+}
+
+//-----------------------------------------------------------------------------------//
+
 
 //exporting
 module.exports = {
     getBookAppointmentPage,
     searchDoctors,
     getDateChooser,
-    recordAppointment
+    recordAppointment,
+    getUpcomingAppointments
 }

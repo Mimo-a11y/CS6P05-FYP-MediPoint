@@ -41,8 +41,10 @@ routes.get('/dashboard/Symptoms/:sympID', sympRecorderController.deleteSymptoms)
 routes.get('/dashboard/bookAppointments', bookAppointmentController.getBookAppointmentPage);
 routes.get('/dashboard/bookAppointments/doctors', bookAppointmentController.searchDoctors);
 routes.get('/dashboard/bookAppointments/doctors/book/:id', bookAppointmentController.getDateChooser);
-routes.post('/dashboard/bookAppointments/doctors/bookingConfirmed', bookAppointmentController.recordAppointment);
+routes.post('/dashboard/bookAppointments/doctors/book/:id/bookingConfirmed', bookAppointmentController.recordAppointment);
 
+//creating routes for upcoming appointments appointments
+routes.get('/dashboard/upcomingAppointments', bookAppointmentController.getUpcomingAppointments);
 //exporting
 module.exports = routes;
 

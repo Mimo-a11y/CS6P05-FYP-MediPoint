@@ -10,8 +10,8 @@
 
 <body class="bg-blue-200">
     {{#mesg}}
-        <p>Available day: {{Avl_Day}}</p>
-        <form action="/dashboard/bookAppointments/doctors/bookingConfirmed" method="POST">
+    <p>Available day: {{Avl_Day}}</p>
+    <form action="/dashboard/bookAppointments/doctors/book/{{D_ID}}/bookingConfirmed" method="POST">
         <label for="appTime">Appointment Time:</label>
         <input type="text" name="appTime" id="appTime" value="{{Avl_Time}}" readonly> <br> <br>
 
@@ -27,9 +27,42 @@
             <option value="Follow-Up">Follow-up visit</option>
         </select> <br> <br>
 
-         <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">Book</button>
-        </form>
-        <a href="/dashboard/bookAppointments" class="text-black-50  hover:bg-slate-200 bg-slate-50 px-5 py-3">Back</a>
+        <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">Book</button>
+    </form>
+    <a href="/dashboard/bookAppointments" class="text-black-50  hover:bg-slate-200 bg-slate-50 px-5 py-3">Back</a>
+
+    <script>
+        var availableDay = "{{Avl_Day}}";
+        var arrayOfWeekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        const validate = (dateString) => {
+            const day = (new Date(dateString)).getDay();
+            var dayName = arrayOfWeekdays[day];
+            if (dayName == availableDay) {
+                return true;
+            }
+            return false;
+        }
+
+        // Sets the value to '' in case of an invalid date
+        document.getElementById('appDate').onchange = (evt) => {
+            if (!validate(evt.target.value)) {
+                evt.target.value = '';
+                alert('Please select the available day only')
+            }
+        }
+        var today = new Date();
+        let tomorrow =  new Date();
+        let maxDate = new Date();
+        tomorrow.setDate(today.getDate() + 1);
+        var firstDayOfNextMonth = new Date(today.getFullYear(), today.getMonth()+1, 1);
+        const timeStamp = firstDayOfNextMonth.getTime();
+        const yesterdayTimeStamp = timeStamp - 24*60*60*1000;
+        const yesterdayDate = new Date(yesterdayTimeStamp);
+        
+        //setting min and max value for the date picker to current month
+        appDate.min = tomorrow.toISOString().split("T")[0];
+        appDate.max = firstDayOfNextMonth.toISOString().split("T")[0];
+    </script>
     {{/mesg}}
 </body>
 
