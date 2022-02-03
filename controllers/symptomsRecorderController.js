@@ -88,10 +88,10 @@ const deleteSymptoms = async (req, res) => {
     const id = req.params.sympID;
      PatientSymptomsDetail.destroy({where: {Symptom_ID: id}}).then((result) => {
          console.log('deleted successfully');
+         return res.redirect(req.get('referer'));
       }).catch((err) => {
          console.log(err);
       });
-    return res.redirect(req.get('referer'));
 
     }catch(e){
         console.log(e);

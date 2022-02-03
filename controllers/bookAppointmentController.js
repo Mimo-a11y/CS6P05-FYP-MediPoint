@@ -93,7 +93,7 @@ const recordAppointment = async (req, res) => {
             PatientAppointmentDetailAppID: appID,
             Doctor_ID: req.params.id
         }
-        await PatientApp.create(pData); // inserting into Patient_Appointments table
+        await PatientApp.create(pData);  // inserting into Patient_Appointments table
         return res.status(200).render('bookingConfirmation');
     }catch(e){
         console.log(e);
@@ -116,6 +116,9 @@ const getUpcomingAppointments = async (req, res) => {
         }
         ]
     });
+    if(appointments[0].Patient_Appointment_Details.length < 1){
+        return res.status(200).render('upcomingAppointments', {mesg2: true});
+    }else{
     var appObj = {}
     var appArr = [];
     appointments[0].Patient_Appointment_Details.forEach(async (e) => {
@@ -132,10 +135,13 @@ const getUpcomingAppointments = async (req, res) => {
         appObj.time = e.dataValues.App_Time;
         appObj.type = e.dataValues.App_Type;
         appObj.pay = e.dataValues.Payment_Status;
+        if(e.dataValues.Payment_Status !== 'Paid'){
         const finalObj = {...appObj};
         appArr.push(finalObj);
+        }
     });
-    return res.status(200).render("upcomingAppointments", {mesg: appArr});
+    return res.status(200).render("upcomingAppointments", {mesg1: appArr});
+}
 }catch(e){
     console.log(e);
     return res.status(400).render('errorPage');
@@ -144,6 +150,22 @@ const getUpcomingAppointments = async (req, res) => {
 
 //-----------------------------------------------------------------------------------//
 
+//delete appointments
+const deleteAppointments = async (req, res) => {
+    try{
+    const id = req.params.id;
+    PatientAppDetail.destroy({where: {App_ID: id}}).then((result) => {
+         console.log('deleted successfully');
+         return res.redirect(req.get('referer'));
+      }).catch((err) => {
+         console.log(err);
+      });
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage');
+    }
+}
+//-----------------------------------------------------------//
 
 //exporting
 module.exports = {
@@ -151,5 +173,6 @@ module.exports = {
     searchDoctors,
     getDateChooser,
     recordAppointment,
-    getUpcomingAppointments
+    getUpcomingAppointments,
+    deleteAppointments
 }

@@ -45,6 +45,7 @@ routes.post('/dashboard/bookAppointments/doctors/book/:id/bookingConfirmed', boo
 
 //creating routes for upcoming appointments appointments
 routes.get('/dashboard/upcomingAppointments', bookAppointmentController.getUpcomingAppointments);
+routes.get('/dashboard/upcomingAppointments/cancelBookings/:id', bookAppointmentController.deleteAppointments);
 //exporting
 module.exports = routes;
 
