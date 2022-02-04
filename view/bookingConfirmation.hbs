@@ -9,11 +9,19 @@
 </head>
 
 <body class="bg-blue-200">
+    {{#mesg1}}
     <div class= 'h-44 mt-8 ml-8 mr-8 border border-gray-600 rounded-md bg-green-100 text-center'>
           <p class="mb-12 mt-9">Your appointment is booked successfully. Please check the upcoming appointments tab in your dashboard.</p>
            <a href="/dashboard/bookAppointments" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3"> Back</a>
     </div>
-   
+    {{/mesg1}}
+
+    {{#mesg2}}
+    <div class= 'h-44 mt-8 ml-8 mr-8 border border-gray-600 rounded-md bg-green-100 text-center'>
+          <p class="mb-12 mt-9">Your appointment with the doctor for the time is already booked. Please check the upcoming appointments tab in your dashboard.</p>
+           <a href="/dashboard/bookAppointments" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3"> Back</a>
+    </div>
+   {{/mesg2}}
 </body>
 
 </html>

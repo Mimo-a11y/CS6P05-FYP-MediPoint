@@ -81,6 +81,49 @@ const getDateChooser = async (req, res) => {
 const recordAppointment = async (req, res) => {
     try{
         const patientID = await Patient.findOne({attributes:['P_ID'], where:{UserUID: req.user.U_ID}});
+        //
+        const appointments = await Patient.findAll({
+            attributes: ['P_ID'],
+            where:{P_ID: patientID.P_ID}, 
+            include:[{
+                model: PatientAppDetail
+            }
+            ]
+        });
+
+        //
+        var appObj = {};
+        var appArr = new Array();
+        var finalObj = {};
+        var isFound = true;
+        for(var e of appointments[0].Patient_Appointment_Details){
+            const doctors = await Doctor.findAll({ 
+                where:{ D_ID: e.dataValues.Patient_Appointments.Doctor_ID },
+                include: User
+                }
+            )
+            appObj.doctorID = e.dataValues.Patient_Appointments.Doctor_ID,
+            appObj.deptName = doctors[0].dataValues.Dept_Name,
+            appObj.docName = doctors[0].dataValues.User.Full_Name,
+            appObj.id = e.dataValues.App_ID;
+            appObj.date = e.dataValues.App_Date;
+            appObj.time = e.dataValues.App_Time;
+            appObj.type = e.dataValues.App_Type;
+            appObj.pay = e.dataValues.Payment_Status;
+            finalObj = {...appObj};
+            appArr.push(finalObj);
+        };
+        for(var element in appArr){
+            if (appArr[element].doctorID == req.params.id && appArr[element].date == req.body.appDate && appArr[element].time == req.body.appTime) {
+                isFound = false;
+                break;
+            }
+            else{
+                isFound = true;
+            }
+            
+        }
+        if(isFound === true){
         let appointment = {
             App_Date: req.body.appDate,
             App_Time: req.body.appTime,
@@ -94,7 +137,10 @@ const recordAppointment = async (req, res) => {
             Doctor_ID: req.params.id
         }
         await PatientApp.create(pData);  // inserting into Patient_Appointments table
-        return res.status(200).render('bookingConfirmation');
+        return res.status(200).render('bookingConfirmation', {mesg1:true});
+    }else{
+        return res.status(200).render('bookingConfirmation', {mesg2:true});
+    }
     }catch(e){
         console.log(e);
         return res.status(400).render('errorPage');
