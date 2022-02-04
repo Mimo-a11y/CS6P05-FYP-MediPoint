@@ -116,12 +116,10 @@ const getUpcomingAppointments = async (req, res) => {
         }
         ]
     });
-    if(appointments[0].Patient_Appointment_Details.length < 1){
-        return res.status(200).render('upcomingAppointments', {mesg2: true});
-    }else{
-    var appObj = {}
-    var appArr = [];
-    appointments[0].Patient_Appointment_Details.forEach(async (e) => {
+    var appObj = {};
+    var appArr = new Array();
+    var finalObj = {};
+    for(var e of appointments[0].Patient_Appointment_Details){
         const doctors = await Doctor.findAll({ 
             where:{ D_ID: e.dataValues.Patient_Appointments.Doctor_ID },
             include: User
@@ -135,13 +133,16 @@ const getUpcomingAppointments = async (req, res) => {
         appObj.time = e.dataValues.App_Time;
         appObj.type = e.dataValues.App_Type;
         appObj.pay = e.dataValues.Payment_Status;
-        if(e.dataValues.Payment_Status !== 'Paid'){
-        const finalObj = {...appObj};
+        if(e.dataValues.Payment_Status === 'Unpaid'){
+        finalObj = {...appObj};
         appArr.push(finalObj);
         }
-    });
-    return res.status(200).render("upcomingAppointments", {mesg1: appArr});
-}
+    };
+    if(appArr.length === 0){
+        return res.status(200).render('upcomingAppointments', {mesg2: true});
+    }else{
+        return res.status(200).render("upcomingAppointments", {mesg1: appArr});
+    }
 }catch(e){
     console.log(e);
     return res.status(400).render('errorPage');
