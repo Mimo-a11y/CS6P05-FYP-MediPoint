@@ -11,8 +11,11 @@
     {{#user}}
     <h1>Welcome {{Full_Name}}</h1>
     {{/user}}
+    {{#doctor}}
+     <h1>Doctor ID: {{D_ID}}</h1>
+    {{/doctor}}
     <form action="/logout" method="POST">
-        <button>Logout</button>
+        <button class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-5 py-3 mt-6">Logout</button>
     </form>
 </body>
 </html>

@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPoint- OPD Appointment Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-indigo-200">
+    <p class=" mt-4 text-xl text-center"><b>Appointment detail</b></p>
+    <div class= 'mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
+    {{#mesg1}}
+      <p><b>Doctor ID:</b> {{D_ID}}</p>
+      <p><b>Doctor Name:</b>{{User.Full_Name}}</p>
+      <p><b>Department:</b>{{Dept_Name}}</p> <br>
+    {{/mesg1}}
+
+    {{#mesg2}}
+      <p> <b>Appointment Date:</b> {{App_Date}}</p>  
+      <p> <b>Appointment Time:</b> {{App_Time}}</p> 
+      <p> <b>Type:</b> {{App_Type}} Appointment</p>
+      <p> <b>Payment Status:</b>{{Payment_Status}}</p>
+    {{/mesg2}}
+      <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2" onClick="#">Confirm</button>  
+    </div>
+</body>
+</html>

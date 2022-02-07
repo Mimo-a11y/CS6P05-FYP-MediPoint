@@ -7,12 +7,21 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-blue-200">
-    <h1>Clinic dashboard</h1>
+    <h1><b>Clinic dashboard</b></h1>
     {{#user}}
     <h1>Welcome {{Full_Name}}</h1>
+    <h1>User ID: {{U_ID}}</h1>
     {{/user}}
+
+    <div class="px-5 py-3">
+    <h1 class="mb-8">HI! Please choose your department</h1>
+    <a href="/dashboard/OPD/incomingAppointments" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">OPD</a>
+    <a href="#" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">Laboratory</a>
+    <a href="#" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">Pharmacy</a>
+    </div>
+
     <form action="/logout" method="POST">
-        <button>Logout</button>
+        <button class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-5 py-3 mt-6">Logout</button>
     </form>
 </body>
 </html>

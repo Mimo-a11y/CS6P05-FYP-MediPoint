@@ -8,6 +8,7 @@ const initPassportLocal = require('../controllers/passportLocalController');
 const homePageController = require('../controllers/homePageController');
 const sympRecorderController = require('../controllers/symptomsRecorderController');
 const bookAppointmentController = require('../controllers/bookAppointmentController');
+const opdController = require('../controllers/opdDashboardController');
 
 //calling the function from passportLocalController
 initPassportLocal();
@@ -46,6 +47,10 @@ routes.post('/dashboard/bookAppointments/doctors/book/:id/bookingConfirmed', boo
 //creating routes for upcoming appointments appointments
 routes.get('/dashboard/upcomingAppointments', bookAppointmentController.getUpcomingAppointments);
 routes.get('/dashboard/upcomingAppointments/cancelBookings/:id', bookAppointmentController.deleteAppointments);
+
+//creating routes for OPD dashboard
+routes.get('/dashboard/OPD/incomingAppointments',opdController.getOpdDashboardPage);
+routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/appID/:appid/dID/:did', opdController.getAppDetail);
 //exporting
 module.exports = routes;
 

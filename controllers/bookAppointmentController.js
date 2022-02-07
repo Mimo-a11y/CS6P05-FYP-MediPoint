@@ -114,7 +114,10 @@ const recordAppointment = async (req, res) => {
             appArr.push(finalObj);
         };
         for(var element in appArr){
-            if (appArr[element].doctorID == req.params.id && appArr[element].date == req.body.appDate && appArr[element].time == req.body.appTime) {
+            if (appArr[element].doctorID == req.params.id && appArr[element].date == req.body.appDate && appArr[element].time == req.body.appTime) { //restricting double bookings
+                isFound = false;
+                break;
+            }else if (appArr[element].date == req.body.appDate){ //restricting one booking per day
                 isFound = false;
                 break;
             }
