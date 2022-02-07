@@ -50,8 +50,72 @@ const getAppDetail = async (req, res) => {
 }
 }
 
+//-------------------------------------------------------------------------------//
+
+//remove appointments
+const deleteAppointments = async (req, res) => {
+    try{
+    const id = req.params.id;
+    AppointmentDetails.destroy({where: {App_ID: id}}).then((result) => {
+         console.log('deleted successfully');
+         return res.redirect('/dashboard/OPD/incomingAppointments');
+      }).catch((err) => {
+         console.log(err);
+      });
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage');
+    }
+}
+
+//--------------------------------------------------------------------------------//
+
+//get confirmed appointments page
+const getConfirmedAppointmentsPage = async (req, res) => {
+    try{
+        const appointments = await Patient.findAll({ 
+            attributes: ['P_ID','P_Address','Phone'],
+            include:[{
+                model: AppointmentDetails,
+                where: {App_Date : new Date().toISOString().slice(0, 10), Payment_Status: 'Paid'}
+            },{
+                model: User,
+                attributes: ['Full_Name']
+            },
+            ]
+        });
+        if(appointments.length === 0){
+            return res.status(200).render('confirmedAppointmentsOPD', {mesg2: true});
+        }else{
+        return res.status(200).render('confirmedAppointmentsOPD', {mesg1: appointments});
+        }
+
+
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage');
+    }
+}
+
+//updating the appointment status
+const updateAppointments = async (req,res) => {
+    try{
+        const id = req.params.id;
+        const appointment = await AppointmentDetails.update(
+            {Payment_Status: 'Paid'},
+            {where: {App_ID: id}});
+        return res.status(200).redirect('/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments');
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage');
+    }
+}
+
 //exporting
 module.exports = {
     getOpdDashboardPage,
-    getAppDetail
+    getAppDetail,
+    deleteAppointments,
+    updateAppointments,
+    getConfirmedAppointmentsPage
 }

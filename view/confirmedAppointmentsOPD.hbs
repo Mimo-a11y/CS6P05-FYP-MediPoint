@@ -3,12 +3,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediPoint-OPD dashboard</title>
+    <title>MediPoint- OPD confirmed appointments </title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-blue-200">
     <h1 class="text-center text-red-500"><b>OPD dashboard</b></h1>
-
     <div class="px-5 py-3 text-center">
     <h1 class="mb-8"><b>Menu</b></h1>
     <div class="bg-teal-200 text-center">
@@ -19,19 +18,21 @@
     </div>
     </div>
 
+    <p class="font-bold text-center">confirmed appointments</p>
     {{#mesg1}}
     <div class= 'mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
+    <button class="text-gray-50 bg-teal-500 px-4 py-2 m-2">Confirmed</button> 
       <p> <b>Patient ID:</b>{{P_ID}}</p>
        <p> <b>Patient Name:</b>{{User.Full_Name}}</p>
       <p> <b>Address:</b>{{P_Address}}</p>
-      <p> <b>Contact:</b>{{Phone}}</p> <br>
-      <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2" onClick="location.href='/dashboard/OPD/incomingAppointments/appointmentDetails/appID/{{Patient_Appointment_Details.0.App_ID}}/dID/{{Patient_Appointment_Details.0.Patient_Appointments.Doctor_ID}}'">Open</button>  
+      <p> <b>Contact:</b>{{Phone}}</p> <br> 
+       <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2">Make OPD card</button>  
     </div>
     {{/mesg1}}
 
     {{#mesg2}}
         <div class= 'mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
-            <p><b>No incoming appointments for today!</b></p>
+            <p><b>No appointments comfirmed for today!</b></p>
         </div>
     {{/mesg2}}
 

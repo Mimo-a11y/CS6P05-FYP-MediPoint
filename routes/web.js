@@ -51,6 +51,11 @@ routes.get('/dashboard/upcomingAppointments/cancelBookings/:id', bookAppointment
 //creating routes for OPD dashboard
 routes.get('/dashboard/OPD/incomingAppointments',opdController.getOpdDashboardPage);
 routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/appID/:appid/dID/:did', opdController.getAppDetail);
+routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/remove/:id', opdController.deleteAppointments);
+routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/confirm/:id', opdController.updateAppointments);
+routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments', opdController.getConfirmedAppointmentsPage);
+
+
 //exporting
 module.exports = routes;
 
