@@ -1,34 +1,39 @@
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediPoint- Upcoming Appointments</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediPoint- Upcoming Appointments</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-indigo-200">
-    <p class=" mt-4 text-xl text-center">Your upcoming appointments</p>
-    <div>
+  <p class=" mt-4 text-xl text-center">Your upcoming appointments</p>
+  <div>
     {{#mesg1}}
-    <div class= 'mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
+    <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
       <p><b>Doctor Name:</b> {{docName}}</p>
       <p><b>Doctor dept:{{deptName}}</b></p>
-      <p> <b>Appointment Date:</b> {{date}}</p>  
-      <p> <b>Appointment Time:</b> {{time}}</p> 
+      <p> <b>Appointment Date:</b> {{date}}</p>
+      <p> <b>Appointment Time:</b> {{time}}</p>
       <p> <b>Type:</b> {{type}} Appointment</p>
       <p> <b>Payment Status:</b>{{pay}}</p>
-      <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2" onClick="location.href='/dashboard/upcomingAppointments/cancelBookings/{{id}}'">Cancel Appointments</button>  
+      <button id="cancelBtn" class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2"
+        onClick="location.href='/dashboard/upcomingAppointments/cancelBookings/{{id}}'">Cancel Appointments</button>
     </div>
     {{/mesg1}}
-    </div>
-    
-    <div>
+  </div>
+
+  <div>
     {{#mesg2}}
-    <div class= 'mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
+    <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
       <p><b>There are no upcoming appointments for you now!</p>
-      <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2" onClick="location.href='/dashboard/bookAppointments'">Book Appointment</button>  
+      <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2"
+        onClick="location.href='/dashboard/bookAppointments'">Book Appointment</button>
     </div>
     {{/mesg2}}
-    </div>
+  </div>
 </body>
+
 </html>

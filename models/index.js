@@ -87,6 +87,36 @@ db.Patient_Appointment_Detail.belongsToMany(db.patients, {
     }
 })
 
+//creating health log table
+db.Health_Log = require('./healthLog') (sequelize,DataTypes);
+db.Patient_OPD = require('./patientOPD') (sequelize,DataTypes);
+db.Doctor_OPD = require('./doctorOPD') (sequelize,DataTypes);
+
+//association between patient and health log
+db.patients.belongsToMany(db.Health_Log, {
+    through:{
+        model: db.Patient_OPD
+    }
+})
+
+db.Health_Log.belongsToMany(db.patients, {
+    through:{
+        model: db.Patient_OPD
+    }
+})
+
+//association between doctors and health log
+db.doctors.belongsToMany(db.Health_Log, {
+    through:{
+        model: db.Doctor_OPD
+    }
+})
+
+db.Health_Log.belongsToMany(db.doctors, {
+    through:{
+        model: db.Doctor_OPD
+    }
+})
 
 //syncing the sequelize i.e. creating tables
 db.sequelize.sync({force: false})

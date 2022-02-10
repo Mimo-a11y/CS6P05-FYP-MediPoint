@@ -54,6 +54,8 @@ routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/appID/:appid/
 routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/remove/:id', opdController.deleteAppointments);
 routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/confirm/:id', opdController.updateAppointments);
 routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments', opdController.getConfirmedAppointmentsPage);
+routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments/newOPDCard/:appid/dID/:did/pID/:pid', opdController.makeOpdCard);
+routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments/reappointmentOPDCard/:appid/dID/:did/pID/:pid', opdController.makeOpdCard);
 
 
 //exporting

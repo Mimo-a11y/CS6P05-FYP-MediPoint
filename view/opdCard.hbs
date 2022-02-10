@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPoint- Patient OPD card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-200">
+    <h1 class="text-center text-red-500"><b>OPD dashboard</b></h1>
+
+    <div class="px-5 py-3 text-center">
+    <h1 class="mb-8"><b>Menu</b></h1>
+    <div class="bg-teal-200 text-center">
+    <a href="/dashboard/OPD/incomingAppointments">Incoming Appointments</a> &nbsp; &nbsp; &nbsp;
+    <a href="/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments">Booked Appointments</a> &nbsp; &nbsp; &nbsp;
+    <a href="#">OPD card</a> &nbsp; &nbsp; &nbsp;
+    <a href="#">LAB tests</a> &nbsp; &nbsp; &nbsp;
+    </div>
+    </div>
+
+    <p class="text-center"><b>Patient OPD Card</b></p>
+
+    <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+        {{#mesg5}}
+        <p><b>Patient OPD card is already uploaded!</b></p>
+        <button onclick="location.href='/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments'" class="text-gray-50  hover:bg-sky-700 bg-sky-500 px-5 py-3 mt-6">Back</button>
+        {{/mesg5}}
+
+        {{#mesg4}}
+            <p><b>Card Details</b></p>
+            <p>Card Number: {{Card_No}}</p> <br> 
+        {{/mesg4}}
+
+        {{#mesg1}}
+            <p><b>Patient Details</b></p>
+            <p>Patient ID: {{P_ID}}</p>
+            <p>Patient Name: {{User.Full_Name}}</p>
+            <p>Age: {{Age}}</p>
+            <p>Gender: {{Gender}}</p> <br>
+        {{/mesg1}}
+
+        {{#mesg2}}
+             <p><b>Consultation Department</b></p>
+            <p>Doctor ID: {{D_ID}}</p>
+            <p>Doctor Name: {{User.Full_Name}}</p>
+            <p>Department: {{Dept_Name}}</p>
+            <p>Day: {{Avl_Day}}</p>
+            <p>Time: {{Avl_Time}}</p> <br>
+        {{/mesg2}}
+
+        {{#mesg3}}
+            <p><b>Appointment Details</b></p>
+            <p>Appointment Type: {{App_Type}}</p>
+            <p>Payment Status: {{Payment_Status}}</p> <br>
+        {{/mesg3}}
+
+        {{#mesg4}}
+        <p><b>Follow-up Details</b></p>
+        <button class='mt-8 ml-8 border border-gray-600 rounded-md bg-red-300'>
+                <p>Visit Number: {{Visit_No}}</p>
+                <p>Visit Date: {{Visit_Date}}</p>
+        </button>
+         {{/mesg4}}
+    </div>
+
+    {{#mesg4}}
+    <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+        <p><b>OPD Card created successfully.</b></p>
+          <button onclick="location.href='/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments'" class="text-gray-50  hover:bg-sky-700 bg-sky-500 px-5 py-3 mt-6">Back</button>
+    </div>
+    {{/mesg4}}
+
+    <form action="/logout" method="POST">
+        <button class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-5 py-3 mt-6">Logout</button>
+    </form>
+</body>
+</html>

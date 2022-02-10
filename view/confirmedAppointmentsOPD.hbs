@@ -26,9 +26,20 @@
        <p> <b>Patient Name:</b>{{User.Full_Name}}</p>
       <p> <b>Address:</b>{{P_Address}}</p>
       <p> <b>Contact:</b>{{Phone}}</p> <br> 
-       <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2">Make OPD card</button>  
+       <a  href="/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments/newOPDCard/{{Patient_Appointment_Details.0.App_ID}}/dID/{{Patient_Appointment_Details.0.Patient_Appointments.Doctor_ID}}/pID/{{P_ID}}" class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2">Make OPD card</a>  
     </div>
     {{/mesg1}}
+
+    {{#mesg3}}
+    <div class= 'mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
+    <button class="text-gray-50 bg-teal-500 px-4 py-2 m-2">Confirmed</button> 
+      <p> <b>Patient ID:</b>{{P_ID}}</p>
+       <p> <b>Patient Name:</b>{{User.Full_Name}}</p>
+      <p> <b>Address:</b>{{P_Address}}</p>
+      <p> <b>Contact:</b>{{Phone}}</p> <br> 
+       <a  href="/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments/reappointmentOPDCard/{{Patient_Appointment_Details.0.App_ID}}/dID/{{Patient_Appointment_Details.0.Patient_Appointments.Doctor_ID}}/pID/{{P_ID}}" class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2">View OPD card</a>  
+    </div>
+    {{/mesg3}}
 
     {{#mesg2}}
         <div class= 'mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>

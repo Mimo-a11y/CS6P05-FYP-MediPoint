@@ -6,6 +6,7 @@ const User = db.users;
 const Patient = db.patients;
 const PatientAppDetail = db.Patient_Appointment_Detail;
 const PatientApp = db.Patient_Appointments;
+const HealthLog = db.Health_Log;
 
 
 //get the book appointment page
@@ -91,11 +92,26 @@ const recordAppointment = async (req, res) => {
             ]
         });
 
+        // checking if the opd card already exists
+        const opdCardExists = await HealthLog.findAll({
+            include:[
+                {
+                    model: Patient,
+                    where:{P_ID: patientID.P_ID}
+                },{
+                    model: Doctor,
+                    where:{D_ID: req.params.id }
+                }
+            ]
+         });
+         console.log(opdCardExists);
+
         //
         var appObj = {};
         var appArr = new Array();
         var finalObj = {};
         var isFound = true;
+        var cardExists = true;
         for(var e of appointments[0].Patient_Appointment_Details){
             const doctors = await Doctor.findAll({ 
                 where:{ D_ID: e.dataValues.Patient_Appointments.Doctor_ID },
@@ -126,7 +142,16 @@ const recordAppointment = async (req, res) => {
             }
             
         }
-        if(isFound === true){
+        if (opdCardExists.length > 0 && req.body.appType === 'New'){
+            cardExists = true;
+            
+        }else if(opdCardExists.length === 0 && req.body.appType === 'Follow-Up'){
+            cardExists = true;
+        }
+        else{
+            cardExists = false;
+        }
+        if(isFound === true && cardExists === false){
         let appointment = {
             App_Date: req.body.appDate,
             App_Time: req.body.appTime,
@@ -141,8 +166,12 @@ const recordAppointment = async (req, res) => {
         }
         await PatientApp.create(pData);  // inserting into Patient_Appointments table
         return res.status(200).render('bookingConfirmation', {mesg1:true});
-    }else{
+    }else if (isFound === false && cardExists === true){
         return res.status(200).render('bookingConfirmation', {mesg2:true});
+    }else if(isFound === false && cardExists === false){
+        return res.status(200).render('bookingConfirmation', {mesg2:true});
+    }else if(isFound === true && cardExists === true){
+        return res.status(200).render('bookingConfirmation', {mesg3:true});
     }
     }catch(e){
         console.log(e);
