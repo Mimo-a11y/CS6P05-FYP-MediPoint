@@ -203,6 +203,70 @@ const makeOpdCard = async (req,res) => {
         return res.status(404).render('errorPage');
     }
 }
+//--------------------------------------------------------------------------------------------//
+
+// updating the follow up visit number
+const getOpdCard = async (req,res) => {
+    try{
+        //retrieving patient details
+        const patient = await Patient.findAll({ 
+            where:{ P_ID: req.params.pid },
+            include:[
+                {
+                    model: User,
+                    attributes:['Full_Name']
+                }
+            ]
+        });
+
+        //retrieving doctor details
+        const doctor = await Doctor.findAll({
+            where: {D_ID: req.params.did},
+            include:[{model: User, attributes: ['Full_Name']}]
+        });
+
+        //retrieving appointment details
+        const appointments = await AppointmentDetails.findOne({
+            where: {App_ID: req.params.appid},
+        });
+        // extracting the patient opd card
+        const opdCard = await HealthLog.findAll({
+            include:[
+                {
+                    model: Patient,
+                    where:{P_ID: req.params.pid}
+                },{
+                    model: Doctor,
+                    where:{D_ID: req.params.did }
+                }
+            ]
+         });
+         //return res.json(opdCard);
+         return res.status(200).render('opdCard', {mesg1: patient, mesg2: doctor, mesg3: appointments, mesg6: opdCard});
+
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage');
+    }
+}
+//------------------------------------------------------------------------------------------//
+
+const followUpUpdate = async(req,res) => {
+    try{
+        //updating the followup visit record
+        let data = {
+            Card_No: req.params.cardno,
+            Visit_No: req.body.visitno,
+            Visit_Date: req.body.visitDate 
+        }
+        await HealthLog.create(data);
+        return res.status(200).render('opdCard', {mesg1: patient, mesg2: doctor, mesg3: appointments, mesg6: opdCard});
+
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage');
+    }
+}
 
 //exporting
 module.exports = {
@@ -211,5 +275,7 @@ module.exports = {
     deleteAppointments,
     updateAppointments,
     getConfirmedAppointmentsPage,
-    makeOpdCard
+    makeOpdCard,
+    getOpdCard,
+    followUpUpdate
 }

@@ -32,6 +32,11 @@
             <p>Card Number: {{Card_No}}</p> <br> 
         {{/mesg4}}
 
+        {{#mesg6}}
+            <p><b>Card Details</b></p>
+            <p>Card Number: {{Card_No}}</p> <br> 
+        {{/mesg6}}
+
         {{#mesg1}}
             <p><b>Patient Details</b></p>
             <p>Patient ID: {{P_ID}}</p>
@@ -62,6 +67,25 @@
                 <p>Visit Date: {{Visit_Date}}</p>
         </button>
          {{/mesg4}}
+
+        {{#mesg6}}
+        <p><b>Follow-up Details</b></p>
+        <button class='mt-8 ml-8 border border-gray-600 rounded-md bg-red-300'>
+                <p>Visit Number: {{Visit_No}}</p>
+                <p>Visit Date: {{Visit_Date}}</p>
+        </button> <br> <br>
+        <p><b>Update visit number</b></p>
+
+        <form action="/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments/reappointmentOPDCard/dID/{{Doctors.0.D_ID}}/pID/{{Patients.0.P_ID}}/cardNo/{{Card_No}}/followUpUpdate" method="POST">
+        <label for="visitno">Visit Number</label>
+        <input type="text" name="visitno" id="visitno" required> <br> <br>
+
+        <label for="visitDate">Visit Date</label>
+        <input type="date" name="visitDate" id="visitDate" required> <br> <br>
+
+        <button class="text-gray-50  hover:bg-sky-700 bg-sky-500 px-5 py-3 mt-6">Update</button>
+        </form>
+         {{/mesg6}}
     </div>
 
     {{#mesg4}}

@@ -104,7 +104,6 @@ const recordAppointment = async (req, res) => {
                 }
             ]
          });
-         console.log(opdCardExists);
 
         //
         var appObj = {};
