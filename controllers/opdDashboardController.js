@@ -1,5 +1,6 @@
 const db = require('../models');
 
+
 // create main model
 const AppointmentDetails = db.Patient_Appointment_Detail;
 const Patient = db.patients;
@@ -231,6 +232,7 @@ const getOpdCard = async (req,res) => {
         });
         // extracting the patient opd card
         const opdCard = await HealthLog.findAll({
+            attributes: ['Card_No', 'Visit_No', 'Visit_Date'],
             include:[
                 {
                     model: Patient,
@@ -241,8 +243,9 @@ const getOpdCard = async (req,res) => {
                 }
             ]
          });
-         //return res.json(opdCard);
-         return res.status(200).render('opdCard', {mesg1: patient, mesg2: doctor, mesg3: appointments, mesg6: opdCard});
+         var cardNumber = [];
+         cardNumber[0] = {Card_No: opdCard[0].Card_No, D_ID: req.params.did, P_ID:req.params.pid};
+         return res.status(200).render('followupOpdCard', {mesg1: patient, mesg2: doctor, mesg3: appointments, mesg6: opdCard, mesg7:true, mesg8: cardNumber});
 
     }catch(e){
         console.log(e);
@@ -253,6 +256,39 @@ const getOpdCard = async (req,res) => {
 
 const followUpUpdate = async(req,res) => {
     try{
+        //retrieving patient details
+        const patient = await Patient.findAll({ 
+            where:{ P_ID: req.params.pid },
+            include:[
+                {
+                    model: User,
+                    attributes:['Full_Name']
+                }
+            ]
+        });
+
+        //retrieving doctor details
+        const doctor = await Doctor.findAll({
+            where: {D_ID: req.params.did},
+            include:[{model: User, attributes: ['Full_Name']}]
+        });
+
+        // extracting the patient opd card
+        const getopdCard = await HealthLog.findAll({
+            attributes:['Card_No','Visit_No', 'Visit_Date'],
+            where:{Card_No: req.params.cardno},
+            include:[
+                {
+                    model: Patient,
+                    where:{P_ID: req.params.pid}
+                },{
+                    model: Doctor,
+                    where:{D_ID: req.params.did }
+                }
+            ]
+         });
+         var cardNumber = [];
+         cardNumber[0] = {Card_No: getopdCard[0].Card_No, D_ID: req.params.did, P_ID: req.params.pid};
         //updating the followup visit record
         let data = {
             Card_No: req.params.cardno,
@@ -260,8 +296,20 @@ const followUpUpdate = async(req,res) => {
             Visit_Date: req.body.visitDate 
         }
         await HealthLog.create(data);
-        return res.status(200).render('opdCard', {mesg1: patient, mesg2: doctor, mesg3: appointments, mesg6: opdCard});
-
+        const opdCard = await HealthLog.findAll({
+            attributes:['Card_No','Visit_No', 'Visit_Date'],
+            where:{Card_No: req.params.cardno},
+            include:[
+                {
+                    model: Patient,
+                    where:{P_ID: req.params.pid}
+                },{
+                    model: Doctor,
+                    where:{D_ID: req.params.did }
+                }
+            ]
+         });
+        return res.status(200).render('followupOpdCard', {mesg1: patient, mesg2: doctor, mesg6: opdCard, mesg8: cardNumber});
     }catch(e){
         console.log(e);
         return res.status(404).render('errorPage');
