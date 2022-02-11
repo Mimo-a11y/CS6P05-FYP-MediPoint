@@ -309,7 +309,7 @@ const followUpUpdate = async(req,res) => {
                 }
             ]
          });
-        return res.status(200).render('followupOpdCard', {mesg1: patient, mesg2: doctor, mesg6: opdCard, mesg8: cardNumber});
+        return res.status(200).render('followupOpdCard', {mesg1: patient, mesg2: doctor, mesg6: opdCard, mesg9: cardNumber});
     }catch(e){
         console.log(e);
         return res.status(404).render('errorPage');
