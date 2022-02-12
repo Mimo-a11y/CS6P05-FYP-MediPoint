@@ -14,6 +14,17 @@
     {{#doctor}}
      <h1>Doctor ID: {{D_ID}}</h1>
     {{/doctor}}
+    <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+        <p>S</p>
+        <p>T</p>
+        <p>A</p>
+        <p>T</p>
+        <p>S</p>
+        <p>STATS</p>
+    </div>
+    {{#doctor}}
+    <button onclick="location.href='/dashboard/incomingVisits/{{D_ID}}'" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3 mt-6">Incoming visits</button>
+    {{/doctor}}
     <form action="/logout" method="POST">
         <button class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-5 py-3 mt-6">Logout</button>
     </form>
