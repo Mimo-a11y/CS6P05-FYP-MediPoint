@@ -104,13 +104,31 @@ const getVisitDetails = async (req,res) => {
         const healthLog = await HealthLog.findOne({
             where: {Card_No: req.params.cardno, Visit_No:req.params.visitno}
         });
-        return res.json(healthLog);
+         //return res.json(healthLog);
+        if(healthLog.BP === null && healthLog.Pulse === null && healthLog.Temperature === null && healthLog.Symptoms_Exp === null && healthLog.Diagnosis === null && healthLog.Lab_Tests === null && healthLog.Test_Pay_Status === null && healthLog.LabReportReportID === null && healthLog.PrescriptionPresID === null){
+            return res.render('patientVisitDetails', {mesg1: true});
+        }else{
+            return res.render('patientVisitDetails', {mesg2: true});
+        }
 
     }catch(e){
         console.log(e);
         return res.status(404).render('errorPage');
     }
 }
+
+//update details on each patient visit
+// const updateVisitDetails = async (req,res) => {
+//     try{
+//         const healthLog = await HealthLog.findOne({
+//             where: {Card_No: req.params.cardno, Visit_No:req.params.visitno}
+//         });
+
+//     }catch(e){
+//         console.log(e);
+//         return res.status(404).render('errorPage');
+//     }
+// }
 
 //exporting
 module.exports = {

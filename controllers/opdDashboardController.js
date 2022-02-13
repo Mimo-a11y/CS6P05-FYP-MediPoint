@@ -273,6 +273,18 @@ const followUpUpdate = async(req,res) => {
             include:[{model: User, attributes: ['Full_Name']}]
         });
 
+        //retrieving appointment details
+        const appointments = await Patient.findOne({
+            attributes:['P_ID'],
+            where: {P_ID: req.params.pid},
+            include:[
+                {
+                    model: AppointmentDetails,
+                    where: {App_Date: new Date().toISOString().slice(0, 10)},
+                }
+            ]
+        });
+
         // extracting the patient opd card
         const getopdCard = await HealthLog.findAll({
             attributes:['Card_No','Visit_No', 'Visit_Date'],
@@ -309,7 +321,7 @@ const followUpUpdate = async(req,res) => {
                 }
             ]
          });
-        return res.status(200).render('followupOpdCard', {mesg1: patient, mesg2: doctor, mesg6: opdCard, mesg9: cardNumber});
+        return res.status(200).render('followupOpdCard', {mesg1: patient, mesg2: doctor, mesg4:appointments, mesg6: opdCard, mesg9: cardNumber});
     }catch(e){
         console.log(e);
         return res.status(404).render('errorPage');

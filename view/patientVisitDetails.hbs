@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPoint- Patient Visit Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-200">
+    <h1 class="text-center text-red-500"><b>Patient visit details</b></h1>
+
+    <div id="healthLogForm" class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+        {{#mesg1}}
+        <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+        <p><b>Log  the health status</b></p>
+
+        <form action="/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments/reappointmentOPDCard/dID/{{D_ID}}/pID/{{P_ID}}/cardNo/{{Card_No}}/followUpUpdate" method="POST">
+        <label for="bp">BP</label>
+        <input type="text" name="bp" id="bp"> <br> <br>
+
+        <label for="pulse">Pulse Rate</label>
+        <input type="text" name="pulse" id="pulse"> <br> <br>
+
+        <label for="temp">Body Temperature</label>
+        <input type="text" name="temp" id="temp"> <br> <br>
+
+        <label for="sympExp">Symptoms experienced by the patients</label>
+        <input type="text" name="sympExp" id="sympExp"> <br> <br>
+
+        <label for="diagnosis">Diagnosis</label>
+        <input type="text" name="diagnosis" id="diagnosis"> <br> <br>
+
+        <div id="container">
+        <label for="labtests">Required Lab Tests</label>
+        <input type="text" name="1" id="labtests"> 
+        <a href="#" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3 mt-6" id="add">Add</a> <br> <br>
+        </div>
+
+        <button class="text-gray-50  hover:bg-sky-700 bg-sky-500 px-5 py-3 mt-6">Save</button>
+        </form>
+         </div>
+        {{/mesg1}}
+         
+    </div>
+
+    <form action="/logout" method="POST">
+        <button class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-5 py-3 mt-6">Logout</button>
+    </form>
+
+    <script>
+        let addBtn = document.getElementById('add');
+        addBtn.addEventListener('click', addTests , false);
+
+        function addTests(){
+           var labNo = document.getElementById("labtests").name;
+           var number = parseInt(labNo);
+            var container = document.getElementById("container");
+             container.removeChild(addBtn);
+                var input = document.createElement("input");
+                input.type = "text";
+                input.name = number + 1;
+                input.classList.add("mt-7");
+                var breakTag = document.createElement("br");
+
+                container.appendChild(input);
+                container.appendChild(breakTag);
+                container.appendChild(addBtn);
+                container.appendChild(breakTag);
+        }
+    </script>
+</body>
+</html>

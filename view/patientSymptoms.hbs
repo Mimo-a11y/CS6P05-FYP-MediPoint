@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -6,32 +7,35 @@
     <title>MediPoint- Symptoms Recorder</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-yellow-200">
     <p class=" mt-4 text-xl text-center">Symptoms Recorder</p>
     <div class="mt-8 ml-8 border border-gray-600 rounded-md text-center">
         <form action="/dashboard/Symptoms" method="POST">
 
-        <label for="date">Date</label>
-        <input type="date" name="date" id="date" required> <br> <br>
+            <label for="date">Date</label>
+            <input type="date" name="date" id="date" required> <br> <br>
 
-        <label for="time">Time</label>
-        <input type="time" name="time" id="time" required> <br> <br>
+            <label for="time">Time</label>
+            <input type="time" name="time" id="time" required> <br> <br>
 
-        <label for="symptom">Please write down the symptoms you are facing right now</label> <br>
-        <textarea id="symptom" name="symptom" rows="4" cols="50" required></textarea> <br> <br>
+            <label for="symptom">Please write down the symptoms you are facing right now</label> <br>
+            <textarea id="symptom" name="symptom" rows="4" cols="50" required></textarea> <br> <br>
 
-       <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">Record</button>
+            <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">Record</button>
         </form>
     </div>
     <div>
-    {{#mesg}}
-    <div class= 'mt-8 ml-8 border border-gray-600 rounded-md bg-blue-200'>
-      <p>Date Recorded: {{date}}</p>  
-      <p>Time Recorded: {{time}}</p> 
-      <p>Symptom: {{symptom}}</p>
-      <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2" onClick="location.href='/dashboard/Symptoms/{{id}}'">Remove</button>  
-    </div>
-    {{/mesg}}
+        {{#mesg}}
+        <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-blue-200'>
+            <p>Date Recorded: {{date}}</p>
+            <p>Time Recorded: {{time}}</p>
+            <p>Symptom: {{symptom}}</p>
+            <a  href="/dashboard/Symptoms/{{id}}" class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2"
+             >Remove</a>
+        </div>
+        {{/mesg}}
     </div>
 </body>
+
 </html>

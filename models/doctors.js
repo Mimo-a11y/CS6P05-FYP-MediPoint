@@ -1,4 +1,4 @@
-let users = require('./users');
+
 module.exports = (sequelize, DataTypes) => {
     const doctors = sequelize.define("Doctor", {
         D_ID: {

@@ -20,7 +20,9 @@
       <p> <b>Appointment Time:</b> {{App_Time}}</p> 
       <p> <b>Type:</b> {{App_Type}} Appointment</p>
       <p> <b>Payment Status:</b>{{Payment_Status}}</p>
-      <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2" onClick="location.href='/dashboard/OPD/incomingAppointments/appointmentDetails/confirm/{{App_ID}}'" >Confirm</button>  
+      <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2" 
+      onClick="location.href='/dashboard/OPD/incomingAppointments/appointmentDetails/confirm/{{App_ID}}'">Confirm
+      </button>  
       <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2" onClick="location.href='/dashboard/OPD/incomingAppointments/appointmentDetails/remove/{{App_ID}}'">Remove</button>  
     {{/mesg2}}
     </div>

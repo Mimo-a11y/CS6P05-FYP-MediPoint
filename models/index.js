@@ -118,6 +118,32 @@ db.Health_Log.belongsToMany(db.doctors, {
     }
 })
 
+//creating lab reports and prescriptions table
+db.Lab_Reports =  require('./labReports') (sequelize,DataTypes);
+db.Prescriptions =  require('./prescriptions') (sequelize,DataTypes);
+
+//associations between lab_reports and health_log table
+db.Lab_Reports.hasOne(db.Health_Log,{
+    foreignKey: {
+        allowNull: true,
+        unique: true,
+    },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+});
+
+//associations between prescriptions and health_log table
+db.Prescriptions.hasOne(db.Health_Log,{
+    foreignKey: {
+        allowNull: true,
+        unique: true,
+    },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+});
+
+
+
 //syncing the sequelize i.e. creating tables
 db.sequelize.sync({force: false})
 .then(() => {
