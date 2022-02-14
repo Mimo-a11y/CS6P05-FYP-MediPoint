@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -6,41 +7,67 @@
     <title>MediPoint- Patient Visit Details</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-blue-200">
     <h1 class="text-center text-red-500"><b>Patient visit details</b></h1>
 
     <div id="healthLogForm" class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
         {{#mesg1}}
         <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
-        <p><b>Log  the health status</b></p>
+            <p><b>Log the health status</b></p>
 
-        <form action="/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments/reappointmentOPDCard/dID/{{D_ID}}/pID/{{P_ID}}/cardNo/{{Card_No}}/followUpUpdate" method="POST">
-        <label for="bp">BP</label>
-        <input type="text" name="bp" id="bp"> <br> <br>
+            <form action="{{Visit_No}}/addVisitDetails" method="POST">
+                <label for="bp">BP</label>
+                <input type="text" name="bp" id="bp"> <br> <br>
 
-        <label for="pulse">Pulse Rate</label>
-        <input type="text" name="pulse" id="pulse"> <br> <br>
+                <label for="pulse">Pulse Rate</label>
+                <input type="text" name="pulse" id="pulse"> <br> <br>
 
-        <label for="temp">Body Temperature</label>
-        <input type="text" name="temp" id="temp"> <br> <br>
+                <label for="temp">Body Temperature</label>
+                <input type="text" name="temp" id="temp"> <br> <br>
 
-        <label for="sympExp">Symptoms experienced by the patients</label>
-        <input type="text" name="sympExp" id="sympExp"> <br> <br>
+                <label for="sympExp">Symptoms experienced by the patient</label> <br>
+                <textarea id="sympExp" name="sympExp" rows="4" cols="50"></textarea> <br> <br>
 
-        <label for="diagnosis">Diagnosis</label>
-        <input type="text" name="diagnosis" id="diagnosis"> <br> <br>
+                <label for="diagnosis">Diagnosis</label> <br>
+                <textarea id="diagnosis" name="diagnosis" rows="4" cols="50"></textarea> <br> <br>
 
-        <div id="container">
-        <label for="labtests">Required Lab Tests</label>
-        <input type="text" name="1" id="labtests"> 
-        <a href="#" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3 mt-6" id="add">Add</a> <br> <br>
+                <div id="container">
+                    <label for="labtests">Required Lab Tests</label> <br>
+                    <input type="text" name="1" id="labtests">
+                    <a class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3 mt-6" id="add">Add</a> <br>
+                    <br>
+                </div>
+
+                <p>Medicine prescriptions</p>
+
+                <div id="prescriptionContainer">
+                <div class="mt-7 border border-gray-600 rounded-md" id="pres">
+                    <label for="medName">Medicine Name</label> 
+                    <input type="text" name="medName" id="medName"> 
+
+                    <label for="desc">Description</label> 
+                    <input type="text" name="desc" id="desc"> 
+
+                    <label for="days">Days</label> 
+                    <input type="text" name="days" id="days"> 
+
+                    <label for="duration">Duration</label> 
+                    <input type="text" name="duration" id="duration">
+                </div>
+                <a class="text-gray-50 hover:bg-red-700 bg-red-500 px-5 py-3 mt-6" id="presAdd">Add</a> <br>
+                    <br>
+                </div>
+
+                <button class="text-gray-50  hover:bg-sky-700 bg-sky-500 px-5 py-3 mt-6">Save</button>
+            </form>
         </div>
-
-        <button class="text-gray-50  hover:bg-sky-700 bg-sky-500 px-5 py-3 mt-6">Save</button>
-        </form>
-         </div>
         {{/mesg1}}
-         
+
+        {{#mesg2}}
+            <p><b>health log details</b></p>
+        {{/mesg2}}
+
     </div>
 
     <form action="/logout" method="POST">
@@ -49,24 +76,113 @@
 
     <script>
         let addBtn = document.getElementById('add');
-        addBtn.addEventListener('click', addTests , false);
-
-        function addTests(){
-           var labNo = document.getElementById("labtests").name;
-           var number = parseInt(labNo);
+        let addBtnPres = document.getElementById('presAdd');
+        addBtn.addEventListener('click', addTests);
+        addBtnPres.addEventListener('click', addPrescriptions);
+        //let cancelBtn = document.getElementById('cancelBtn');
+        //cancelBtn.addEventListener('click', function(event){
+          //  console.log(event.target.previousElementSibling);    
+        //});
+        function addTests() {
             var container = document.getElementById("container");
-             container.removeChild(addBtn);
-                var input = document.createElement("input");
-                input.type = "text";
-                input.name = number + 1;
-                input.classList.add("mt-7");
-                var breakTag = document.createElement("br");
+            container.removeChild(addBtn);
 
-                container.appendChild(input);
-                container.appendChild(breakTag);
-                container.appendChild(addBtn);
-                container.appendChild(breakTag);
+            var inputArrays = [...document.querySelectorAll('#labtests')].pop();
+            var number = parseInt(inputArrays.name);
+
+            var input = document.createElement("input");
+            input.type = "text";
+            input.name = number + 1;
+            input.id = "labtests";
+            input.classList.add("mt-7");
+            var breakTag = document.createElement("br");
+            var cancelBtn = document.createElement("a");
+            cancelBtn.innerHTML = "Cancel";
+            //cancelBtn.href = "#";
+            cancelBtn.id = "cancelBtn";
+
+            container.appendChild(input);
+            container.appendChild(cancelBtn);
+            container.appendChild(breakTag);
+            container.appendChild(addBtn);
+            container.appendChild(breakTag);
+        }
+
+        function addPrescriptions() {
+            var prescriptionContainer = document.getElementById("prescriptionContainer");
+            prescriptionContainer.removeChild(addBtnPres);
+
+            var inputArrays = [...document.querySelectorAll('#pres')].pop();
+            var number = parseInt(inputArrays.name);
+
+            //
+            var container = document.createElement("div");
+            container.id = "pres";
+            container.classList.add('mt-7','border','border-gray-600','rounded-md');
+            //
+            var cancelBtn = document.createElement("a");
+            cancelBtn.innerHTML = "Cancel";
+            //cancelBtn.href = "#";
+            cancelBtn.id = "cancelBtn";
+            //
+            var medNameLbl = document.createElement("label");
+            medNameLbl.innerHTML = "Medicine Name";
+            var medNameInput = document.createElement("input");
+            medNameInput.name = "medName";
+            medNameInput.id = "medInput";
+
+            var descLbl = document.createElement("label");
+            descLbl.innerHTML = "Description";
+            var descInput = document.createElement("input");
+            descInput.name = "desc";
+            descInput.id = "desc";
+
+            var daysLbl = document.createElement("label");
+            daysLbl.innerHTML = "Days";
+            var daysInput = document.createElement("input");
+            daysInput.name = "days";
+            daysInput.id = "days";
+
+            var durationLbl = document.createElement("label");
+            durationLbl.innerHTML = "Duration";
+            var durationInput = document.createElement("input");
+            durationInput.name = "duration";
+            durationInput.id = "duration";
+
+            var receivedLbl = document.createElement("label");
+            receivedLbl.innerHTML = "Received Status";
+            var receivedInput = document.createElement("input");
+            receivedInput.name = "received";
+            receivedInput.id = "received";
+
+            //
+
+
+            prescriptionContainer.appendChild(container);
+            container.appendChild(medNameLbl);
+            container.appendChild(medNameInput);
+            //container.appendChild(breakTag);
+
+            container.appendChild(descLbl);
+             container.appendChild(descInput);
+            //container.appendChild(breakTag);
+
+            container.appendChild(daysLbl);
+             container.appendChild(daysInput);
+            //container.appendChild(breakTag);
+
+            container.appendChild(durationLbl);
+             container.appendChild(durationInput);
+            //container.appendChild(breakTag);
+
+            container.appendChild(receivedLbl);
+             container.appendChild(receivedInput);
+            //container.appendChild(breakTag);
+
+            prescriptionContainer.appendChild(cancelBtn);
+           prescriptionContainer.appendChild(addBtnPres);
         }
     </script>
 </body>
+
 </html>

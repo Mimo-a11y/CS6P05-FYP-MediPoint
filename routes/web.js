@@ -63,6 +63,7 @@ routes.post('/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedApp
 routes.get('/dashboard/incomingVisits/:did', doctorController.getTodaysOPDcard);
 routes.get('/dashboard/incomingVisits/dID/:did/pID/:pid', doctorController.getPatientOpdCard);
 routes.get('/dashboard/incomingVisits/cardNo/:cardno/visitNo/:visitno', doctorController.getVisitDetails);
+routes.post('/dashboard/incomingVisits/cardNo/:cardno/visitNo/:visitno/addVisitDetails', doctorController.updateVisitDetails);
 
 //exporting
 module.exports = routes;

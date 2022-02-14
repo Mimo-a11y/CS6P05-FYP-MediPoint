@@ -9,6 +9,7 @@ const Doctor = db.doctors;
 const HealthLog = db.Health_Log;
 const OpdCard = db.Patient_OPD;
 const DoctorOPD = db.Doctor_OPD;
+const LabReports = db.Lab_Reports;
 
 //get OPD card for incoming appointments for doctors
 
@@ -104,9 +105,8 @@ const getVisitDetails = async (req,res) => {
         const healthLog = await HealthLog.findOne({
             where: {Card_No: req.params.cardno, Visit_No:req.params.visitno}
         });
-         //return res.json(healthLog);
-        if(healthLog.BP === null && healthLog.Pulse === null && healthLog.Temperature === null && healthLog.Symptoms_Exp === null && healthLog.Diagnosis === null && healthLog.Lab_Tests === null && healthLog.Test_Pay_Status === null && healthLog.LabReportReportID === null && healthLog.PrescriptionPresID === null){
-            return res.render('patientVisitDetails', {mesg1: true});
+        if(healthLog.BP === null && healthLog.Pulse === null && healthLog.Temperature === null && healthLog.Symptoms_Exp === null && healthLog.Diagnosis === null && healthLog.LabReportReportID === null && healthLog.PrescriptionPresID === null){
+            return res.render('patientVisitDetails', {mesg1: healthLog});
         }else{
             return res.render('patientVisitDetails', {mesg2: true});
         }
@@ -118,21 +118,48 @@ const getVisitDetails = async (req,res) => {
 }
 
 //update details on each patient visit
-// const updateVisitDetails = async (req,res) => {
-//     try{
-//         const healthLog = await HealthLog.findOne({
-//             where: {Card_No: req.params.cardno, Visit_No:req.params.visitno}
-//         });
+const updateVisitDetails = async (req,res) => {
+    try{
+        let payStatusData = {
+            Test_Done: "No",
+            Test_No:  1,
+            Test_Name: req.body['1']
+        }
+        let reportID = await LabReports.create(payStatusData).then(result => {return result.Report_ID});
+        Object.keys(req.body).forEach(async function(key){
+            let intKey = parseInt(key);
+            if( intKey < 20 && intKey !== NaN && intKey !== 1 ){
+                let testData = {
+                    Report_ID: reportID,
+                    Test_No: key,
+                    Test_Name: req.body[key]
+                }
+                let labReports = await LabReports.create(testData);
+            }
+             })
+        await HealthLog.update(
+            {
+            BP: req.body.bp,
+            Pulse: req.body.pulse,
+            Temperature: req.body.temp,
+            Symptoms_Exp: req.body.sympExp,
+            Diagnosis: req.body.diagnosis,
+            LabReportReportID: reportID},
+            {where: {Card_No: req.params.cardno, Visit_No:req.params.visitno}}
+        );
+        console.log(req.body);
+        return res.send("hello");
 
-//     }catch(e){
-//         console.log(e);
-//         return res.status(404).render('errorPage');
-//     }
-// }
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage');
+    }
+}
 
 //exporting
 module.exports = {
     getTodaysOPDcard,
     getPatientOpdCard,
-    getVisitDetails
+    getVisitDetails,
+    updateVisitDetails
 }

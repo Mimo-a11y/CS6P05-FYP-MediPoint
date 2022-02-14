@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BIGINT(20),
             primaryKey: true,
         },
+        Test_Name:{
+            type: DataTypes.STRING,
+        },
         File_Name:{
             type: DataTypes.STRING,
         },
