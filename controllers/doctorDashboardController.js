@@ -10,6 +10,7 @@ const HealthLog = db.Health_Log;
 const OpdCard = db.Patient_OPD;
 const DoctorOPD = db.Doctor_OPD;
 const LabReports = db.Lab_Reports;
+const Prescriptions = db.Prescriptions;
 
 //get OPD card for incoming appointments for doctors
 
@@ -103,12 +104,19 @@ const getPatientOpdCard = async (req,res) => {
 const getVisitDetails = async (req,res) => {
     try{
         const healthLog = await HealthLog.findOne({
-            where: {Card_No: req.params.cardno, Visit_No:req.params.visitno}
+            where: {Card_No: req.params.cardno, Visit_No:req.params.visitno},
         });
+
+        const labReports = await LabReports.findAll({
+            where: {Report_ID: healthLog.LabReportReportID},
+        }); 
+        const medicines = await Prescriptions.findAll({
+            where: {Pres_ID: healthLog.PrescriptionPresID},
+        }); 
         if(healthLog.BP === null && healthLog.Pulse === null && healthLog.Temperature === null && healthLog.Symptoms_Exp === null && healthLog.Diagnosis === null && healthLog.LabReportReportID === null && healthLog.PrescriptionPresID === null){
             return res.render('patientVisitDetails', {mesg1: healthLog});
         }else{
-            return res.render('patientVisitDetails', {mesg2: true});
+            return res.render('patientVisitDetails', {mesg2: healthLog, mesg3: labReports, mesg4: medicines});
         }
 
     }catch(e){
@@ -120,6 +128,7 @@ const getVisitDetails = async (req,res) => {
 //update details on each patient visit
 const updateVisitDetails = async (req,res) => {
     try{
+        //LAB TESTS RECORD
         let payStatusData = {
             Test_Done: "No",
             Test_No:  1,
@@ -137,6 +146,50 @@ const updateVisitDetails = async (req,res) => {
                 let labReports = await LabReports.create(testData);
             }
              })
+
+        //PRESCRIPTIONS RECORD
+        if(req.body.medName instanceof Array){
+        let medicineData ={
+            Pres_No: 1,
+            Medicine_Name: req.body.medName[0],
+            Description: req.body.desc[0],
+            Days: req.body.days[0],
+            Duration: req.body.duration[0],
+            Received: 'No'
+        }
+        let presID = await Prescriptions.create(medicineData).then(result => {return result.Pres_ID});
+        for(var i=1; i< req.body.medName.length; i++){
+            let medicineData ={
+                Pres_ID: presID,
+                Pres_No: i + 1,
+                Medicine_Name: req.body.medName[i],
+                Description: req.body.desc[i],
+                Days: req.body.days[i],
+                Duration: req.body.duration[i],
+                Received: 'No'
+            }
+            await Prescriptions.create(medicineData);
+        }
+        await HealthLog.update(
+            {PrescriptionPresID: presID},
+            {where: {Card_No: req.params.cardno, Visit_No:req.params.visitno}}
+        );
+    }else{
+        let medicineData ={
+            Pres_No: 1,
+            Medicine_Name: req.body.medName,
+            Description: req.body.desc,
+            Days: req.body.days,
+            Duration: req.body.duration,
+            Received: 'No'
+        }
+        let presID = await Prescriptions.create(medicineData).then(result => {return result.Pres_ID});
+        await HealthLog.update(
+            {PrescriptionPresID: presID},
+            {where: {Card_No: req.params.cardno, Visit_No:req.params.visitno}}
+        );
+    }
+        //UPDATE THE OPD CARD
         await HealthLog.update(
             {
             BP: req.body.bp,
@@ -148,7 +201,7 @@ const updateVisitDetails = async (req,res) => {
             {where: {Card_No: req.params.cardno, Visit_No:req.params.visitno}}
         );
         console.log(req.body);
-        return res.send("hello");
+        return res.redirect(req.get('referer'));
 
     }catch(e){
         console.log(e);

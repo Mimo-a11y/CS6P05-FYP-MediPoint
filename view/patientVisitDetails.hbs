@@ -65,8 +65,43 @@
         {{/mesg1}}
 
         {{#mesg2}}
-            <p><b>health log details</b></p>
+            <p><b>Visit details</b></p>
+                 <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-red-200 text-center'>
+                     <p><b>Visit No:</b>{{Visit_No}}</p>
+                     <p><b>Visit Date:</b>{{Visit_Date}}</p> <br>
+                     <p><b>Vitals</b></p>
+                     <p><b>BP:</b>{{BP}}</p>
+                     <p><b>Pulse:</b>{{Pulse}}</p>
+                     <p><b>Temperature:</b>{{Temperature}}</p>
+                     <p><b>Symptoms Experienced:</b>{{Symptoms_Exp}}</p>
+                     <p><b>Diagnosis:</b>{{Diagnosis}}</p>
+                 </div>
         {{/mesg2}}
+
+        {{#mesg3}}
+        <p><b>Lab Test details</b></p>
+        {{/mesg3}}
+        
+        {{#mesg3}}
+            <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-red-200 text-center'>
+                     <p><b>Test No:</b>{{Test_No}}</p>
+                     <p><b>Test Name:</b>{{Test_Name}}</p>
+            </div>
+        {{/mesg3}}
+
+        {{#mesg4}}
+        <p><b>Medicine Details</b></p>
+        {{/mesg4}}
+
+        {{#mesg4}}
+            <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-red-200 text-center'>
+                     <p><b>Medicine No:</b>{{Pres_No}}</p>
+                     <p><b>Name:</b>{{Medicine_Name}}</p>
+                     <p><b>Description:</b>{{Description}}</p>
+                     <p><b>Days:</b>{{Days}}</p>
+                     <p><b>Duration:</b>{{Duration}}</p>
+                 </div>
+        {{/mesg4}}
 
     </div>
 
@@ -149,14 +184,7 @@
             durationInput.name = "duration";
             durationInput.id = "duration";
 
-            var receivedLbl = document.createElement("label");
-            receivedLbl.innerHTML = "Received Status";
-            var receivedInput = document.createElement("input");
-            receivedInput.name = "received";
-            receivedInput.id = "received";
-
             //
-
 
             prescriptionContainer.appendChild(container);
             container.appendChild(medNameLbl);
@@ -175,10 +203,7 @@
              container.appendChild(durationInput);
             //container.appendChild(breakTag);
 
-            container.appendChild(receivedLbl);
-             container.appendChild(receivedInput);
-            //container.appendChild(breakTag);
-
+            //
             prescriptionContainer.appendChild(cancelBtn);
            prescriptionContainer.appendChild(addBtnPres);
         }
