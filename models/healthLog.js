@@ -28,14 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         Diagnosis:{
             type: DataTypes.TEXT,
-        },
-        Lab_Tests:{
-            type: DataTypes.TEXT,
-        },
-        Test_Pay_Status:{
-            type: DataTypes.ENUM('Paid','Unpaid'),
         }
-
     },
     {
         initialAutoIncrement: 1401

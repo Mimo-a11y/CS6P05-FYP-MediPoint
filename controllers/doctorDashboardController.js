@@ -116,7 +116,7 @@ const getVisitDetails = async (req,res) => {
         if(healthLog.BP === null && healthLog.Pulse === null && healthLog.Temperature === null && healthLog.Symptoms_Exp === null && healthLog.Diagnosis === null && healthLog.LabReportReportID === null && healthLog.PrescriptionPresID === null){
             return res.render('patientVisitDetails', {mesg1: healthLog});
         }else{
-            return res.render('patientVisitDetails', {mesg2: healthLog, mesg3: labReports, mesg4: medicines});
+            return res.render('patientVisitDetails', {mesg2: healthLog, mesg3: labReports, mesg4: medicines, mesg5:true});
         }
 
     }catch(e){
@@ -127,23 +127,42 @@ const getVisitDetails = async (req,res) => {
 
 //update details on each patient visit
 const updateVisitDetails = async (req,res) => {
+
+    console.log(req.body);
+    //console.log(req.body.bp === "");
+    //return res.send("hello");
     try{
+        //adding the default value
+        // for(var i=0; i< req.body.length; i++){
+        //     if(req.body[i] == ''){
+        //         console.log(req.body[i]);
+        //     }
+        // }
+        // console.log(req.body);
         //LAB TESTS RECORD
-        let payStatusData = {
+        let labData = {
             Test_Done: "No",
             Test_No:  1,
-            Test_Name: req.body['1']
+            Test_Name: (req.body['1'] === "") ? 'N/A' : req.body['1'],
+            Test_Pay_Status: 'Unpaid',
+            File_Name: 'N/A',
+            File_Data: 'N/A'
+
         }
-        let reportID = await LabReports.create(payStatusData).then(result => {return result.Report_ID});
+        let reportID = await LabReports.create(labData).then(result => {return result.Report_ID});
         Object.keys(req.body).forEach(async function(key){
             let intKey = parseInt(key);
             if( intKey < 20 && intKey !== NaN && intKey !== 1 ){
                 let testData = {
                     Report_ID: reportID,
                     Test_No: key,
-                    Test_Name: req.body[key]
+                    Test_Name: (req.body[key] === "") ? 'N/A' : req.body[key],
+                    Test_Done: "No",
+                    Test_Pay_Status: 'Unpaid',
+                    File_Name: 'N/A',
+                    File_Data: 'N/A'
                 }
-                let labReports = await LabReports.create(testData);
+                await LabReports.create(testData);
             }
              })
 
@@ -151,10 +170,10 @@ const updateVisitDetails = async (req,res) => {
         if(req.body.medName instanceof Array){
         let medicineData ={
             Pres_No: 1,
-            Medicine_Name: req.body.medName[0],
-            Description: req.body.desc[0],
-            Days: req.body.days[0],
-            Duration: req.body.duration[0],
+            Medicine_Name: (req.body.medName[0] === "") ? 'N/A' : req.body.medName[0],
+            Description: (req.body.desc[0] === "") ? 'N/A' : req.body.desc[0],
+            Days: (req.body.days[0] === "") ? 'N/A' : req.body.days[0],
+            Duration: (req.body.duration[0] === "") ? 'N/A' : req.body.duration[0],
             Received: 'No'
         }
         let presID = await Prescriptions.create(medicineData).then(result => {return result.Pres_ID});
@@ -162,10 +181,10 @@ const updateVisitDetails = async (req,res) => {
             let medicineData ={
                 Pres_ID: presID,
                 Pres_No: i + 1,
-                Medicine_Name: req.body.medName[i],
-                Description: req.body.desc[i],
-                Days: req.body.days[i],
-                Duration: req.body.duration[i],
+                Medicine_Name: (req.body.medName[i] === "") ? 'N/A' : req.body.medName[i],
+                Description: (req.body.desc[i] === "") ? 'N/A' : req.body.desc[i] ,
+                Days: (req.body.days[i] === "") ? 'N/A' : req.body.days[i],
+                Duration: (req.body.duration[i] === "") ? 'N/A' : req.body.duration[i] ,
                 Received: 'No'
             }
             await Prescriptions.create(medicineData);
@@ -177,10 +196,10 @@ const updateVisitDetails = async (req,res) => {
     }else{
         let medicineData ={
             Pres_No: 1,
-            Medicine_Name: req.body.medName,
-            Description: req.body.desc,
-            Days: req.body.days,
-            Duration: req.body.duration,
+            Medicine_Name: (req.body.medName === "") ? 'N/A' : req.body.medName,
+            Description: (req.body.desc === "") ? 'N/A' : req.body.desc,
+            Days: (req.body.days === "") ? 'N/A' : req.body.days,
+            Duration: (req.body.duration === "") ? 'N/A' : req.body.duration,
             Received: 'No'
         }
         let presID = await Prescriptions.create(medicineData).then(result => {return result.Pres_ID});
@@ -192,15 +211,14 @@ const updateVisitDetails = async (req,res) => {
         //UPDATE THE OPD CARD
         await HealthLog.update(
             {
-            BP: req.body.bp,
-            Pulse: req.body.pulse,
-            Temperature: req.body.temp,
-            Symptoms_Exp: req.body.sympExp,
-            Diagnosis: req.body.diagnosis,
+            BP: (req.body.bp === "") ? 'N/A' : req.body.bp,
+            Pulse: (req.body.pulse === "") ? 'N/A' : req.body.pulse ,
+            Temperature: (req.body.temp === "") ? 'N/A' : req.body.temp,
+            Symptoms_Exp: (req.body.sympExp === "") ? 'N/A' : req.body.sympExp,
+            Diagnosis: (req.body.diagnosis === "") ? 'N/A' : req.body.diagnosis,
             LabReportReportID: reportID},
             {where: {Card_No: req.params.cardno, Visit_No:req.params.visitno}}
         );
-        console.log(req.body);
         return res.redirect(req.get('referer'));
 
     }catch(e){

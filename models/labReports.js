@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
         File_Data:{
             type: DataTypes.BLOB,
         },
+        Test_Pay_Status:{
+            type: DataTypes.ENUM('Paid','Unpaid'),
+        },
         Test_Done:{
             type: DataTypes.ENUM('Yes', 'No')
         }

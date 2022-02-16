@@ -17,10 +17,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
         },
         Days:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
         },
         Duration:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
         },
         Received:{
             type: DataTypes.ENUM('Yes', 'No')
