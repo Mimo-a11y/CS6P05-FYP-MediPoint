@@ -1,4 +1,5 @@
 const db = require('../models');
+const { Op } = require("sequelize");
 
 
 // create main model
@@ -9,6 +10,7 @@ const Doctor = db.doctors;
 const HealthLog = db.Health_Log;
 const OpdCard = db.Patient_OPD;
 const DoctorOPD = db.Doctor_OPD;
+const LabReports = db.Lab_Reports;
 
 
 //get OPD dashboard page
@@ -327,6 +329,107 @@ const followUpUpdate = async(req,res) => {
         return res.status(404).render('errorPage');
     }
 }
+//----------------------------------------------------------------------------------------//
+
+//update lab tests payment status
+const getTodaysLabTests = async (req,res) => {
+    try{
+    const patient = await Patient.findAll({
+        attributes: ['P_ID'],
+        include: [{
+            model: User,
+            attributes:['Full_Name']
+        },{
+            model: HealthLog,
+            attributes:['Card_No', 'Visit_No', 'LabReportReportID'],
+            where: {Visit_Date: new Date().toISOString().slice(0, 10)},
+            include:[{
+                model: LabReports,
+                where:{
+                    Test_No: 1,
+                    [Op.not]: [
+                        {
+                          Test_Name: {
+                            [Op.like]: 'N/A'
+                          }
+                        }
+                      ]
+                },
+                attributes:['Report_ID', 'Test_No', 'Test_Name']
+            },{
+                model: Doctor,
+                attributes: ['D_ID'],
+                include: [{
+                    model: User,
+                    attributes: ['Full_Name']
+                }]
+            }]
+        }]
+    }).catch((err) => {console.log(err)});
+    if(patient.length === 0){
+        return res.status(200).render('labReports', {mesg1: true});
+    }else{
+        return res.status(200).render('labReports', {mesg2: patient});
+    }
+}catch(e){
+    console.log(e);
+    return res.status(404).render('errorPage');
+}
+}
+
+//----------------------------------------------------------------------------//
+
+//get lab test details
+const getLabTestsDetails = async (req,res) => {
+    try{
+        let labTests = await LabReports.findAll({
+            where: {Report_ID: req.params.reportid, Test_Pay_Status: 'Unpaid', Test_Done: 'N/A'},
+            attributes: ['Report_ID', 'Test_Name', 'Test_No', 'Test_Pay_Status']
+        });
+        if(labTests.length === 0){
+            return res.status(200).render('labReports', {mesg4:true});
+        }else{
+            return res.status(200).render('labReports', {mesg3: labTests});
+        }
+
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage');
+    }
+}
+
+//-----------------------------------------------------------------------------------//
+
+//confirm lab test payment
+const confirmLabTestsDetails = async (req,res) => {
+    try{
+        await LabReports.update(
+            {Test_Pay_Status: "Paid", Test_Done: 'No'},
+            {where: {Report_ID: req.params.reportid, Test_No: req.params.testno}}
+        );
+        return res.redirect(req.get('referer'));
+
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage');
+    }
+}
+//---------------------------------------------------------------------------------------//
+
+//confirm lab test payment
+const cancelLabTestsDetails = async (req,res) => {
+    try{
+        await LabReports.update(
+            {Test_Done: 'No'},
+            {where: {Report_ID: req.params.reportid, Test_No: req.params.testno}}
+        );
+        return res.redirect(req.get('referer'));
+
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage');
+    }
+}
 
 //exporting
 module.exports = {
@@ -337,5 +440,9 @@ module.exports = {
     getConfirmedAppointmentsPage,
     makeOpdCard,
     getOpdCard,
-    followUpUpdate
+    followUpUpdate,
+    getTodaysLabTests,
+    getLabTestsDetails,
+    confirmLabTestsDetails,
+    cancelLabTestsDetails
 }

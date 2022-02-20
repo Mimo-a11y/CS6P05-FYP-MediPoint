@@ -127,24 +127,13 @@ const getVisitDetails = async (req,res) => {
 
 //update details on each patient visit
 const updateVisitDetails = async (req,res) => {
-
-    console.log(req.body);
-    //console.log(req.body.bp === "");
-    //return res.send("hello");
     try{
-        //adding the default value
-        // for(var i=0; i< req.body.length; i++){
-        //     if(req.body[i] == ''){
-        //         console.log(req.body[i]);
-        //     }
-        // }
-        // console.log(req.body);
         //LAB TESTS RECORD
         let labData = {
-            Test_Done: "No",
+            Test_Done: 'N/A',
             Test_No:  1,
             Test_Name: (req.body['1'] === "") ? 'N/A' : req.body['1'],
-            Test_Pay_Status: 'Unpaid',
+            Test_Pay_Status: (req.body['1'] === "") ? 'N/A' : 'Unpaid',
             File_Name: 'N/A',
             File_Data: 'N/A'
 
@@ -157,8 +146,8 @@ const updateVisitDetails = async (req,res) => {
                     Report_ID: reportID,
                     Test_No: key,
                     Test_Name: (req.body[key] === "") ? 'N/A' : req.body[key],
-                    Test_Done: "No",
-                    Test_Pay_Status: 'Unpaid',
+                    Test_Done: 'N/A',
+                    Test_Pay_Status: (req.body[key] === "") ? 'N/A' : 'Unpaid',
                     File_Name: 'N/A',
                     File_Data: 'N/A'
                 }
@@ -174,7 +163,7 @@ const updateVisitDetails = async (req,res) => {
             Description: (req.body.desc[0] === "") ? 'N/A' : req.body.desc[0],
             Days: (req.body.days[0] === "") ? 'N/A' : req.body.days[0],
             Duration: (req.body.duration[0] === "") ? 'N/A' : req.body.duration[0],
-            Received: 'No'
+            Received: (req.body.duration[0] === "") ? 'N/A' : 'No'
         }
         let presID = await Prescriptions.create(medicineData).then(result => {return result.Pres_ID});
         for(var i=1; i< req.body.medName.length; i++){
@@ -185,7 +174,7 @@ const updateVisitDetails = async (req,res) => {
                 Description: (req.body.desc[i] === "") ? 'N/A' : req.body.desc[i] ,
                 Days: (req.body.days[i] === "") ? 'N/A' : req.body.days[i],
                 Duration: (req.body.duration[i] === "") ? 'N/A' : req.body.duration[i] ,
-                Received: 'No'
+                Received: (req.body.duration[i] === "") ? 'N/A' : 'No'
             }
             await Prescriptions.create(medicineData);
         }

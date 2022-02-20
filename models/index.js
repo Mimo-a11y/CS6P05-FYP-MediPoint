@@ -131,9 +131,26 @@ db.Lab_Reports.hasOne(db.Health_Log,{
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
 });
+db.Health_Log.belongsTo(db.Lab_Reports,{
+    foreignKey: {
+        allowNull: true,
+        unique: true,
+    },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+});
 
 //associations between prescriptions and health_log table
 db.Prescriptions.hasOne(db.Health_Log,{
+    foreignKey: {
+        allowNull: true,
+        unique: true,
+    },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+});
+
+db.Health_Log.belongsTo(db.Prescriptions,{
     foreignKey: {
         allowNull: true,
         unique: true,

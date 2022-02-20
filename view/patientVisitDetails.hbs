@@ -124,6 +124,9 @@
           //  console.log(event.target.previousElementSibling);    
         //});
         function addTests() {
+            var firstInput = document.getElementById('labtests');
+            firstInput.setAttribute("required", "true");
+
             var container = document.getElementById("container");
             container.removeChild(addBtn);
 
@@ -135,6 +138,7 @@
             input.name = number + 1;
             input.id = "labtests";
             input.classList.add("mt-7");
+            input.setAttribute("required", "true");
             var breakTag = document.createElement("br");
             var cancelBtn = document.createElement("a");
             cancelBtn.innerHTML = "Cancel";

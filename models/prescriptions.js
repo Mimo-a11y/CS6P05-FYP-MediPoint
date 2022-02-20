@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
         },
         Received:{
-            type: DataTypes.ENUM('Yes', 'No')
+            type: DataTypes.ENUM('Yes', 'No', 'N/A')
         }
         
     },

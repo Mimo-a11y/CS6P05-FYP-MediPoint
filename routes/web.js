@@ -58,6 +58,10 @@ routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppo
 routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments/newOPDCard/:appid/dID/:did/pID/:pid', opdController.makeOpdCard);
 routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments/reappointmentOPDCard/:appid/dID/:did/pID/:pid', opdController.getOpdCard);
 routes.post('/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments/reappointmentOPDCard/dID/:did/pID/:pid/cardNo/:cardno/followUpUpdate', opdController.followUpUpdate);
+routes.get('/dashboard/OPD/incomingLabTests', opdController.getTodaysLabTests);
+routes.get('/dashboard/OPD/labTestDetails/reportID/:reportid', opdController.getLabTestsDetails);
+routes.get('/dashboard/OPD/labTestDetails/reportID/:reportid/confirmLabTests/TestNo/:testno', opdController.confirmLabTestsDetails);
+routes.get('/dashboard/OPD/labTestDetails/reportID/:reportid/cancelLabTests/TestNo/:testno', opdController.cancelLabTestsDetails);
 
 //creating routes for Doctors dashboard
 routes.get('/dashboard/incomingVisits/:did', doctorController.getTodaysOPDcard);

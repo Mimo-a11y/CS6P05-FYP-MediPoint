@@ -2,9 +2,9 @@
 module.exports = (sequelize, DataTypes) => {
     const labReports = sequelize.define("Lab_Report", {
         Report_ID: {
-            type: DataTypes.BIGINT(20),
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
-            autoIncrement: true,
         },
         Test_No: {
             type: DataTypes.BIGINT(20),
@@ -20,15 +20,13 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BLOB,
         },
         Test_Pay_Status:{
-            type: DataTypes.ENUM('Paid','Unpaid'),
+            type: DataTypes.ENUM('Paid','Unpaid', 'N/A'),
         },
         Test_Done:{
-            type: DataTypes.ENUM('Yes', 'No')
+            type: DataTypes.ENUM('Yes', 'No', 'N/A')
         }
         
     },
-    {
-		initialAutoIncrement: 1501
-	})
+    )
     return labReports;
 }
