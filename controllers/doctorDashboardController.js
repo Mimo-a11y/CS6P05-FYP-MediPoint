@@ -163,7 +163,8 @@ const updateVisitDetails = async (req,res) => {
             Description: (req.body.desc[0] === "") ? 'N/A' : req.body.desc[0],
             Days: (req.body.days[0] === "") ? 'N/A' : req.body.days[0],
             Duration: (req.body.duration[0] === "") ? 'N/A' : req.body.duration[0],
-            Received: (req.body.duration[0] === "") ? 'N/A' : 'No'
+            Med_Pay_Status: (req.body.medName[0] === "") ? 'N/A' : 'Unpaid',
+            Received: 'N/A'
         }
         let presID = await Prescriptions.create(medicineData).then(result => {return result.Pres_ID});
         for(var i=1; i< req.body.medName.length; i++){
@@ -174,7 +175,8 @@ const updateVisitDetails = async (req,res) => {
                 Description: (req.body.desc[i] === "") ? 'N/A' : req.body.desc[i] ,
                 Days: (req.body.days[i] === "") ? 'N/A' : req.body.days[i],
                 Duration: (req.body.duration[i] === "") ? 'N/A' : req.body.duration[i] ,
-                Received: (req.body.duration[i] === "") ? 'N/A' : 'No'
+                Med_Pay_Status: (req.body.medName[i] === "") ? 'N/A' : 'Unpaid',
+                Received: 'N/A'
             }
             await Prescriptions.create(medicineData);
         }

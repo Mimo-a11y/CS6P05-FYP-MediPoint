@@ -104,6 +104,7 @@
                      <p><b>Description:</b>{{Description}}</p>
                      <p><b>Days:</b>{{Days}}</p>
                      <p><b>Duration:</b>{{Duration}}</p>
+                     <p><b>Payment Status:</b>{{Med_Pay_Status}}</p>
                      <p><b>Medicine Received Status:</b>{{Received}}</p>
                  </div>
         {{/mesg4}}
@@ -153,6 +154,11 @@
         }
 
         function addPrescriptions() {
+            var medInput = document.getElementById('medName').setAttribute("required", "true");
+            var descInput = document.getElementById('desc').setAttribute("required", "true");
+            var daysInput = document.getElementById('days').setAttribute("required", "true");
+            var durationInput = document.getElementById('duration').setAttribute("required", "true");
+
             var prescriptionContainer = document.getElementById("prescriptionContainer");
             prescriptionContainer.removeChild(addBtnPres);
 
@@ -174,12 +180,14 @@
             var medNameInput = document.createElement("input");
             medNameInput.name = "medName";
             medNameInput.id = "medInput";
+            medNameInput.setAttribute("required", "true");
 
             var descLbl = document.createElement("label");
             descLbl.innerHTML = "Description";
             var descInput = document.createElement("input");
             descInput.name = "desc";
             descInput.id = "desc";
+            descInputvar.setAttribute("required", "true");
 
             var daysLbl = document.createElement("label");
             daysLbl.innerHTML = "Days";
@@ -188,6 +196,7 @@
             daysInput.id = "days";
             daysInput.pattern = "^[0-9]+$";
             daysInput.title = "Please enter numeric value only";
+            daysInput.setAttribute("required", "true");
 
             var durationLbl = document.createElement("label");
             durationLbl.innerHTML = "Duration";
@@ -196,6 +205,7 @@
             durationInput.id = "duration";
             durationInput.pattern = "^[0-9]+$";
             durationInput.title = "Please enter numeric value only";
+            durationInput.setAttribute("required", "true");
 
 
             //

@@ -22,6 +22,9 @@ module.exports = (sequelize, DataTypes) => {
         Duration:{
             type: DataTypes.STRING,
         },
+        Med_Pay_Status:{
+            type: DataTypes.ENUM('Paid','Unpaid', 'N/A'),
+        },
         Received:{
             type: DataTypes.ENUM('Yes', 'No', 'N/A')
         }

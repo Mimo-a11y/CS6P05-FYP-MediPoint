@@ -10,6 +10,7 @@ const sympRecorderController = require('../controllers/symptomsRecorderControlle
 const bookAppointmentController = require('../controllers/bookAppointmentController');
 const opdController = require('../controllers/opdDashboardController');
 const doctorController = require('../controllers/doctorDashboardController');
+const pharmacyController = require('../controllers/pharmacyController');
 
 //calling the function from passportLocalController
 initPassportLocal();
@@ -62,6 +63,14 @@ routes.get('/dashboard/OPD/incomingLabTests', opdController.getTodaysLabTests);
 routes.get('/dashboard/OPD/labTestDetails/reportID/:reportid', opdController.getLabTestsDetails);
 routes.get('/dashboard/OPD/labTestDetails/reportID/:reportid/confirmLabTests/TestNo/:testno', opdController.confirmLabTestsDetails);
 routes.get('/dashboard/OPD/labTestDetails/reportID/:reportid/cancelLabTests/TestNo/:testno', opdController.cancelLabTestsDetails);
+
+//creating routes for pharmacy dashboard
+routes.get('/dashboard/Pharmacy/incomingPrescriptions',pharmacyController.getPharmacyDashboardPage);
+routes.get('/dashboard/Pharmacy/prescriptionsDetails/presID/:presid', pharmacyController.getPresDetails);
+routes.get('/dashboard/Pharmacy/prescriptionsDetails/presID/:presid/ConfirmPrescriptions/PresNo/:presno', pharmacyController.confirmPrescriptionsDetails);
+routes.get('/dashboard/Pharmacy/prescriptionsDetails/presID/:presid/CancelPrescriptions/PresNo/:presno', pharmacyController.cancelPrescriptionsDetails);
+routes.get('/dashboard/OPD/incomingPrescriptions/prescriptionDetailsDetails/confirmedPrescriptions', pharmacyController.getConfirmedPrescriptions);
+
 
 //creating routes for Doctors dashboard
 routes.get('/dashboard/incomingVisits/:did', doctorController.getTodaysOPDcard);

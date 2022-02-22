@@ -1,0 +1,79 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPoint- Pharmacy Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-blue-200">
+    <h1 class="text-center text-red-500"><b>Pharmacy dashboard</b></h1>
+
+    <div class="px-5 py-3 text-center">
+        <h1 class="mb-8"><b>Menu</b></h1>
+        <div class="bg-teal-200 text-center">
+            <a href="/dashboard/Pharmacy/incomingPrescriptions">Incoming Medicine Presciptions</a> &nbsp; &nbsp; &nbsp;
+            <a href="/dashboard/OPD/incomingPrescriptions/prescriptionDetailsDetails/confirmedPrescriptions">Verified Medicine Prescriptions</a> &nbsp; &nbsp; &nbsp;
+        </div>
+    </div>
+    <p class="text-center"><b>Medicine prescriptions for today</b></p>
+    <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+        {{#mesg1}}
+            <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+                <p><b>No incoming med pescriptions for today</b></p>
+            </div>
+        {{/mesg1}}
+        {{#mesg2}}
+             <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+                <p><b>Patient ID: </b>{{P_ID}}</p>
+                <p><b>Patient Name: </b>{{User.Full_Name}}</p>
+                <p><b>Card_No: </b>{{Health_Logs.0.Card_No}}</p>
+                <p><b>Visit_No: </b>{{Health_Logs.0.Visit_No}}</p>
+                <p><b>Reffered By:</b> Dr. {{Health_Logs.0.Doctors.0.User.Full_Name}}</p>
+                <a href="prescriptionsDetails/presID/{{Health_Logs.0.PrescriptionPresID}}" class="text-gray-50  hover:bg-sky-700 bg-sky-500 px-3 py-1">Open</a>
+            </div>
+        {{/mesg2}}
+        {{#mesg3}}
+            <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+                <p><b>Medicine Number: </b>{{Pres_No}}</p>
+                <p><b>Medicine Name: </b>{{Medicine_Name}}</p>
+                <p><b>Description:</b>{{Description}}</p>
+                <p><b>Prescribed for </b>{{Days}} Days</p>
+                <p><b>To be taken in the duration of </b>{{Duration}} hours</p>
+                <p><b>Payment Status: </b>{{Med_Pay_Status}}</p>
+                <a href="{{Pres_ID}}/ConfirmPrescriptions/PresNo/{{Pres_No}}" class="visited:text-purple-200 visited:cursor-not-allowed text-gray-50  hover:bg-sky-700 bg-sky-500 px-3 py-1">confirm</a>
+                <a href="{{Pres_ID}}/CancelPrescriptions/PresNo/{{Pres_No}}" class="visited:text-purple-200 visited:cursor-not-allowed text-gray-50  hover:bg-sky-700 bg-sky-500 px-3 py-1">cancel</a>
+            </div>
+        {{/mesg3}}
+        {{#mesg4}}
+            <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+                <p><b>All medicine prescription for this patient has already been checked out.</b></p>
+                  <p><b>Please check the verified Prescriptions tab</b></p>
+            </div>
+        {{/mesg4}}
+        {{#mesg5}}
+            <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+                <p><b>No med prescriptions cofirmed for today!</b></p>
+            </div>
+        {{/mesg5}}
+        {{#mesg6}}
+            <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+                <button class="text-gray-50  hover:bg-sky-700 bg-sky-500 px-3 py-1">Confirmed</button>
+                <p><b>Patient ID: </b>{{P_ID}}</p>
+                <p><b>Patient Name: </b>{{User.Full_Name}}</p>
+                <p><b>Card_No: </b>{{Health_Logs.0.Card_No}}</p>
+                <p><b>Visit_No: </b>{{Health_Logs.0.Visit_No}}</p>
+                <p><b>Reffered By:</b> Dr. {{Health_Logs.0.Doctors.0.User.Full_Name}}</p>
+                <p><b>Payment Status: </b>{{Health_Logs.0.Prescription.Med_Pay_Status}}</p>
+                <p><b>Medicine received: </b>{{Health_Logs.0.Prescription.Received}}</p>
+            </div>
+        {{/mesg6}}
+    </div>
+    <form action="/logout" method="POST">
+        <button class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-5 py-3 mt-6">Logout</button>
+    </form>
+</body>
+
+</html>
