@@ -1,0 +1,54 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPoint- Upload lab reports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-blue-200">
+    <h1 class="text-center text-red-500"><b>Laboratory dashboard</b></h1>
+
+    <div class="px-5 py-3 text-center">
+        <h1 class="mb-8"><b>Menu</b></h1>
+        <div class="bg-teal-200 text-center">
+            <a href="/dashboard/Laboratory/incomingLabTests">Incoming Lab tests</a> &nbsp; &nbsp; &nbsp;
+            <a href="#">Completed lab Tests</a> &nbsp; &nbsp; &nbsp;
+        </div>
+    </div>
+    <p class="text-center"><b>Upload Lab test report</b></p>
+     {{#mesg1}}
+    <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+            <p class="text-red-500"><b>Lab test detail</b></p>
+            <p><b>Patient ID: </b>{{Health_Log.Patients.0.P_ID}}</p>
+            <p><b>Patient Name: </b> {{Health_Log.Patients.0.User.Full_Name}}</p>
+             <p><b>Age: </b>{{Health_Log.Patients.0.Age}}</p>
+             <p><b>Gender: </b>{{Health_Log.Patients.0.Gender}}</p>
+            <p><b>OPD Card Number: </b>{{Health_Log.Card_No}}</p>
+            <p><b>Test Name: </b>{{Test_Name}}</p>
+    </div>
+    <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+        <p><b>Upload reports</b></p>
+        <form action="">
+        <input type="text" name="filename" id="filename" value="{{Health_Log.Patients.0.P_ID}} {{Test_Name}} report" readonly> <br> <br>
+
+        <label for="upload">Choose a file</label> <br>
+        <input class="border border-gray-600 rounded-md bg-white" type="file" name="upload" accept="application/pdf"/>
+        </form>
+    </div>
+    {{/mesg1}}
+    {{#mesg2}}
+           <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+               <p>
+                   <b>Lab test report uploaded successfully!</b>
+               </p>
+           </div> 
+    {{/mesg2}}
+    <form action="/logout" method="POST">
+        <button class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-5 py-3 mt-6">Logout</button>
+    </form>
+</body>
+
+</html>
