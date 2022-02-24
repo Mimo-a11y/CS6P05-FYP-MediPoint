@@ -31,11 +31,12 @@
     </div>
     <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
         <p><b>Upload reports</b></p>
-        <form action="">
+        <form action="{{Test_No}}/uploadReports" method="POST">
         <input type="text" name="filename" id="filename" value="{{Health_Log.Patients.0.P_ID}} {{Test_Name}} report" readonly> <br> <br>
 
         <label for="upload">Choose a file</label> <br>
         <input class="border border-gray-600 rounded-md bg-white" type="file" name="upload" accept="application/pdf"/>
+        <button class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-5 py-3 mt-6">Submit</button>
         </form>
     </div>
     {{/mesg1}}

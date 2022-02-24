@@ -74,7 +74,8 @@ routes.get('/dashboard/OPD/incomingPrescriptions/prescriptionDetailsDetails/conf
 
 //creating routes for laboratory dashboard
 routes.get('/dashboard/Laboratory/incomingLabTests', labController.getLabTests);
-routes.get('/dashboard/Laboratory/LabTestDetails/reportID/:reportid/testNo/:testno', labController.uploadLabTestsReports);
+routes.get('/dashboard/Laboratory/LabTestDetails/reportID/:reportid/testNo/:testno', labController.LabTestsDetails);
+routes.post('/dashboard/Laboratory/LabTestDetails/reportID/:reportid/testNo/:testno/uploadReports', labController.uploadReports);
 
 
 //creating routes for Doctors dashboard

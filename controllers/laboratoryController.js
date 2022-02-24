@@ -60,8 +60,8 @@ const getLabTests = async (req,res) => {
 }
 //---------------------------------------------------------------------------------------------//
 
-//get lab test details and upload reports
-const uploadLabTestsReports = async (req,res) => {
+//get lab test details and upload reports form
+const LabTestsDetails = async (req,res) => {
     try{
         const report = await LabReports.findOne({
             where: {Report_ID: req.params.reportid, Test_No: req.params.testno, Test_Done: 'No'},
@@ -79,7 +79,6 @@ const uploadLabTestsReports = async (req,res) => {
                 }]
             }]
         });
-        //res.json(report);
         if(report.length === 0){
             return res.status(200).render('uploadLabReports', {mesg2: true});
         }else{
@@ -92,10 +91,26 @@ const uploadLabTestsReports = async (req,res) => {
         return res.status(404).render('errorPage');
     }
 }
+//----------------------------------------------------------------------------------------//
+
+// upload lab tests reports
+const uploadReports = async (req,res) => {
+    try{
+        await LabReports.update(
+            {Test_Done: 'Yes', File_Name: req.body.filename, File_Data: req.body.upload},
+            {where: {Report_ID: req.params.reportid, Test_No: req.params.testno}}
+        ).catch((err) => {console.log(err)});
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage');
+    }
+}
 
 
 //exporting
 module.exports= {
     getLabTests,
-    uploadLabTestsReports
+    LabTestsDetails,
+    uploadReports
+
 }
