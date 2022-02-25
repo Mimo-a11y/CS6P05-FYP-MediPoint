@@ -84,12 +84,18 @@
         
         {{#mesg3}}
             <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-red-200 text-center'>
-                     <p><b>Test No:</b>{{Test_No}}</p>
-                     <p><b>Test Name:</b>{{Test_Name}}</p>
-                     <p><b>Payment Status:</b>{{Test_Pay_Status}}</p>
-                     <p><b>Test Completed:</b>{{Test_Done}}</p>
-                     <p><b>File Name:</b>{{File_Name}}</p>
-                     <p><b>File Data:</b>{{File_Data}}</p>
+                     <p><b>Test No: </b>{{Test_No}}</p>
+                     <p><b>Test Name: </b>{{Test_Name}}</p>
+                     <p><b>Payment Status: </b>{{Test_Pay_Status}}</p>
+                     <p><b>Test Completed: </b>{{Test_Done}}</p>
+                     <p><b>File Name: </b>{{File_Name}}</p>
+                     {{#if (isAvailable File_Data) }}
+                          <a href="/dashboard/incomingVisits/downloadLabReports/{{File_Data}}"><div class='mt-8 ml-8 border border-gray-600 rounded-md bg-sky-300 hover:bg-sky-500 text-center'>{{File_Data}}</div></a>
+                    {{else}}
+                        <p><b>File: </b>{{File_Data}}</p>
+                    {{/if}}
+                    
+                     
             </div>
         {{/mesg3}}
 

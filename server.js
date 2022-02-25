@@ -12,6 +12,7 @@ const db = require('./models');
 const passwordFeature = require('@adminjs/passwords');
 const argon2 = require('argon2');
 const User = db.users;
+var expressHbs =  require('hbs');
 
 //instanciating express app
 const app = new Express();
@@ -164,6 +165,15 @@ app.use(connectFlash());
 //handlebars configuration
 app.set("view engine", "hbs");
 app.set("views", "./view");
+
+// register new helper function for handlebars
+expressHbs.handlebars.registerHelper('isAvailable', function(filedata) {
+  if(filedata == 'N/A'){
+      return filedata = false;
+  }else{
+    return filedata = true;
+  }
+});
 
 //configure passport middleware
 app.use(passport.initialize());
