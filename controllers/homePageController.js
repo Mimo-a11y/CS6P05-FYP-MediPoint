@@ -26,6 +26,7 @@ let getHomePage = async (req,res) => {
         }
 }
 let addNewPatient = async (req,res) => {
+    try{
     let data = {
         Patient_Name: req.body.patient_name,
         P_Address: req.body.pAddress,
@@ -38,6 +39,9 @@ let addNewPatient = async (req,res) => {
     res.status(200).render("patientHomePage",{
         user: req.user
     });
+}catch(e){
+    res.status(404).render('errorPage',  {error: true});
+}
 }
 
 

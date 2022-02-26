@@ -8,6 +8,9 @@ const Patient = db.patients;
 //get symptoms recorder page
 const getSymptomsRecorderPage = async (req,res) => {
     try{
+    if(req.user.User_Type !== "Patient"){
+        res.status(400).render('errorPage', {unauthorized: true});
+    }
     const patientID = await Patient.findOne({attributes:['P_ID'], where:{UserUID: req.user.U_ID}});
     const symptoms = await Patient.findAll({
         attributes: ['P_ID'],
@@ -32,7 +35,7 @@ const getSymptomsRecorderPage = async (req,res) => {
     return res.status(200).render("patientSymptoms", {mesg: symptomsArr});
 }catch(e){
     console.log(e);
-    return res.status(404).render('errorPage');
+    return res.status(404).render('errorPage', {error: true});
 }
 }
 //-------------------------------------------------------------------//
@@ -40,6 +43,9 @@ const getSymptomsRecorderPage = async (req,res) => {
 //post symptoms
 const recordSymptoms = async (req, res) => {
     try{
+    if(req.user.User_Type !== "Patient"){
+            res.status(400).render('errorPage', {unauthorized: true});
+    }
     const patientID = await Patient.findOne({attributes:['P_ID'], where:{UserUID: req.user.U_ID}});
     let newSymptom = {
         Symptom_Date: req.body.date,
@@ -75,7 +81,7 @@ const recordSymptoms = async (req, res) => {
     return res.status(200).render("patientSymptoms", {mesg: symptomsArr});
 }catch(e){
     console.log(e);
-    return res.status(404).render('errorPage');
+    return res.status(404).render('errorPage', {error: true});
 
     
 }
@@ -85,6 +91,9 @@ const recordSymptoms = async (req, res) => {
 //delete symptoms
 const deleteSymptoms = async (req, res) => {
     try{
+        if(req.user.User_Type !== "Patient"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
     const id = req.params.sympID;
      PatientSymptomsDetail.destroy({where: {Symptom_ID: id}}).then((result) => {
          console.log('deleted successfully');
@@ -95,7 +104,7 @@ const deleteSymptoms = async (req, res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 //-----------------------------------------------------------//

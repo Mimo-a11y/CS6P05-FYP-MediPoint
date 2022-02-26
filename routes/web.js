@@ -83,7 +83,12 @@ routes.get('/dashboard/incomingVisits/:did', doctorController.getTodaysOPDcard);
 routes.get('/dashboard/incomingVisits/dID/:did/pID/:pid', doctorController.getPatientOpdCard);
 routes.get('/dashboard/incomingVisits/cardNo/:cardno/visitNo/:visitno', doctorController.getVisitDetails);
 routes.post('/dashboard/incomingVisits/cardNo/:cardno/visitNo/:visitno/addVisitDetails', doctorController.updateVisitDetails);
+routes.get('/dashboard/incomingVisits/downloadLabReports/:file(*)', doctorController.downloadLabReports);
 
+//handling invalid routes
+routes.get('*', (req,res) => {
+        res.status(404).render('errorPage', {error:true});
+})
 //exporting
 module.exports = routes;
 

@@ -13,6 +13,9 @@ const HealthLog = db.Health_Log;
  
 const getBookAppointmentPage = async (req, res) => {
         try{
+            if(req.user.User_Type !== "Patient"){
+                res.status(400).render('errorPage', {unauthorized: true});
+            }
            const userType = await User.findOne({attributes:['User_Type'], where:{U_ID: req.user.U_ID}});
            if(userType.User_Type !== "Patient"){
             return res.status(400).render('errorPage');
@@ -21,7 +24,7 @@ const getBookAppointmentPage = async (req, res) => {
         }
         }catch(e){
             console.log(e);
-            return res.status(400).render('errorPage');
+            return res.status(400).render('errorPage', {error: true});
         }
 
 }
@@ -30,6 +33,9 @@ const getBookAppointmentPage = async (req, res) => {
 //search doctors
 const searchDoctors = async (req, res) => {
     try{
+        if(req.user.User_Type !== "Patient"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         const doctors = await Doctor.findAll({ 
         where:{ Dept_Name: req.query.departments },
         include: User
@@ -58,7 +64,7 @@ const searchDoctors = async (req, res) => {
 } 
     }catch(e){
         console.log(e);
-        return res.status(400).render('errorPage');
+        return res.status(400).render('errorPage', {error: true});
 
     }
 }
@@ -68,11 +74,14 @@ const searchDoctors = async (req, res) => {
 
 const getDateChooser = async (req, res) => {
     try{
+        if(req.user.User_Type !== "Patient"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         const doctorDetails = await Doctor.findOne({attributes:['Avl_Time', 'Avl_Day', 'D_ID'], where:{D_ID:req.params.id }});
         return res.status(200).render('fixAppointment', {mesg: doctorDetails});
     }catch(e){
         console.log(e);
-        return res.status(400).render('errorPage');
+        return res.status(400).render('errorPage', {error: true});
     }
 }
 
@@ -81,6 +90,9 @@ const getDateChooser = async (req, res) => {
 //insert appointment data
 const recordAppointment = async (req, res) => {
     try{
+        if(req.user.User_Type !== "Patient"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         const patientID = await Patient.findOne({attributes:['P_ID'], where:{UserUID: req.user.U_ID}});
         //
         const appointments = await Patient.findAll({
@@ -174,7 +186,7 @@ const recordAppointment = async (req, res) => {
     }
     }catch(e){
         console.log(e);
-        return res.status(400).render('errorPage');
+        return res.status(400).render('errorPage', {error: true});
 
     }
 }
@@ -184,6 +196,9 @@ const recordAppointment = async (req, res) => {
 //upcoming appointments
 const getUpcomingAppointments = async (req, res) => {
     try{
+        if(req.user.User_Type !== "Patient"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
     const patientID = await Patient.findOne({attributes:['P_ID'], where:{UserUID: req.user.U_ID}});
     const appointments = await Patient.findAll({
         attributes: ['P_ID'],
@@ -222,7 +237,7 @@ const getUpcomingAppointments = async (req, res) => {
     }
 }catch(e){
     console.log(e);
-    return res.status(400).render('errorPage');
+    return res.status(400).render('errorPage', {error: true});
 }
 }
 
@@ -231,6 +246,9 @@ const getUpcomingAppointments = async (req, res) => {
 //delete appointments
 const deleteAppointments = async (req, res) => {
     try{
+        if(req.user.User_Type !== "Patient"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
     const id = req.params.id;
     PatientAppDetail.destroy({where: {App_ID: id}}).then((result) => {
          console.log('deleted successfully');
@@ -240,7 +258,7 @@ const deleteAppointments = async (req, res) => {
       });
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 //-----------------------------------------------------------//

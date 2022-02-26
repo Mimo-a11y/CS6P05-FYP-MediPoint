@@ -15,6 +15,9 @@ const Prescription = db.Prescriptions;
 //get the pharmacy dashboard page
 const getPharmacyDashboardPage = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         const patient = await Patient.findAll({
             attributes: ['P_ID'],
             include: [{
@@ -55,7 +58,7 @@ const getPharmacyDashboardPage = async (req,res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 //-----------------------------------------------------------------------------//
@@ -63,6 +66,9 @@ const getPharmacyDashboardPage = async (req,res) => {
 //get prescriptions details
 const getPresDetails = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         let medicines = await Prescription.findAll({
             where: {Pres_ID: req.params.presid, Med_Pay_Status: 'Unpaid', Received: 'N/A'},
             attributes: ['Pres_ID', 'Medicine_Name', 'Pres_No', 'Med_Pay_Status', 'Description', 'Duration', 'Days']
@@ -75,7 +81,7 @@ const getPresDetails = async (req,res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 //------------------------------------------------------------------------------------------------//
@@ -83,6 +89,9 @@ const getPresDetails = async (req,res) => {
 //confirm medicine payment
 const confirmPrescriptionsDetails = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         await Prescription.update(
             {Med_Pay_Status: "Paid", Received: 'Yes'},
             {where: {Pres_ID: req.params.presid, Pres_No: req.params.presno}}
@@ -91,7 +100,7 @@ const confirmPrescriptionsDetails = async (req,res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 //---------------------------------------------------------------------------------------//
@@ -99,6 +108,9 @@ const confirmPrescriptionsDetails = async (req,res) => {
 //confirm lab test payment
 const cancelPrescriptionsDetails = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         await Prescription.update(
             {Received: 'No'},
             {where: {Pres_ID: req.params.presid, Pres_No: req.params.presno}}
@@ -107,7 +119,7 @@ const cancelPrescriptionsDetails = async (req,res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 //---------------------------------------------------------------------------//
@@ -115,6 +127,9 @@ const cancelPrescriptionsDetails = async (req,res) => {
 //get confirmed prescriptions
 const getConfirmedPrescriptions = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         const patient = await Patient.findAll({
             attributes: ['P_ID'],
             include: [{
@@ -157,7 +172,7 @@ const getConfirmedPrescriptions = async (req,res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 

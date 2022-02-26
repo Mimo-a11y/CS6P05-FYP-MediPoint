@@ -2,6 +2,7 @@ const db = require('../models');
 const { Op } = require("sequelize");
 
 
+
 // create main model
 const AppointmentDetails = db.Patient_Appointment_Detail;
 const Patient = db.patients;
@@ -15,6 +16,9 @@ const LabReports = db.Lab_Reports;
 //get the incoming lab tests 
 const getLabTests = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
     const labReports = await LabReports.findAll({
          where: { Test_Done: 'No', 
         Test_Pay_Status: 'Paid', 
@@ -55,7 +59,7 @@ const getLabTests = async (req,res) => {
     }
 }catch(e){
     console.log(e);
-    return res.status(404).render('errorPage');
+    return res.status(404).render('errorPage', {error: true});
 }
 }
 //---------------------------------------------------------------------------------------------//
@@ -63,6 +67,9 @@ const getLabTests = async (req,res) => {
 //get lab test details and upload reports form
 const LabTestsDetails = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         const report = await LabReports.findOne({
             where: {Report_ID: req.params.reportid, Test_No: req.params.testno, Test_Done: 'No'},
             include:[
@@ -88,7 +95,7 @@ const LabTestsDetails = async (req,res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 //----------------------------------------------------------------------------------------//
@@ -96,13 +103,25 @@ const LabTestsDetails = async (req,res) => {
 // upload lab tests reports
 const uploadReports = async (req,res) => {
     try{
-        await LabReports.update(
-            {Test_Done: 'Yes', File_Name: req.body.filename, File_Data: req.body.upload},
-            {where: {Report_ID: req.params.reportid, Test_No: req.params.testno}}
-        ).catch((err) => {console.log(err)});
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
+        const file = req.files.file;
+        const filename = req.body.filename;
+        file.mv('./uploads/'+filename+'.pdf', async (err) => {
+                if(err){
+                    console.log(err);
+                }else{
+                    await LabReports.update(
+                        {Test_Done: 'Yes', File_Data: filename},
+                        {where: {Report_ID: req.params.reportid, Test_No: req.params.testno}}
+                    ).catch((err) => {console.log(err)});
+                    res.send('file uploaded');
+                }
+        })
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 

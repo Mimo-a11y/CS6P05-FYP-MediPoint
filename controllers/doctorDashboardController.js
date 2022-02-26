@@ -1,4 +1,7 @@
 const db = require('../models');
+const path = require('path');
+const fs = require('fs');
+const stream = require('stream');
 
 
 // create main model
@@ -16,6 +19,9 @@ const Prescriptions = db.Prescriptions;
 
 const getTodaysOPDcard = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Doctor"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         // extracting the patient opd card
         const opdCard = await HealthLog.findAll({
             where:{Visit_Date: new Date().toISOString().slice(0, 10)},
@@ -38,7 +44,7 @@ const getTodaysOPDcard = async (req,res) => {
          }
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 
@@ -47,6 +53,9 @@ const getTodaysOPDcard = async (req,res) => {
 // get the patient's OPD card
 const getPatientOpdCard = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Doctor"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         //retrieving patient details
         const patient = await Patient.findAll({ 
             where:{ P_ID: req.params.pid },
@@ -95,7 +104,7 @@ const getPatientOpdCard = async (req,res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 //-----------------------------------------------------------------------------------------------------------//
@@ -103,6 +112,9 @@ const getPatientOpdCard = async (req,res) => {
 //get indiviual visit detail
 const getVisitDetails = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Doctor"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         const healthLog = await HealthLog.findOne({
             where: {Card_No: req.params.cardno, Visit_No:req.params.visitno},
         });
@@ -121,13 +133,16 @@ const getVisitDetails = async (req,res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 
 //update details on each patient visit
 const updateVisitDetails = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Doctor"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         //LAB TESTS RECORD
         let labData = {
             Test_Done: 'N/A',
@@ -214,14 +229,51 @@ const updateVisitDetails = async (req,res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
+//--------------------------------------------------------------------------//
+
+//download lab reports
+const downloadLabReports = async (req,res) => {
+    try{
+        if(req.user.User_Type !== "Doctor"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
+        const fileName = req.params.file;
+        // const filedata = await LabReports.findOne({
+        //     where: {File_Name: fileName},
+        //     attributes:['File_Data']
+        // });
+        // var obj = filedata.File_Data;
+            //var file = path.join(__dirname, fileName);
+        //res.setHeader('Content-Type', 'application/pdf');
+        
+        res.setHeader("Content-Disposition", "attachment");
+            res.download(fileName, function (err) {
+                if (err) {
+                    console.log("Error");
+                    console.log(err);
+                } else {
+                    console.log("Success");
+                }
+            });
+        res.setHeader('Content-Type', 'application/pdf')
+        //res.setHeader(`Content-Disposition', 'attachment;filename=${fileName}`);
+         
+    }
+    catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage', {error: true});
+    }
+};
+
 
 //exporting
 module.exports = {
     getTodaysOPDcard,
     getPatientOpdCard,
     getVisitDetails,
-    updateVisitDetails
+    updateVisitDetails,
+    downloadLabReports
 }

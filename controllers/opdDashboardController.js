@@ -16,6 +16,9 @@ const LabReports = db.Lab_Reports;
 //get OPD dashboard page
 const getOpdDashboardPage = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         const appointments = await Patient.findAll({ 
             attributes: ['P_ID','P_Address','Phone'],
             include:[{
@@ -34,7 +37,7 @@ const getOpdDashboardPage = async (req,res) => {
         }
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 //-----------------------------------------------------------------------------------//
@@ -42,6 +45,9 @@ const getOpdDashboardPage = async (req,res) => {
 //get appointment detail
 const getAppDetail = async (req, res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
     const doctor = await Doctor.findAll({
         where: {D_ID: req.params.did},
         include:[{model: User, attributes: ['Full_Name']}]
@@ -52,7 +58,7 @@ const getAppDetail = async (req, res) => {
     return res.status(200).render('appointmentDetails', {mesg1: doctor, mesg2: appointments});
 }catch(e){
     console.log(e);
-    return res.status(404).render('errorPage');
+    return res.status(404).render('errorPage', {error: true});
 }
 }
 
@@ -61,6 +67,9 @@ const getAppDetail = async (req, res) => {
 //remove appointments
 const deleteAppointments = async (req, res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
     const id = req.params.id;
     AppointmentDetails.destroy({where: {App_ID: id}}).then((result) => {
          console.log('deleted successfully');
@@ -70,7 +79,7 @@ const deleteAppointments = async (req, res) => {
       });
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 
@@ -79,6 +88,9 @@ const deleteAppointments = async (req, res) => {
 //get confirmed appointments page
 const getConfirmedAppointmentsPage = async (req, res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         const newAppointments = await Patient.findAll({ 
             attributes: ['P_ID','P_Address','Phone'],
             include:[{
@@ -110,13 +122,16 @@ const getConfirmedAppointmentsPage = async (req, res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 
 //updating the appointment status
 const updateAppointments = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         const id = req.params.id;
         const appointment = await AppointmentDetails.update(
             {Payment_Status: 'Paid'},
@@ -124,7 +139,7 @@ const updateAppointments = async (req,res) => {
         return res.status(200).redirect('/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments');
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 
@@ -133,6 +148,9 @@ const updateAppointments = async (req,res) => {
 //Make OPD card
 const makeOpdCard = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         //retrieving patient details
         const patient = await Patient.findAll({ 
             where:{ P_ID: req.params.pid },
@@ -203,7 +221,7 @@ const makeOpdCard = async (req,res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 //--------------------------------------------------------------------------------------------//
@@ -211,6 +229,9 @@ const makeOpdCard = async (req,res) => {
 // updating the follow up visit number
 const getOpdCard = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         //retrieving patient details
         const patient = await Patient.findAll({ 
             where:{ P_ID: req.params.pid },
@@ -251,13 +272,16 @@ const getOpdCard = async (req,res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 //------------------------------------------------------------------------------------------//
 
 const followUpUpdate = async(req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         //retrieving patient details
         const patient = await Patient.findAll({ 
             where:{ P_ID: req.params.pid },
@@ -326,7 +350,7 @@ const followUpUpdate = async(req,res) => {
         return res.status(200).render('followupOpdCard', {mesg1: patient, mesg2: doctor, mesg4:appointments, mesg6: opdCard, mesg9: cardNumber});
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 //----------------------------------------------------------------------------------------//
@@ -334,6 +358,9 @@ const followUpUpdate = async(req,res) => {
 //update lab tests payment status
 const getTodaysLabTests = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
     const patient = await Patient.findAll({
         attributes: ['P_ID'],
         include: [{
@@ -373,7 +400,7 @@ const getTodaysLabTests = async (req,res) => {
     }
 }catch(e){
     console.log(e);
-    return res.status(404).render('errorPage');
+    return res.status(404).render('errorPage', {error: true});
 }
 }
 
@@ -382,6 +409,9 @@ const getTodaysLabTests = async (req,res) => {
 //get lab test details
 const getLabTestsDetails = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         let labTests = await LabReports.findAll({
             where: {Report_ID: req.params.reportid, Test_Pay_Status: 'Unpaid', Test_Done: 'N/A'},
             attributes: ['Report_ID', 'Test_Name', 'Test_No', 'Test_Pay_Status']
@@ -394,7 +424,7 @@ const getLabTestsDetails = async (req,res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 
@@ -403,6 +433,9 @@ const getLabTestsDetails = async (req,res) => {
 //confirm lab test payment
 const confirmLabTestsDetails = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         await LabReports.update(
             {Test_Pay_Status: "Paid", Test_Done: 'No'},
             {where: {Report_ID: req.params.reportid, Test_No: req.params.testno}}
@@ -411,7 +444,7 @@ const confirmLabTestsDetails = async (req,res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 //---------------------------------------------------------------------------------------//
@@ -419,6 +452,9 @@ const confirmLabTestsDetails = async (req,res) => {
 //confirm lab test payment
 const cancelLabTestsDetails = async (req,res) => {
     try{
+        if(req.user.User_Type !== "Clinic"){
+            res.status(400).render('errorPage', {unauthorized: true});
+        }
         await LabReports.update(
             {Test_Done: 'No'},
             {where: {Report_ID: req.params.reportid, Test_No: req.params.testno}}
@@ -427,7 +463,7 @@ const cancelLabTestsDetails = async (req,res) => {
 
     }catch(e){
         console.log(e);
-        return res.status(404).render('errorPage');
+        return res.status(404).render('errorPage', {error: true});
     }
 }
 
