@@ -13,7 +13,6 @@ const passwordFeature = require('@adminjs/passwords');
 const argon2 = require('argon2');
 const User = db.users;
 var expressHbs =  require('hbs');
-const upload = require('express-fileupload');
 
 //instanciating express app
 const app = new Express();
@@ -33,8 +32,6 @@ app.use(session({
         maxAge:1000 * 60 * 60 * 24 //1 day
     }
 }));
-
-app.use(upload());
 
 //app.use(ValidationError());
 

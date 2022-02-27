@@ -107,16 +107,17 @@ const uploadReports = async (req,res) => {
             res.status(400).render('errorPage', {unauthorized: true});
         }
         const file = req.files.file;
-        const filename = req.body.filename;
-        file.mv('./uploads/'+filename+'.pdf', async (err) => {
+        const filename = new Date().getTime() +'_'+file.name;
+        file.mv('./uploads/'+filename, async (err) => {
                 if(err){
                     console.log(err);
+                    return res.status(404).render('errorPage', {error: true});
                 }else{
                     await LabReports.update(
                         {Test_Done: 'Yes', File_Data: filename},
                         {where: {Report_ID: req.params.reportid, Test_No: req.params.testno}}
                     ).catch((err) => {console.log(err)});
-                    res.send('file uploaded');
+                    return res.redirect('/dashboard/Laboratory/incomingLabTests');
                 }
         })
     }catch(e){

@@ -1,8 +1,5 @@
 const db = require('../models');
 const path = require('path');
-const fs = require('fs');
-const stream = require('stream');
-
 
 // create main model
 const AppointmentDetails = db.Patient_Appointment_Detail;
@@ -20,7 +17,7 @@ const Prescriptions = db.Prescriptions;
 const getTodaysOPDcard = async (req,res) => {
     try{
         if(req.user.User_Type !== "Doctor"){
-            res.status(400).render('errorPage', {unauthorized: true});
+           return res.status(400).render('errorPage', {unauthorized: true});
         }
         // extracting the patient opd card
         const opdCard = await HealthLog.findAll({
@@ -54,7 +51,7 @@ const getTodaysOPDcard = async (req,res) => {
 const getPatientOpdCard = async (req,res) => {
     try{
         if(req.user.User_Type !== "Doctor"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return res.status(400).render('errorPage', {unauthorized: true});
         }
         //retrieving patient details
         const patient = await Patient.findAll({ 
@@ -113,7 +110,7 @@ const getPatientOpdCard = async (req,res) => {
 const getVisitDetails = async (req,res) => {
     try{
         if(req.user.User_Type !== "Doctor"){
-            res.status(400).render('errorPage', {unauthorized: true});
+           return res.status(400).render('errorPage', {unauthorized: true});
         }
         const healthLog = await HealthLog.findOne({
             where: {Card_No: req.params.cardno, Visit_No:req.params.visitno},
@@ -141,7 +138,7 @@ const getVisitDetails = async (req,res) => {
 const updateVisitDetails = async (req,res) => {
     try{
         if(req.user.User_Type !== "Doctor"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return res.status(400).render('errorPage', {unauthorized: true});
         }
         //LAB TESTS RECORD
         let labData = {
@@ -206,7 +203,8 @@ const updateVisitDetails = async (req,res) => {
             Description: (req.body.desc === "") ? 'N/A' : req.body.desc,
             Days: (req.body.days === "") ? 'N/A' : req.body.days,
             Duration: (req.body.duration === "") ? 'N/A' : req.body.duration,
-            Received: 'No'
+            Med_Pay_Status: (req.body.medName === "") ? 'N/A' : 'Unpaid',
+            Received: 'N/A'
         }
         let presID = await Prescriptions.create(medicineData).then(result => {return result.Pres_ID});
         await HealthLog.update(
@@ -238,29 +236,13 @@ const updateVisitDetails = async (req,res) => {
 const downloadLabReports = async (req,res) => {
     try{
         if(req.user.User_Type !== "Doctor"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return res.status(400).render('errorPage', {unauthorized: true});
         }
-        const fileName = req.params.file;
-        // const filedata = await LabReports.findOne({
-        //     where: {File_Name: fileName},
-        //     attributes:['File_Data']
-        // });
-        // var obj = filedata.File_Data;
-            //var file = path.join(__dirname, fileName);
-        //res.setHeader('Content-Type', 'application/pdf');
-        
-        res.setHeader("Content-Disposition", "attachment");
-            res.download(fileName, function (err) {
-                if (err) {
-                    console.log("Error");
-                    console.log(err);
-                } else {
-                    console.log("Success");
-                }
-            });
-        res.setHeader('Content-Type', 'application/pdf')
-        //res.setHeader(`Content-Disposition', 'attachment;filename=${fileName}`);
-         
+        var file = req.params.file;
+        var fileLocation = path.join('./uploads',file);
+        res.download(fileLocation, file, (err) => {
+            return res.status(400).render('errorPage', {error: true});
+        })
     }
     catch(e){
         console.log(e);
