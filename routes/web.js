@@ -8,6 +8,7 @@ const initPassportLocal = require('../controllers/passportLocalController');
 const homePageController = require('../controllers/homePageController');
 const sympRecorderController = require('../controllers/symptomsRecorderController');
 const bookAppointmentController = require('../controllers/bookAppointmentController');
+const medicalRecordsController = require('../controllers/medicalRecordsController');
 const opdController = require('../controllers/opdDashboardController');
 const doctorController = require('../controllers/doctorDashboardController');
 const pharmacyController = require('../controllers/pharmacyController');
@@ -51,6 +52,11 @@ routes.post('/dashboard/bookAppointments/doctors/book/:id/bookingConfirmed', boo
 routes.get('/dashboard/upcomingAppointments', bookAppointmentController.getUpcomingAppointments);
 routes.get('/dashboard/upcomingAppointments/cancelBookings/:id', bookAppointmentController.deleteAppointments);
 
+//creating routes for patient medical records
+routes.get('/dashboard/myMedicalRecords', medicalRecordsController.getmedicalRecordsPage);
+routes.get('/dashboard/myMedicalRecords/cardNo/:cardno/pID/:pid/dID/:did', medicalRecordsController.getPatientsOpdCard);
+routes.get('/dashboard/myMedicalRecords/cardNo/:cardno/visitNo/:visitno', medicalRecordsController.getPatientVisitDetails);
+
 //creating routes for OPD dashboard
 routes.get('/dashboard/OPD/incomingAppointments',opdController.getOpdDashboardPage);
 routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/appID/:appid/dID/:did', opdController.getAppDetail);
@@ -76,7 +82,6 @@ routes.get('/dashboard/OPD/incomingPrescriptions/prescriptionDetailsDetails/conf
 routes.get('/dashboard/Laboratory/incomingLabTests', labController.getLabTests);
 routes.get('/dashboard/Laboratory/LabTestDetails/reportID/:reportid/testNo/:testno', labController.LabTestsDetails);
 routes.post('/dashboard/Laboratory/LabTestDetails/reportID/:reportid/testNo/:testno/uploadReports', labController.uploadReports);
-routes.get('/dashboard/Laboratory/completedLabTests', labController.getCompletedLabTests);
 
 
 //creating routes for Doctors dashboard

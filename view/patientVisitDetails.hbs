@@ -97,6 +97,21 @@
             </div>
         {{/mesg3}}
 
+        {{#mesg6}}
+            <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-red-200 text-center'>
+                     <p><b>Test Name: </b>{{Test_Name}}</p>
+                     <p><b>Payment Status: </b>{{Test_Pay_Status}}</p>
+                     <p><b>Test Completed: </b>{{Test_Done}}</p>
+                     {{#if (isAvailable File_Data) }}
+                          <a href="/dashboard/myMedicalRecords/downloadLabReports/{{File_Data}}"><div class='mt-8 ml-8 border border-gray-600 rounded-md bg-sky-300 hover:bg-sky-500 text-center'>{{File_Data}}</div></a>
+                    {{else}}
+                        <p><b>Report: </b>{{File_Data}}</p>
+                    {{/if}}
+                    
+                     
+            </div>
+        {{/mesg6}}
+
         {{#mesg5}}
         <p><b>Medicine Details</b></p>
         {{/mesg5}}
@@ -111,6 +126,13 @@
                      <p><b>Medicine Received Status:</b>{{Received}}</p>
                  </div>
         {{/mesg4}}
+
+        {{#mesg7}}
+            <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-red-200 text-center'>
+                <p><b>Your Health status is not logged yet!</b>
+                </p>
+            </div>
+        {{/mesg7}}
 
     </div>
 

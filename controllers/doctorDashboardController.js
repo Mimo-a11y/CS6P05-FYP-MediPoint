@@ -146,7 +146,6 @@ const updateVisitDetails = async (req,res) => {
             Test_No:  1,
             Test_Name: (req.body['1'] === "") ? 'N/A' : req.body['1'],
             Test_Pay_Status: (req.body['1'] === "") ? 'N/A' : 'Unpaid',
-            File_Name: 'N/A',
             File_Data: 'N/A'
 
         }
@@ -160,7 +159,6 @@ const updateVisitDetails = async (req,res) => {
                     Test_Name: (req.body[key] === "") ? 'N/A' : req.body[key],
                     Test_Done: 'N/A',
                     Test_Pay_Status: (req.body[key] === "") ? 'N/A' : 'Unpaid',
-                    File_Name: 'N/A',
                     File_Data: 'N/A'
                 }
                 await LabReports.create(testData);

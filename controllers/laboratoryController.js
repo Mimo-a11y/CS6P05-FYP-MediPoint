@@ -126,64 +126,10 @@ const uploadReports = async (req,res) => {
     }
 }
 
-//get the completed lab tests for today 
-const getCompletedLabTests = async (req,res) => {
-    try{
-        if(req.user.User_Type !== "Clinic"){
-            return res.status(400).render('errorPage', {unauthorized: true});
-        }
-    const labReports = await LabReports.findAll({
-         where: { Test_Done: 'Yes', 
-        Test_Pay_Status: 'Paid',
-        //updatedAt: new Date().getDate(), 
-        [Op.not]: [
-            {
-              Test_Name: {
-                [Op.like]: 'N/A'
-              }
-            }
-        ]},
-        attributes: [ 'Report_ID', 'Test_No', 'Test_Name', 'Test_Pay_Status', 'Test_Done'],
-        include: [{
-            model: HealthLog,
-            attributes:['Card_No', 'Visit_No', 'LabReportReportID'],
-            where:{Visit_Date: new Date().toISOString().slice(0, 10)},
-            include:[{
-                model: Patient,
-                attributes:['P_ID'],
-                include: [{
-                    model: User,
-                    attributes: ['Full_Name']
-                }]
-            },
-            {
-                model: Doctor,
-                attributes: ['D_ID'],
-                include: [{
-                    model: User,
-                    attributes: ['Full_Name']
-                }]
-            }
-        ]
-        }]
-    }).catch((err) => {console.log(err)});
-    if(labReports.length === 0){
-        return res.status(200).render('laboratoryDashboard', {mesg3: true});
-    }else{
-        return res.status(200).render('laboratoryDashboard', {mesg4: labReports});
-    }
-}catch(e){
-    console.log(e);
-    return res.status(404).render('errorPage', {error: true});
-}
-}
-
-
 //exporting
 module.exports= {
     getLabTests,
     LabTestsDetails,
-    uploadReports,
-    getCompletedLabTests
+    uploadReports
 
 }

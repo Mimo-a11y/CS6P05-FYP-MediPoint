@@ -56,6 +56,15 @@
         </button>
     </div>
     {{/mesg4}}
+
+    {{#mesg6}}
+    <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+        <button onclick="location.href='/dashboard/myMedicalRecords/cardNo/{{Card_No}}/visitNo/{{Visit_No}}'" class='mt-8 ml-8 border border-gray-600 rounded-md bg-red-300'>
+            <p>Visit Number: {{Visit_No}}</p>
+            <p>Visit Date: {{Visit_Date}}</p>
+        </button>
+    </div>
+    {{/mesg6}}
     </div>
     <form action="/logout" method="POST">
         <button class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-5 py-3 mt-6">Logout</button>
