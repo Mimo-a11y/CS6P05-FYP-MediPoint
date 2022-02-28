@@ -15,10 +15,10 @@
         <h1 class="mb-8"><b>Menu</b></h1>
         <div class="bg-teal-200 text-center">
             <a href="/dashboard/Laboratory/incomingLabTests">Incoming Lab tests</a> &nbsp; &nbsp; &nbsp;
-            <a href="#">Completed lab Tests</a> &nbsp; &nbsp; &nbsp;
+            <a href="/dashboard/Laboratory/completedLabTests">Completed lab Tests</a> &nbsp; &nbsp; &nbsp;
         </div>
     </div>
-    <p class="text-center"><b>Incoming Lab tests</b></p>
+    <p class="text-center"><b>Lab tests</b></p>
     <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
         {{#mesg1}}
             <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
@@ -35,6 +35,22 @@
             <a class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-3 py-1" href="LabTestDetails/reportID/{{Report_ID}}/testNo/{{Test_No}}">Open</a>
         </div>
         {{/mesg2}}
+
+        {{#mesg3}}
+            <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+            <p><b>There are no completed lab tests for today!</b></p>
+            </div>
+        {{/mesg3}}
+
+        {{#mesg4}}
+         <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200 text-center'>
+             <button class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-3 py-1">Completed</button>
+            <p><b>Test Name:</b>{{Test_Name}}</p>
+            <p><b>Test completed:</b>{{Test_Done}}</p>
+            <p><b>Payment status:</b>{{Test_Pay_Status}}</p>
+            <p><b>Referred by:</b>Dr. {{Health_Log.Doctors.0.User.Full_Name}}</p>
+        </div>
+        {{/mesg4}}
     </div>
     <form action="/logout" method="POST">
         <button class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-5 py-3 mt-6">Logout</button>

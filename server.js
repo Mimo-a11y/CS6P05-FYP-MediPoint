@@ -13,6 +13,7 @@ const passwordFeature = require('@adminjs/passwords');
 const argon2 = require('argon2');
 const User = db.users;
 var expressHbs =  require('hbs');
+const upload = require('express-fileupload');
 
 //instanciating express app
 const app = new Express();
@@ -165,6 +166,9 @@ app.use(connectFlash());
 //handlebars configuration
 app.set("view engine", "hbs");
 app.set("views", "./view");
+
+//configuring file upload
+app.use(upload());
 
 // register new helper function for handlebars
 expressHbs.handlebars.registerHelper('isAvailable', function(filedata) {

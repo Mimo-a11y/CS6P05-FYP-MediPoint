@@ -240,8 +240,10 @@ const downloadLabReports = async (req,res) => {
         }
         var file = req.params.file;
         var fileLocation = path.join('./uploads',file);
-        res.download(fileLocation, file, (err) => {
-            return res.status(400).render('errorPage', {error: true});
+        return res.download(fileLocation, file, (err) => {
+            if(err){
+                return res.status(400).render('errorPage', {error: true});
+            }
         })
     }
     catch(e){

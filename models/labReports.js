@@ -13,11 +13,8 @@ module.exports = (sequelize, DataTypes) => {
         Test_Name:{
             type: DataTypes.STRING,
         },
-        File_Name:{
-            type: DataTypes.STRING,
-        },
         File_Data:{
-            type: DataTypes.BLOB,
+            type: DataTypes.STRING,
         },
         Test_Pay_Status:{
             type: DataTypes.ENUM('Paid','Unpaid', 'N/A'),

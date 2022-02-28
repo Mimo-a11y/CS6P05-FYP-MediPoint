@@ -17,7 +17,7 @@ const LabReports = db.Lab_Reports;
 const getLabTests = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return res.status(400).render('errorPage', {unauthorized: true});
         }
     const labReports = await LabReports.findAll({
          where: { Test_Done: 'No', 
@@ -68,7 +68,7 @@ const getLabTests = async (req,res) => {
 const LabTestsDetails = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return res.status(400).render('errorPage', {unauthorized: true});
         }
         const report = await LabReports.findOne({
             where: {Report_ID: req.params.reportid, Test_No: req.params.testno, Test_Done: 'No'},
@@ -104,7 +104,7 @@ const LabTestsDetails = async (req,res) => {
 const uploadReports = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return res.status(400).render('errorPage', {unauthorized: true});
         }
         const file = req.files.file;
         const filename = new Date().getTime() +'_'+file.name;
@@ -126,11 +126,64 @@ const uploadReports = async (req,res) => {
     }
 }
 
+//get the completed lab tests for today 
+const getCompletedLabTests = async (req,res) => {
+    try{
+        if(req.user.User_Type !== "Clinic"){
+            return res.status(400).render('errorPage', {unauthorized: true});
+        }
+    const labReports = await LabReports.findAll({
+         where: { Test_Done: 'Yes', 
+        Test_Pay_Status: 'Paid',
+        //updatedAt: new Date().getDate(), 
+        [Op.not]: [
+            {
+              Test_Name: {
+                [Op.like]: 'N/A'
+              }
+            }
+        ]},
+        attributes: [ 'Report_ID', 'Test_No', 'Test_Name', 'Test_Pay_Status', 'Test_Done'],
+        include: [{
+            model: HealthLog,
+            attributes:['Card_No', 'Visit_No', 'LabReportReportID'],
+            where:{Visit_Date: new Date().toISOString().slice(0, 10)},
+            include:[{
+                model: Patient,
+                attributes:['P_ID'],
+                include: [{
+                    model: User,
+                    attributes: ['Full_Name']
+                }]
+            },
+            {
+                model: Doctor,
+                attributes: ['D_ID'],
+                include: [{
+                    model: User,
+                    attributes: ['Full_Name']
+                }]
+            }
+        ]
+        }]
+    }).catch((err) => {console.log(err)});
+    if(labReports.length === 0){
+        return res.status(200).render('laboratoryDashboard', {mesg3: true});
+    }else{
+        return res.status(200).render('laboratoryDashboard', {mesg4: labReports});
+    }
+}catch(e){
+    console.log(e);
+    return res.status(404).render('errorPage', {error: true});
+}
+}
+
 
 //exporting
 module.exports= {
     getLabTests,
     LabTestsDetails,
-    uploadReports
+    uploadReports,
+    getCompletedLabTests
 
 }
