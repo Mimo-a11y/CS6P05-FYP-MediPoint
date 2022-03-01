@@ -17,7 +17,7 @@ const LabReports = db.Lab_Reports;
 const getOpdDashboardPage = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return res.status(400).render('errorPage', {unauthorized: true});
         }
         const appointments = await Patient.findAll({ 
             attributes: ['P_ID','P_Address','Phone'],
@@ -46,7 +46,7 @@ const getOpdDashboardPage = async (req,res) => {
 const getAppDetail = async (req, res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
     const doctor = await Doctor.findAll({
         where: {D_ID: req.params.did},
@@ -68,7 +68,7 @@ const getAppDetail = async (req, res) => {
 const deleteAppointments = async (req, res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return res.status(400).render('errorPage', {unauthorized: true});
         }
     const id = req.params.id;
     AppointmentDetails.destroy({where: {App_ID: id}}).then((result) => {
@@ -89,7 +89,7 @@ const deleteAppointments = async (req, res) => {
 const getConfirmedAppointmentsPage = async (req, res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
         const newAppointments = await Patient.findAll({ 
             attributes: ['P_ID','P_Address','Phone'],
@@ -130,7 +130,7 @@ const getConfirmedAppointmentsPage = async (req, res) => {
 const updateAppointments = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
         const id = req.params.id;
         const appointment = await AppointmentDetails.update(
@@ -149,7 +149,7 @@ const updateAppointments = async (req,res) => {
 const makeOpdCard = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return res.status(400).render('errorPage', {unauthorized: true});
         }
         //retrieving patient details
         const patient = await Patient.findAll({ 
@@ -230,7 +230,7 @@ const makeOpdCard = async (req,res) => {
 const getOpdCard = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
         //retrieving patient details
         const patient = await Patient.findAll({ 
@@ -280,7 +280,7 @@ const getOpdCard = async (req,res) => {
 const followUpUpdate = async(req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
         //retrieving patient details
         const patient = await Patient.findAll({ 
@@ -359,7 +359,7 @@ const followUpUpdate = async(req,res) => {
 const getTodaysLabTests = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return res.status(400).render('errorPage', {unauthorized: true});
         }
     const patient = await Patient.findAll({
         attributes: ['P_ID'],
@@ -410,7 +410,7 @@ const getTodaysLabTests = async (req,res) => {
 const getLabTestsDetails = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
         let labTests = await LabReports.findAll({
             where: {Report_ID: req.params.reportid, Test_Pay_Status: 'Unpaid', Test_Done: 'N/A'},
@@ -434,7 +434,7 @@ const getLabTestsDetails = async (req,res) => {
 const confirmLabTestsDetails = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return res.status(400).render('errorPage', {unauthorized: true});
         }
         await LabReports.update(
             {Test_Pay_Status: "Paid", Test_Done: 'No'},
@@ -453,13 +453,116 @@ const confirmLabTestsDetails = async (req,res) => {
 const cancelLabTestsDetails = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
         await LabReports.update(
             {Test_Done: 'No'},
             {where: {Report_ID: req.params.reportid, Test_No: req.params.testno}}
         );
         return res.redirect(req.get('referer'));
+
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage', {error: true});
+    }
+}
+//-------------------------------------------------------------------------------------------//
+
+//card search feature
+const getopdCardSearchPage = async (req,res) => {
+    try{
+        if(req.user.User_Type !== "Clinic"){
+            return  res.status(400).render('errorPage', {unauthorized: true});
+        }
+        return res.status(200).render('OPDCardSearch', {opdsearchpage: true});
+
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage', {error: true});
+    }
+}
+//------------------------------------------------------------------------------//
+
+//get patient OPD card details
+const getopdCardDetails = async (req,res) => {
+    try{
+        if(req.user.User_Type !== "Clinic"){
+            return  res.status(400).render('errorPage', {unauthorized: true});
+        }
+        // extracting the patient opd card
+        const opdCard = await HealthLog.findAll({
+            attributes: ['Card_No', 'Visit_No', 'Visit_Date'],
+            where: {Visit_No: 1},
+            include:[
+                {
+                    model: Patient,
+                    where:{P_ID: req.query.cardsearch},
+                    include: [{
+                        model: User,
+                        attributes: ['Full_Name']
+                    },
+                ]
+                },{
+                    model: Doctor,
+                    include: [{
+                        model: User,
+                        attributes: ['Full_Name']
+                    }]
+                }
+            ]
+         });
+         if(opdCard.length === 0){
+            return res.status(200).render('OPDCardSearch', {mesg1: true, opdsearchpage: true});
+         }else{
+            return res.status(200).render('OPDCardSearch', {opdsearchmesg2: opdCard, opdsearchpage: true});
+         }
+
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage', {error: true});
+    }
+}
+//-----------------------------------------------------------------------//
+
+//get individual card details
+const getIndividualOpdCardDetails = async (req,res) => {
+    try{
+        if(req.user.User_Type !== "Clinic"){
+            return res.status(400).render('errorPage', {unauthorized: true});
+        }
+        //retrieving patient details
+        const patient = await Patient.findAll({ 
+            where:{ P_ID: req.params.pid },
+            include:[
+                {
+                    model: User,
+                    attributes:['Full_Name']
+                }
+            ]
+        });
+
+        //retrieving doctor details
+        const doctor = await Doctor.findAll({
+            where: {D_ID: req.params.did},
+            include:[{model: User, attributes: ['Full_Name']}]
+        });
+
+        // extracting the patient opd card
+        const getopdCard = await HealthLog.findAll({
+            attributes:['Card_No','Visit_No', 'Visit_Date'],
+            include:[
+                {
+                    model: Patient,
+                    where:{P_ID: req.params.pid}
+                },{
+                    model: Doctor,
+                    where:{D_ID: req.params.did }
+                }
+            ]
+         });
+         var cardNumber = [];
+         cardNumber[0] = {Card_No: getopdCard[0].Card_No, D_ID: req.params.did, P_ID: req.params.pid};
+         return res.status(200).render('OPDcardDetails', {mesg1: patient, mesg2: doctor, opdsearchmesg4: getopdCard, mesg5: cardNumber});
 
     }catch(e){
         console.log(e);
@@ -480,5 +583,8 @@ module.exports = {
     getTodaysLabTests,
     getLabTestsDetails,
     confirmLabTestsDetails,
-    cancelLabTestsDetails
+    cancelLabTestsDetails,
+    getopdCardSearchPage,
+    getopdCardDetails,
+    getIndividualOpdCardDetails
 }

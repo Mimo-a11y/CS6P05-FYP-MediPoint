@@ -16,7 +16,7 @@ const Prescription = db.Prescriptions;
 const getPharmacyDashboardPage = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
         const patient = await Patient.findAll({
             attributes: ['P_ID'],
@@ -67,7 +67,7 @@ const getPharmacyDashboardPage = async (req,res) => {
 const getPresDetails = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
         let medicines = await Prescription.findAll({
             where: {Pres_ID: req.params.presid, Med_Pay_Status: 'Unpaid', Received: 'N/A'},
@@ -90,7 +90,7 @@ const getPresDetails = async (req,res) => {
 const confirmPrescriptionsDetails = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
         await Prescription.update(
             {Med_Pay_Status: "Paid", Received: 'Yes'},
@@ -109,7 +109,7 @@ const confirmPrescriptionsDetails = async (req,res) => {
 const cancelPrescriptionsDetails = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
         await Prescription.update(
             {Received: 'No'},
@@ -128,7 +128,7 @@ const cancelPrescriptionsDetails = async (req,res) => {
 const getConfirmedPrescriptions = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
         const patient = await Patient.findAll({
             attributes: ['P_ID'],

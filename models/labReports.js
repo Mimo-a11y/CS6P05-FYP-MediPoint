@@ -2,9 +2,9 @@
 module.exports = (sequelize, DataTypes) => {
     const labReports = sequelize.define("Lab_Report", {
         Report_ID: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+            type: DataTypes.BIGINT(20),
             primaryKey: true,
+            autoIncrement: true,
         },
         Test_No: {
             type: DataTypes.BIGINT(20),
@@ -24,6 +24,9 @@ module.exports = (sequelize, DataTypes) => {
         }
         
     },
+    {
+        initialAutoIncrement: 15001
+    }
     )
     return labReports;
 }

@@ -249,13 +249,148 @@ const downloadLabReports = async (req,res) => {
         return res.status(404).render('errorPage', {error: true});
     }
 };
+//------------------------------------------------------------------------------//
+
+//card search feature
+const getopdCardSearchPageByDoctor = async (req,res) => {
+    try{
+        if(req.user.User_Type !== "Doctor"){
+            return  res.status(400).render('errorPage', {unauthorized: true});
+        }
+        return res.status(200).render('OPDCardSearch', {doctorsearchpage: true});
+
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage', {error: true});
+    }
+}
+//------------------------------------------------------------------------------//
+
+//get patient OPD card details
+const getopdCardDetailsByDoctor = async (req,res) => {
+    try{
+        if(req.user.User_Type !== "Doctor"){
+            return  res.status(400).render('errorPage', {unauthorized: true});
+        }
+        // extracting the patient opd card
+        const opdCard = await HealthLog.findAll({
+            attributes: ['Card_No', 'Visit_No', 'Visit_Date'],
+            where: {Visit_No: 1},
+            include:[
+                {
+                    model: Patient,
+                    where:{P_ID: req.query.cardsearch},
+                    include: [{
+                        model: User,
+                        attributes: ['Full_Name']
+                    },
+                ]
+                },{
+                    model: Doctor,
+                    include: [{
+                        model: User,
+                        attributes: ['Full_Name']
+                    }]
+                }
+            ]
+         });
+         if(opdCard.length === 0){
+            return res.status(200).render('OPDCardSearch', {mesg1: true, doctorsearchpage: true });
+         }else{
+            return res.status(200).render('OPDCardSearch', {docsearchmesg2: opdCard, doctorsearchpage: true});
+         }
+
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage', {error: true});
+    }
+}
+//--------------------------------------------------------------------------------------------------//
 
 
+//get individual card details
+const getIndividualOpdCardDetailsByDoc = async (req,res) => {
+    try{
+        if(req.user.User_Type !== "Doctor"){
+            return res.status(400).render('errorPage', {unauthorized: true});
+        }
+        //retrieving patient details
+        const patient = await Patient.findAll({ 
+            where:{ P_ID: req.params.pid },
+            include:[
+                {
+                    model: User,
+                    attributes:['Full_Name']
+                }
+            ]
+        });
+
+        //retrieving doctor details
+        const doctor = await Doctor.findAll({
+            where: {D_ID: req.params.did},
+            include:[{model: User, attributes: ['Full_Name']}]
+        });
+
+        // extracting the patient opd card
+        const getopdCard = await HealthLog.findAll({
+            attributes:['Card_No','Visit_No', 'Visit_Date'],
+            include:[
+                {
+                    model: Patient,
+                    where:{P_ID: req.params.pid}
+                },{
+                    model: Doctor,
+                    where:{D_ID: req.params.did }
+                }
+            ]
+         });
+         var cardNumber = [];
+         cardNumber[0] = {Card_No: getopdCard[0].Card_No, D_ID: req.params.did, P_ID: req.params.pid};
+         return res.status(200).render('OPDcardDetails', {mesg1: patient, mesg2: doctor, docsearchmesg4: getopdCard, mesg5: cardNumber});
+
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage', {error: true});
+    }
+}
+//-------------------------------------------------------------------------------//
+
+//get indiviual visit detail
+const getVisitDetailsByDoc = async (req,res) => {
+    try{
+        if(req.user.User_Type !== "Doctor"){
+           return res.status(400).render('errorPage', {unauthorized: true});
+        }
+        const healthLog = await HealthLog.findOne({
+            where: {Card_No: req.params.cardno, Visit_No:req.params.visitno},
+        });
+
+        const labReports = await LabReports.findAll({
+            where: {Report_ID: healthLog.LabReportReportID},
+        }); 
+        const medicines = await Prescriptions.findAll({
+            where: {Pres_ID: healthLog.PrescriptionPresID},
+        }); 
+        if(healthLog.BP === null && healthLog.Pulse === null && healthLog.Temperature === null && healthLog.Symptoms_Exp === null && healthLog.Diagnosis === null && healthLog.LabReportReportID === null && healthLog.PrescriptionPresID === null){
+            return res.render('patientVisitDetails', {mesg8: true});
+        }else{
+            return res.render('patientVisitDetails', {mesg2: healthLog, mesg3: labReports, mesg4: medicines, mesg5:true});
+        }
+
+    }catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage', {error: true});
+    }
+}
 //exporting
 module.exports = {
     getTodaysOPDcard,
     getPatientOpdCard,
     getVisitDetails,
     updateVisitDetails,
-    downloadLabReports
+    downloadLabReports,
+    getopdCardDetailsByDoctor,
+    getopdCardSearchPageByDoctor,
+    getIndividualOpdCardDetailsByDoc,
+    getVisitDetailsByDoc
 }

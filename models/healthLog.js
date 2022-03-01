@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     {
-        initialAutoIncrement: 1401
+        initialAutoIncrement: 14001
     }
     )
     return healthLogs;

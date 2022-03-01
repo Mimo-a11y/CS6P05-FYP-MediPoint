@@ -9,7 +9,7 @@ const Patient = db.patients;
 const getSymptomsRecorderPage = async (req,res) => {
     try{
     if(req.user.User_Type !== "Patient"){
-        res.status(400).render('errorPage', {unauthorized: true});
+        return  res.status(400).render('errorPage', {unauthorized: true});
     }
     const patientID = await Patient.findOne({attributes:['P_ID'], where:{UserUID: req.user.U_ID}});
     const symptoms = await Patient.findAll({
@@ -44,7 +44,7 @@ const getSymptomsRecorderPage = async (req,res) => {
 const recordSymptoms = async (req, res) => {
     try{
     if(req.user.User_Type !== "Patient"){
-            res.status(400).render('errorPage', {unauthorized: true});
+        return  res.status(400).render('errorPage', {unauthorized: true});
     }
     const patientID = await Patient.findOne({attributes:['P_ID'], where:{UserUID: req.user.U_ID}});
     let newSymptom = {
@@ -92,7 +92,7 @@ const recordSymptoms = async (req, res) => {
 const deleteSymptoms = async (req, res) => {
     try{
         if(req.user.User_Type !== "Patient"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
     const id = req.params.sympID;
      PatientSymptomsDetail.destroy({where: {Symptom_ID: id}}).then((result) => {

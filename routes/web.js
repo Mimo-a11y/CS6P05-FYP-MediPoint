@@ -56,6 +56,8 @@ routes.get('/dashboard/upcomingAppointments/cancelBookings/:id', bookAppointment
 routes.get('/dashboard/myMedicalRecords', medicalRecordsController.getmedicalRecordsPage);
 routes.get('/dashboard/myMedicalRecords/cardNo/:cardno/pID/:pid/dID/:did', medicalRecordsController.getPatientsOpdCard);
 routes.get('/dashboard/myMedicalRecords/cardNo/:cardno/visitNo/:visitno', medicalRecordsController.getPatientVisitDetails);
+routes.get('/dashboard/myMedicalRecords/downloadLabReports/:file(*)', medicalRecordsController.downloadPatientLabReports);
+
 
 //creating routes for OPD dashboard
 routes.get('/dashboard/OPD/incomingAppointments',opdController.getOpdDashboardPage);
@@ -70,6 +72,9 @@ routes.get('/dashboard/OPD/incomingLabTests', opdController.getTodaysLabTests);
 routes.get('/dashboard/OPD/labTestDetails/reportID/:reportid', opdController.getLabTestsDetails);
 routes.get('/dashboard/OPD/labTestDetails/reportID/:reportid/confirmLabTests/TestNo/:testno', opdController.confirmLabTestsDetails);
 routes.get('/dashboard/OPD/labTestDetails/reportID/:reportid/cancelLabTests/TestNo/:testno', opdController.cancelLabTestsDetails);
+routes.get('/dashboard/OPD/cardSearch', opdController.getopdCardSearchPage);
+routes.get('/dashboard/OPD/cardSearch/PatientOPDCardDetails', opdController.getopdCardDetails);
+routes.get('/dashboard/OPD/cardSearch/PatientOPDCardDetails/dID/:did/pID/:pid', opdController.getIndividualOpdCardDetails);
 
 //creating routes for pharmacy dashboard
 routes.get('/dashboard/Pharmacy/incomingPrescriptions',pharmacyController.getPharmacyDashboardPage);
@@ -90,6 +95,11 @@ routes.get('/dashboard/incomingVisits/dID/:did/pID/:pid', doctorController.getPa
 routes.get('/dashboard/incomingVisits/cardNo/:cardno/visitNo/:visitno', doctorController.getVisitDetails);
 routes.post('/dashboard/incomingVisits/cardNo/:cardno/visitNo/:visitno/addVisitDetails', doctorController.updateVisitDetails);
 routes.get('/dashboard/incomingVisits/downloadLabReports/:file(*)', doctorController.downloadLabReports);
+routes.get('/dashboard/searchOPDdetails', doctorController.getopdCardSearchPageByDoctor);
+routes.get('/dashboard/searchOPDdetails/PatientOPDCardDetails', doctorController.getopdCardDetailsByDoctor);
+routes.get('/dashboard/searchOPDdetails/dID/:did/pID/:pid', doctorController.getIndividualOpdCardDetailsByDoc);
+routes.get('/dashboard/searchOPDdetails/PatientOPDCardDetails/cardNo/:cardno/visitNo/:visitno', doctorController.getVisitDetailsByDoc);
+routes.get('/dashboard/searchOPDdetails/downloadLabReports/:file(*)', doctorController.downloadLabReports);
 
 //handling invalid routes
 routes.get('*', (req,res) => {

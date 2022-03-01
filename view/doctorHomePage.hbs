@@ -25,6 +25,7 @@
     {{#doctor}}
     <button onclick="location.href='/dashboard/incomingVisits/{{D_ID}}'" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3 mt-6">Incoming visits</button>
     {{/doctor}}
+    <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3 mt-6" onclick="location.href='/dashboard/searchOPDdetails'">Search Patient medical history</button>
     <form action="/logout" method="POST">
         <button class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-5 py-3 mt-6">Logout</button>
     </form>

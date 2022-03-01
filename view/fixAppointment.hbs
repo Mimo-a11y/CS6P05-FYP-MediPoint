@@ -54,7 +54,7 @@
         let tomorrow =  new Date();
         let maxDate = new Date();
         tomorrow.setDate(today.getDate() + 1);
-        //var firstDayOfNextMonth = new Date(today.getFullYear(), today.getMonth()+1, 1);
+        var firstDayOfNextMonth = new Date(today.getFullYear(), today.getMonth()+1, 1);
         const timeStamp = firstDayOfNextMonth.getTime();
         const yesterdayTimeStamp = timeStamp - 24*60*60*1000;
         const yesterdayDate = new Date(yesterdayTimeStamp);

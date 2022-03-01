@@ -57,6 +57,24 @@
     </div>
     {{/mesg4}}
 
+    {{#opdsearchmesg4}}
+    <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+        <button class='mt-8 ml-8 border border-gray-600 rounded-md bg-red-300'>
+            <p>Visit Number: {{Visit_No}}</p>
+            <p>Visit Date: {{Visit_Date}}</p>
+        </button>
+    </div>
+    {{/opdsearchmesg4}}
+
+    {{#docsearchmesg4}}
+    <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
+        <button onclick="location.href='/dashboard/searchOPDdetails/PatientOPDCardDetails/cardNo/{{Card_No}}/visitNo/{{Visit_No}}'" class='mt-8 ml-8 border border-gray-600 rounded-md bg-red-300'>
+            <p>Visit Number: {{Visit_No}}</p>
+            <p>Visit Date: {{Visit_Date}}</p>
+        </button>
+    </div>
+    {{/docsearchmesg4}}
+
     {{#mesg6}}
     <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
         <button onclick="location.href='/dashboard/myMedicalRecords/cardNo/{{Card_No}}/visitNo/{{Visit_No}}'" class='mt-8 ml-8 border border-gray-600 rounded-md bg-red-300'>

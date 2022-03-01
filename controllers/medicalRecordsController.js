@@ -1,4 +1,5 @@
 const db = require('../models');
+const path = require('path');
 
 // create main model
 const Doctor = db.doctors;
@@ -127,7 +128,6 @@ const getPatientVisitDetails = async (req,res) => {
         }else{
             return res.render('patientVisitDetails', {mesg2: healthLog, mesg6: labReports, mesg4: medicines, mesg5:true});
         }
-       // return res.render('patientVisitDetails', {mesg2: healthLog, mesg6: labReports, mesg4: medicines, mesg5:true});
         
 
     }catch(e){
@@ -135,11 +135,33 @@ const getPatientVisitDetails = async (req,res) => {
         return res.status(404).render('errorPage', {error: true});
     }
 }
+//----------------------------------------------------------------------------------------//
+
+//download lab reports
+const downloadPatientLabReports = async (req,res) => {
+    try{
+        if(req.user.User_Type !== "Patient"){
+            return res.status(400).render('errorPage', {unauthorized: true});
+        }
+        var file = req.params.file;
+        var fileLocation = path.join('./uploads',file);
+        return res.download(fileLocation, file, (err) => {
+            if(err){
+                return res.status(400).render('errorPage', {error: true});
+            }
+        })
+    }
+    catch(e){
+        console.log(e);
+        return res.status(404).render('errorPage', {error: true});
+    }
+};
 
 
 //exporting
 module.exports = {
     getmedicalRecordsPage,
     getPatientsOpdCard,
-    getPatientVisitDetails
+    getPatientVisitDetails,
+    downloadPatientLabReports
 }

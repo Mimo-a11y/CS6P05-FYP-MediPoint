@@ -112,6 +112,21 @@
             </div>
         {{/mesg6}}
 
+        {{#mesg9}}
+            <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-red-200 text-center'>
+                     <p><b>Test Name: </b>{{Test_Name}}</p>
+                     <p><b>Payment Status: </b>{{Test_Pay_Status}}</p>
+                     <p><b>Test Completed: </b>{{Test_Done}}</p>
+                     {{#if (isAvailable File_Data) }}
+                          <a href="/dashboard/searchOPDdetails/downloadLabReports/{{File_Data}}"><div class='mt-8 ml-8 border border-gray-600 rounded-md bg-sky-300 hover:bg-sky-500 text-center'>{{File_Data}}</div></a>
+                    {{else}}
+                        <p><b>Report: </b>{{File_Data}}</p>
+                    {{/if}}
+                    
+                     
+            </div>
+        {{/mesg9}}
+
         {{#mesg5}}
         <p><b>Medicine Details</b></p>
         {{/mesg5}}
@@ -133,6 +148,12 @@
                 </p>
             </div>
         {{/mesg7}}
+        {{#mesg8}}
+            <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-red-200 text-center'>
+                <p><b>Nothing to display for now!</b>
+                </p>
+            </div>
+        {{/mesg8}}
 
     </div>
 

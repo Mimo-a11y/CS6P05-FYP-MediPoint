@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         
     },
     {
-		initialAutoIncrement: 1601
+		initialAutoIncrement: 16001
 	})
     return prescriptions;
 }

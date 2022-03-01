@@ -14,7 +14,7 @@ const HealthLog = db.Health_Log;
 const getBookAppointmentPage = async (req, res) => {
         try{
             if(req.user.User_Type !== "Patient"){
-                res.status(400).render('errorPage', {unauthorized: true});
+               return res.status(400).render('errorPage', {unauthorized: true});
             }
            const userType = await User.findOne({attributes:['User_Type'], where:{U_ID: req.user.U_ID}});
            if(userType.User_Type !== "Patient"){
@@ -34,7 +34,7 @@ const getBookAppointmentPage = async (req, res) => {
 const searchDoctors = async (req, res) => {
     try{
         if(req.user.User_Type !== "Patient"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
         const doctors = await Doctor.findAll({ 
         where:{ Dept_Name: req.query.departments },
@@ -42,7 +42,7 @@ const searchDoctors = async (req, res) => {
         }
     )
     if(doctors.length < 1){
-        res.status(200).render('bookAppointment', {mesg1: true})
+        return res.status(200).render('bookAppointment', {mesg1: true})
     }else{
     var doctorsObj = {}
     var doctorsArr = [];
@@ -75,7 +75,7 @@ const searchDoctors = async (req, res) => {
 const getDateChooser = async (req, res) => {
     try{
         if(req.user.User_Type !== "Patient"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return res.status(400).render('errorPage', {unauthorized: true});
         }
         const doctorDetails = await Doctor.findOne({attributes:['Avl_Time', 'Avl_Day', 'D_ID'], where:{D_ID:req.params.id }});
         return res.status(200).render('fixAppointment', {mesg: doctorDetails});
@@ -91,7 +91,7 @@ const getDateChooser = async (req, res) => {
 const recordAppointment = async (req, res) => {
     try{
         if(req.user.User_Type !== "Patient"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
         const patientID = await Patient.findOne({attributes:['P_ID'], where:{UserUID: req.user.U_ID}});
         //
@@ -197,7 +197,7 @@ const recordAppointment = async (req, res) => {
 const getUpcomingAppointments = async (req, res) => {
     try{
         if(req.user.User_Type !== "Patient"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
     const patientID = await Patient.findOne({attributes:['P_ID'], where:{UserUID: req.user.U_ID}});
     const appointments = await Patient.findAll({
@@ -247,7 +247,7 @@ const getUpcomingAppointments = async (req, res) => {
 const deleteAppointments = async (req, res) => {
     try{
         if(req.user.User_Type !== "Patient"){
-            res.status(400).render('errorPage', {unauthorized: true});
+            return  res.status(400).render('errorPage', {unauthorized: true});
         }
     const id = req.params.id;
     PatientAppDetail.destroy({where: {App_ID: id}}).then((result) => {

@@ -1,0 +1,84 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPoint-Card Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-200">
+    {{#opdsearchpage}}
+    <h1 class="text-center text-red-500"><b>OPD dashboard</b></h1>
+
+    <div class="px-5 py-3 text-center">
+    <h1 class="mb-8"><b>Menu</b></h1>
+    <div class="bg-teal-200 text-center">
+    <a href="/dashboard/OPD/incomingAppointments">Incoming Appointments</a> &nbsp; &nbsp; &nbsp;
+    <a href="/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments">Booked Appointments</a> &nbsp; &nbsp; &nbsp;
+    <a href="/dashboard/OPD/cardSearch">OPD card</a> &nbsp; &nbsp; &nbsp;
+    <a href="/dashboard/OPD/incomingLabTests">LAB tests</a> &nbsp; &nbsp; &nbsp;
+    </div>
+    </div>
+    {{/opdsearchpage}}
+
+    {{#doctorsearchpage}}
+        <p class="text-center"><b>DOCTOR SEARCH BOARD</b></p>
+    {{/doctorsearchpage}}
+
+    {{#opdsearchpage}}
+    <div class= 'text-center mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
+        <form action="/dashboard/OPD/cardSearch/PatientOPDCardDetails">
+        <label for="cardsearch">Search OPD Card:</label>
+        <input type="search" id="cardsearch" name="cardsearch" placeholder="Search by patient ID" required pattern="^[0-9]+$" title="Please enter a valid patient ID">
+        <input class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2" type="submit">
+        </form>
+    </div>
+    {{/opdsearchpage}}
+
+    {{#doctorsearchpage}}
+    <div class= 'text-center mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
+        <form action="/dashboard/searchOPDdetails/PatientOPDCardDetails">
+        <label for="cardsearch">Search OPD Card:</label>
+        <input type="search" id="cardsearch" name="cardsearch" placeholder="Search by patient ID" required pattern="^[0-9]+$" title="Please enter a valid patient ID">
+        <input class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2" type="submit">
+        </form>
+    </div>
+    {{/doctorsearchpage}}
+
+    {{#mesg1}}
+         <div class= 'text-center mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
+             <p><b>No OPD Card found!</b>
+             </p>
+         </div>
+    {{/mesg1}}
+
+    {{#opdsearchmesg2}}
+         <div class= 'text-center mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
+             <p><b>Card Number: </b>{{Card_No}}</p>
+             <p><b>Patient ID: </b>{{Patients.0.P_ID}}</p>
+             <p><b>Patient Name:</b>{{Patients.0.User.Full_Name}}</p>
+             <p><b>Address: </b>{{Patients.0.P_Address}}</p>
+              <p><b>Contact: </b>{{Patients.0.Phone}}</p>
+              <p><b>Consultation Department</b>{{Doctors.0.Dept_Name}}</p>
+              <p><b>Doctor Name: </b>{{Doctors.0.User.Full_Name}}</p>
+              <a href="/dashboard/OPD/cardSearch/PatientOPDCardDetails/dID/{{Doctors.0.D_ID}}/pID/{{Patients.0.P_ID}}" class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-2 py-1 mt-6">View Details</a>
+         </div>
+    {{/opdsearchmesg2}}
+
+    {{#docsearchmesg2}}
+         <div class= 'text-center mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
+             <p><b>Card Number: </b>{{Card_No}}</p>
+             <p><b>Patient ID: </b>{{Patients.0.P_ID}}</p>
+             <p><b>Patient Name:</b>{{Patients.0.User.Full_Name}}</p>
+             <p><b>Address: </b>{{Patients.0.P_Address}}</p>
+              <p><b>Contact: </b>{{Patients.0.Phone}}</p>
+              <p><b>Consultation Department</b>{{Doctors.0.Dept_Name}}</p>
+              <p><b>Doctor Name: </b>{{Doctors.0.User.Full_Name}}</p>
+              <a href="/dashboard/searchOPDdetails/dID/{{Doctors.0.D_ID}}/pID/{{Patients.0.P_ID}}" class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-2 py-1 mt-6">View Details</a>
+         </div>
+    {{/docsearchmesg2}}
+    <form action="/logout" method="POST">
+        <button class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-5 py-3 mt-6">Logout</button>
+    </form>
+</body>
+</html>
