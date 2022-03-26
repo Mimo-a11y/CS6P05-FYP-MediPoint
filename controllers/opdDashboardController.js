@@ -84,14 +84,26 @@ const deleteAppointments = async (req, res) => {
         include:[{
             model: User,
             attributes:['Full_Name', 'Email']
-        }]
+        },
+    {
+        model: AppointmentDetails,
+        attributes: ['App_ID']
+    }]
     });
+    const doctor = await Doctor.findOne({
+        where:{D_ID: patient.Patient_Appointment_Details[0].Patient_Appointments.Doctor_ID},
+        attributes:['D_ID'],
+        include:[{
+          model: User,
+          attributes: ['Full_Name']
+        }]
+      })
     // e-mail message options
   let mailOptions = {
     from: 'kmimo7na@gmail.com',
     to: patient.User.Email,
     subject: 'Appointment cancelled',
-    text: `Hello ${patient.User.Full_Name}, Your appointment for today has been cancelled due to the doctors unavailability. Please contact Tarkeshwor health clinic in case of any query. 9810313394`
+    text: `Hello ${patient.User.Full_Name}, Your appointment for today with doctor ${doctor.User.Full_Name} has been cancelled due to the doctors unavailability. Please contact Tarkeshwor health clinic in case of any query. 9810313394`
 };
 
 // e-mail transport configuration

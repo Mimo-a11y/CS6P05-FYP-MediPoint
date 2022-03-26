@@ -19,6 +19,7 @@ var nodemailer = require('nodemailer');
 const User = db.users;
 const Patient = db.patients;
 const PatientAppDetail = db.Patient_Appointment_Detail;
+const Doctor = db.doctors;
 
 
 //instanciating express app
@@ -218,10 +219,21 @@ const appointments = await PatientAppDetail.findAll({
       }
       ]
   });
+  const doctor = await Doctor.findOne({
+    where:{D_ID: appointments[0].Patients[0].Patient_Appointments.Doctor_ID},
+    attributes:['D_ID'],
+    include:[{
+      model: User,
+      attributes: ['Full_Name']
+    }]
+  })
   console.log(JSON.stringify(appointments));
   console.log(tomorrow.toISOString().split("T")[0]);
+  console.log(JSON.stringify(doctor));
+  console.log(doctor.User.Full_Name);
   console.log(appointments[0].Patients[0].User.Full_Name);
   console.log(appointments[0].Patients[0].User.Email);
+  console.log(appointments[0].Patients[0].Patient_Appointments.Doctor_ID);
   console.log(appointments[0].App_Date);
   console.log(appointments[0].App_Time);
   console.log(appointments[0].App_Type);
@@ -241,7 +253,7 @@ const appointments = await PatientAppDetail.findAll({
         from: 'kmimo7na@gmail.com',
         to: appointment.Patients[0].User.Email,
         subject: `Appointment reminder `,
-        html: `<b>Dear, ${appointment.Patients[0].User.Full_Name}</b> You have an appointment tomorrow.\n <small>this is auto generated</small>`                       
+        html: `<b>Dear, ${appointment.Patients[0].User.Full_Name}</b> You have an appointment with Dr. ${doctor.User.Full_Name} tomorrow.\n <small>this is auto generated</small>`                       
     };
     return transporter.sendMail(mailOptions, (error, data) => {
       if (error) {
