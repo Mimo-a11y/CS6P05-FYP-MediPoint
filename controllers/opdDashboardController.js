@@ -1,5 +1,6 @@
 const db = require('../models');
 const { Op } = require("sequelize");
+let nodemailer = require('nodemailer');
 
 
 // create main model
@@ -77,6 +78,39 @@ const deleteAppointments = async (req, res) => {
       }).catch((err) => {
          console.log(err);
       });
+      const patient = await Patient.findOne({
+        attributes:['P_ID'],
+        where: {P_ID: req.params.pid},
+        include:[{
+            model: User,
+            attributes:['Full_Name', 'Email']
+        }]
+    });
+    // e-mail message options
+  let mailOptions = {
+    from: 'kmimo7na@gmail.com',
+    to: patient.User.Email,
+    subject: 'Appointment cancelled',
+    text: `Hello ${patient.User.Full_Name}, Your appointment for today has been cancelled due to the doctors unavailability. Please contact Tarkeshwor health clinic in case of any query. 9810313394`
+};
+
+// e-mail transport configuration
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'kmimo7na@gmail.com',
+      pass: 'hjongizomfmjrlik'
+    }
+});
+
+transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+});
+                 
     }catch(e){
         console.log(e);
         return res.status(404).render('errorPage', {error: true});

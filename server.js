@@ -241,7 +241,7 @@ const appointments = await PatientAppDetail.findAll({
         from: 'kmimo7na@gmail.com',
         to: appointment.Patients[0].User.Email,
         subject: `Appointment reminder `,
-        html: `Wishing You a <b>Happy birthday ${appointment.Patients[0].User.Full_Name}</b> On Your Enjoy your day \n <small>this is auto generated</small>`                       
+        html: `<b>Dear, ${appointment.Patients[0].User.Full_Name}</b> You have an appointment tomorrow.\n <small>this is auto generated</small>`                       
     };
     return transporter.sendMail(mailOptions, (error, data) => {
       if (error) {

@@ -31,7 +31,7 @@
             <p><b>Test completed:</b>{{Test_Done}}</p>
             <p><b>Payment status:</b>{{Test_Pay_Status}}</p>
             <p><b>Referred by:</b>Dr. {{Health_Log.Doctors.0.User.Full_Name}}</p>
-            <a class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-3 py-1" href="LabTestDetails/reportID/{{Report_ID}}/testNo/{{Test_No}}">Open</a>
+            <a class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-3 py-1" href="LabTestDetails/pID/{{Health_Log.Patients.0.P_ID}}/reportID/{{Report_ID}}/testNo/{{Test_No}}">Open</a>
         </div>
         {{/mesg2}}
 

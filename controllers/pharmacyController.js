@@ -1,5 +1,6 @@
 const db = require('../models');
 const { Op } = require("sequelize");
+let nodemailer = require('nodemailer');
 
 
 // create main model
@@ -96,6 +97,51 @@ const confirmPrescriptionsDetails = async (req,res) => {
             {Med_Pay_Status: "Paid", Received: 'Yes'},
             {where: {Pres_ID: req.params.presid, Pres_No: req.params.presno}}
         );
+        const patient = await Patient.findOne({
+            attributes:['P_ID'],
+            where: {P_ID: req.params.pid},
+            include:[{
+                model: User,
+                attributes:['Full_Name', 'Email']
+            }]
+        });
+        const medicine = await Prescription.findOne({
+            attributes:['Pres_No', 'Medicine_Name', 'Description', 'Days', 'Duration'],
+            where: {Pres_ID: req.params.presid, Pres_No: req.params.presno}
+        })
+        console.log(JSON.stringify(patient));
+        console.log(patient.User.Email);
+        console.log(patient.User.Full_Name);
+        console.log(JSON.stringify(medicine));
+        console.log(medicine.Pres_No);
+        console.log(medicine.Medicine_Name);
+        console.log(medicine.Description);
+        console.log(medicine.Days);
+        console.log(medicine.Duration);
+        // e-mail message options
+  let mailOptions = {
+    from: 'kmimo7na@gmail.com',
+    to: patient.User.Email,
+    subject: 'Medicine reminder',
+    text: `Hello ${patient.User.Full_Name}, below are your medicine details \n Medicine Name: ${medicine.Medicine_Name} Prescription no: ${medicine.Pres_No}`
+};
+
+// e-mail transport configuration
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'kmimo7na@gmail.com',
+      pass: 'hjongizomfmjrlik'
+    }
+});
+
+transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+});
         return res.redirect(req.get('referer'));
 
     }catch(e){

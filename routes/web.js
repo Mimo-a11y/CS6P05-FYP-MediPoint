@@ -61,9 +61,9 @@ routes.get('/dashboard/myMedicalRecords/downloadLabReports/:file(*)', medicalRec
 
 //creating routes for OPD dashboard
 routes.get('/dashboard/OPD/incomingAppointments',opdController.getOpdDashboardPage);
-routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/appID/:appid/dID/:did', opdController.getAppDetail);
-routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/remove/:id', opdController.deleteAppointments);
-routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/confirm/:id', opdController.updateAppointments);
+routes.get('/dashboard/OPD/incomingAppointments/pID/:pid/appointmentDetails/appID/:appid/dID/:did', opdController.getAppDetail);
+routes.get('/dashboard/OPD/incomingAppointments/pID/:pid/appointmentDetails/appID/:appid/dID/:id/remove', opdController.deleteAppointments);
+routes.get('/dashboard/OPD/incomingAppointments/pID/:pid/appointmentDetails/appID/:appid/dID/:id/confirm', opdController.updateAppointments);
 routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments', opdController.getConfirmedAppointmentsPage);
 routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments/newOPDCard/:appid/dID/:did/pID/:pid', opdController.makeOpdCard);
 routes.get('/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments/reappointmentOPDCard/:appid/dID/:did/pID/:pid', opdController.getOpdCard);
@@ -78,15 +78,15 @@ routes.get('/dashboard/OPD/cardSearch/PatientOPDCardDetails/dID/:did/pID/:pid', 
 
 //creating routes for pharmacy dashboard
 routes.get('/dashboard/Pharmacy/incomingPrescriptions',pharmacyController.getPharmacyDashboardPage);
-routes.get('/dashboard/Pharmacy/prescriptionsDetails/presID/:presid', pharmacyController.getPresDetails);
-routes.get('/dashboard/Pharmacy/prescriptionsDetails/presID/:presid/ConfirmPrescriptions/PresNo/:presno', pharmacyController.confirmPrescriptionsDetails);
-routes.get('/dashboard/Pharmacy/prescriptionsDetails/presID/:presid/CancelPrescriptions/PresNo/:presno', pharmacyController.cancelPrescriptionsDetails);
+routes.get('/dashboard/Pharmacy/prescriptionsDetails/pID/:pid/presID/:presid', pharmacyController.getPresDetails);
+routes.get('/dashboard/Pharmacy/prescriptionsDetails/pID/:pid/presID/:presid/ConfirmPrescriptions/PresNo/:presno', pharmacyController.confirmPrescriptionsDetails);
+routes.get('/dashboard/Pharmacy/prescriptionsDetails/pID/:pid/presID/:presid/CancelPrescriptions/PresNo/:presno', pharmacyController.cancelPrescriptionsDetails);
 routes.get('/dashboard/OPD/incomingPrescriptions/prescriptionDetailsDetails/confirmedPrescriptions', pharmacyController.getConfirmedPrescriptions);
 
 //creating routes for laboratory dashboard
 routes.get('/dashboard/Laboratory/incomingLabTests', labController.getLabTests);
-routes.get('/dashboard/Laboratory/LabTestDetails/reportID/:reportid/testNo/:testno', labController.LabTestsDetails);
-routes.post('/dashboard/Laboratory/LabTestDetails/reportID/:reportid/testNo/:testno/uploadReports', labController.uploadReports);
+routes.get('/dashboard/Laboratory/LabTestDetails/pID/:pid/reportID/:reportid/testNo/:testno', labController.LabTestsDetails);
+routes.post('/dashboard/Laboratory/LabTestDetails/pID/:pid/reportID/:reportid/testNo/:testno/uploadReports', labController.uploadReports);
 
 
 //creating routes for Doctors dashboard

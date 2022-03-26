@@ -1,5 +1,7 @@
 const db = require('../models');
 const { Op } = require("sequelize");
+const { json } = require('body-parser');
+let nodemailer = require('nodemailer');
 
 
 
@@ -56,6 +58,7 @@ const getLabTests = async (req,res) => {
         return res.status(200).render('laboratoryDashboard', {mesg1: true});
     }else{
         return res.status(200).render('laboratoryDashboard', {mesg2: labReports});
+        //return res.json(labReports);
     }
 }catch(e){
     console.log(e);
@@ -117,6 +120,43 @@ const uploadReports = async (req,res) => {
                         {Test_Done: 'Yes', File_Data: filename},
                         {where: {Report_ID: req.params.reportid, Test_No: req.params.testno}}
                     ).catch((err) => {console.log(err)});
+
+                    const patient = await Patient.findOne({
+                        attributes:['P_ID'],
+                        where: {P_ID: req.params.pid},
+                        include:[{
+                            model: User,
+                            attributes:['Full_Name', 'Email']
+                        }]
+                    });
+                    const labTest = await LabReports.findOne({
+                        attributes:['Test_No', 'Test_Name'],
+                        where: {Report_ID: req.params.reportid, Test_No: req.params.testno}
+                    });
+                     // e-mail message options
+  let mailOptions = {
+    from: 'kmimo7na@gmail.com',
+    to: patient.User.Email,
+    subject: 'Lab test completed',
+    text: `Hello ${patient.User.Full_Name}, the reports for ${labTest.Test_Name} has been published. Please login into your account to view your reports.`
+};
+
+// e-mail transport configuration
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'kmimo7na@gmail.com',
+      pass: 'hjongizomfmjrlik'
+    }
+});
+
+transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+});
                     return res.redirect('/dashboard/Laboratory/incomingLabTests');
                 }
         })

@@ -25,7 +25,7 @@
        <p> <b>Patient Name:</b>{{User.Full_Name}}</p>
       <p> <b>Address:</b>{{P_Address}}</p>
       <p> <b>Contact:</b>{{Phone}}</p> <br>
-      <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2" onClick="location.href='/dashboard/OPD/incomingAppointments/appointmentDetails/appID/{{Patient_Appointment_Details.0.App_ID}}/dID/{{Patient_Appointment_Details.0.Patient_Appointments.Doctor_ID}}'">Open</button>  
+      <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2" onClick="location.href='/dashboard/OPD/incomingAppointments/pID/{{P_ID}}/appointmentDetails/appID/{{Patient_Appointment_Details.0.App_ID}}/dID/{{Patient_Appointment_Details.0.Patient_Appointments.Doctor_ID}}'">Open</button>  
     </div>
     {{/mesg1}}
 
