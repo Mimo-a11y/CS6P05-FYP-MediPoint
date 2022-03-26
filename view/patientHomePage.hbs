@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -6,24 +7,29 @@
     <title>MediPoint-patient dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-green-200">
     <h1>Patient dashboard</h1>
     {{#user}}
     <h1>Welcome {{Full_Name}}</h1>
     {{/user}}
     {{#patient}}
-     <h1>Patient ID: {{P_ID}}</h1>
+    <h1>Patient ID: {{P_ID}}</h1>
     {{/patient}}
     <div class="px-5 py-3">
-    <h1 class="mb-8">HI! What would you like to do today?</h1>
-    <a href="/dashboard/Symptoms" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">My Symptoms</a>
-    <a href="/dashboard/myMedicalRecords" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">My medical records</a>
-    <a href="/dashboard/bookAppointments" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">Book an Appointment</a>
-    <a href="/dashboard/upcomingAppointments" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">Upcoming appointments</a>
+        <h1 class="mb-8">HI! What would you like to do today?</h1>
+        <a href="/dashboard/Symptoms" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">My Symptoms</a>
+        <a href="/dashboard/myMedicalRecords" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">My medical
+            records</a>
+        <a href="/dashboard/bookAppointments" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">Book an
+            Appointment</a>
+        <a href="/dashboard/upcomingAppointments" class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">Upcoming
+            appointments</a>
     </div>
 
     <form action="/logout" method="POST">
         <button class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-5 py-3 mt-6">Logout</button>
     </form>
 </body>
+
 </html>

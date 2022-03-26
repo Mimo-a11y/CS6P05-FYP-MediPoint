@@ -11,12 +11,21 @@ const AdminJsSequelize = require('@adminjs/sequelize');
 const db = require('./models');
 const passwordFeature = require('@adminjs/passwords');
 const argon2 = require('argon2');
-const User = db.users;
 var expressHbs =  require('hbs');
 const upload = require('express-fileupload');
+const path = require('path');
+var cron = require('node-cron');
+var nodemailer = require('nodemailer');
+const User = db.users;
+const Patient = db.patients;
+const PatientAppDetail = db.Patient_Appointment_Detail;
+
 
 //instanciating express app
 const app = new Express();
+
+//static files use
+app.use(Express.static(path.join(__dirname, "public")));
 
 //configuring dotenv
 dotenv.config();
@@ -183,8 +192,8 @@ expressHbs.handlebars.registerHelper('isAvailable', function(filedata) {
 app.use(passport.initialize());
 app.use(passport.session());
 
-// using static files
-// app.use(Express.static(__dirname + '/public'));
+//for using external JS file
+app.use("/JS",Express.static(__dirname + "/JS"));
 
 //routing for home page
 const router = require('./routes/web');
@@ -192,7 +201,63 @@ const { ValidationError } = require('adminjs');
 const users = require('./models/users');
 app.use('/', router);
 
+
+//UPCOMING APPOINTMENTS EMAIL
+const setAppointmentReminders = async (req, res) => {
+       var today = new Date();
+        let tomorrow =  new Date();
+        tomorrow.setDate(today.getDate() + 1);
+const appointments = await PatientAppDetail.findAll({
+      where: {Payment_Status: 'Unpaid', App_Date: tomorrow.toISOString().split("T")[0]},
+      include: [{
+        model: Patient,
+        include: [{
+          model: User,
+          attributes: ['Full_Name', 'Email']
+        }]
+      }
+      ]
+  });
+  console.log(JSON.stringify(appointments));
+  console.log(tomorrow.toISOString().split("T")[0]);
+  console.log(appointments[0].Patients[0].User.Full_Name);
+  console.log(appointments[0].Patients[0].User.Email);
+  console.log(appointments[0].App_Date);
+  console.log(appointments[0].App_Time);
+  console.log(appointments[0].App_Type);
+  let transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'kmimo7na@gmail.com',
+      pass: 'hjongizomfmjrlik'
+    }
+  });
+  
+  cron.schedule('00 00 13 * * *', () => {
+    const sendWishes =  
+      // looping through the users
+     appointments.forEach(appointment => {
+        const mailOptions = {
+        from: 'kmimo7na@gmail.com',
+        to: appointment.Patients[0].User.Email,
+        subject: `Appointment reminder `,
+        html: `Wishing You a <b>Happy birthday ${appointment.Patients[0].User.Full_Name}</b> On Your Enjoy your day \n <small>this is auto generated</small>`                       
+    };
+    return transporter.sendMail(mailOptions, (error, data) => {
+      if (error) {
+          console.log(error)
+          return
+      }
+  });
+    
+    }
+   )});
+}
+setAppointmentReminders();
+
 //server
 app.listen(process.env.PORT, () => {
-    console.log("server is running on port 3000");
+  console.log("server is running on port 3000");
 })
+
+
