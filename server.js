@@ -26,7 +26,7 @@ const Doctor = db.doctors;
 const app = new Express();
 
 //static files use
-//app.use(Express.static(path.join(__dirname, "public")));
+app.use(Express.static(path.join(__dirname, "public")));
 
 //configuring dotenv
 dotenv.config();
@@ -196,6 +196,7 @@ app.use(passport.session());
 //for using external JS file
 //app.use("/JS",Express.static(__dirname + "/JS"));
 app.use("/public/images",Express.static(__dirname + "/public/images"));
+//app.use("/public/assets",Express.static(__dirname + "/public/assets"));
 
 //routing for home page
 const router = require('./routes/web');
