@@ -35,7 +35,7 @@ let compareUserPassword= (user, password) => {
             if(isMatch){
                 resolve(true);
             }else{
-            resolve("The password that you have entered is incorrect!");
+            resolve("Incorrect password");
             }
 
         }catch(e){

@@ -15,7 +15,7 @@ let initPassportLocal = () => {
                 let user = await loginService.findUserByEmail(email);
                 //check if the user email exist or not
                 if(!user){
-                    return done(null,false, req.flash("errors", `The user email ${email} does not exist!`));
+                    return done(null,false, req.flash("errors", `The user email ${email} does not exist`));
                 }
                 //if user exists
                 if(user){
