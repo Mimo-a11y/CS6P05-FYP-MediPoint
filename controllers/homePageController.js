@@ -35,10 +35,8 @@ let addNewPatient = async (req,res) => {
         Gender:req.body.gender,
         UserUID: req.user.U_ID
     }
-    Patient.create(data);
-    res.status(200).render("patientHomePage",{
-        user: req.user
-    });
+    await Patient.create(data);
+    res.redirect('/');
 }catch(e){
     res.status(404).render('errorPage',  {error: true});
 }
