@@ -1,49 +1,182 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediPoint- Book Appointment</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/icon.png">
+  <title>
+    MediPoint - Book Appointment
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="/assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="/assets/css/argon-dashboard.css?v=2.0.2" rel="stylesheet" />
 </head>
 
-<body class="bg-blue-200">
-    <h1 class="text-center font-bold mt-6">Book Appointments</h1>
-    <div class="border border-solid border-black mt-6 text-center">
-    <form action="/dashboard/bookAppointments/doctors" method="GET">
-        <label for="departments">Choose your department</label> <br> <br>
-        <select name="departments" id="departments" required>
-            <option value="" disabled selected>-- Department Name --</option>
+<body class="g-sidenav-show bg-gray-100">
+    <div class="position-absolute w-100 min-height-300 top-0 bg-gradient-info">
+        <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 text-center mx-auto">
+            <h2 class="text-white mb-2 mt-5"><i class="fas fa-comment-medical"></i> Book an Appointment</h2>
+            <p class="text-lead text-white">Book an appointment with Tarakeshwor Health Clinic <br> and <br> Get consultation from the doctors of your choice</p>
+          </div>
+        </div>
+      </div>
+  </div>
+  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
+    <div class="sidenav-header text-center mt-4">
+      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <a href="/" class="text-center">
+       <img src="/assets/img/logofinal.png" alt="logo" height="90px" width="90px" class="shadow-lg rounded-circle">
+      </a>
+    </div>
+    <hr class="horizontal dark mt-4">
+    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-tv-2 text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/dashboard/Symptoms">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-single-copy-04 text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Symptoms recorder</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard/myMedicalRecords">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-books text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Medical records</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/dashboard/upcomingAppointments">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-watch-time text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Upcoming appointments</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="sidenav-footer mx-3 ">
+        <div class="card card-plain shadow-none" id="sidenavCard">
+        <img class="w-50" src="/assets/img/doctor.svg" alt="sidebar_illustration" style="margin-left: 2.5rem;">
+        <div class="card-body text-center p-3 w-100 pt-0">
+          <div class="docs-info">
+            <h6 class="mb-0">Need a consultation?</h6>
+            <p class="text-xs font-weight-bold mb-0">Book doctors of your choice</p>
+          </div>
+        </div>
+      </div>
+      <a href="/dashboard/bookAppointments" class="btn btn-secondary btn-sm w-100 mb-3">Book an appointment</a>
+      <form action="/logout" method="POST">
+              <button class="btn btn-dark btn-sm mb-0 w-100">Logout</button>
+      </form>
+    </div>
+  </aside>
+  <div class="main-content position-relative max-height-vh-100 h-100">
+    <div class="card shadow-lg mx-4 card-profile-bottom">
+      <div class="card-body p-3">
+        <div class="row gx-4">
+          <div class="col-auto my-auto">
+            <div class="h-100">
+            <div class="container-fluid py-4">
+      <div class="row">
+          <nav aria-label="breadcrumb mt-0">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">/ Book Appointments</li>
+          </ol>
+        </nav>
+        <h3>Please choose a Department</h3>
+        <form action="/dashboard/bookAppointments/doctors" method="GET">
+            <select class="form-select" aria-label="Default select example" name="departments" id="departments" required>
+            <option value="" disabled selected>Department Name</option>
             <option value="Physician">Physician</option>
             <option value="Cardiology">Cardiology</option>
             <option value="ENT">ENT</option>
             <option value="Orthopaedic">Orthopaedic</option>
             <option value="Gynaecology">Gynaecology</option>
-        </select> <br> <br>
-        <button class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3">Search</button>
-    </form>
-    </div>
-
-    {{#mesg1}}
-        <div class= 'mt-8 ml-8 border border-gray-600 rounded-md bg-orange-100'>
-            <p>Sorry! there are no doctors available for this department right now</p>
+            </select>
+             <button type="submit" class="btn btn-info mt-3">Search</button>
+        </form>
+      </div>
+       <div class="row">
+        {{#mesg2}}
+        <div class="col-md-6">
+          <div class="card" style="width: 25rem; margin-top: 2rem">
+            <div class="card-body">
+              <i class="fas fa-user-md text-dark" style="font-size: 3rem; margin-bottom:0.5rem;"></i>
+              <h5 class="card-title">Dr. {{name}}</h5>
+              <h5 class="card-title text-dark">{{dept}}</h5>
+              <p class="card-text"><b>NMC registration number:</b> {{regNo}}</p>
+              <p class="card-text"><b>Years Of Experience:</b> {{exp}}</p>
+              <p class="card-text"><b>Address:</b> {{address}}</p>
+               <p class="card-text"><b>Contact Number:</b> {{contact}}</p>
+                <p class="card-text"><b>Day:</b> {{day}}</p>
+                 <p class="card-text"><b>Time:</b> {{time}}</p>
+              <a href="/dashboard/bookAppointments/doctors/book/{{id}}" class="btn btn-info">Book</a>
+            </div>
+          </div>
         </div>
-    {{/mesg1}}
-
-    {{#mesg2}}
-    <div class= 'mt-8 ml-8 border border-gray-600 rounded-md bg-orange-100'>
-       <p> Name: {{name}}</p>
-       <p>NMC registration number: {{regNo}}</p> 
-       <p>Department: {{dept}}</p> 
-       <p>Years Of Experience: {{exp}}</p> 
-       <p>Address: {{address}}</p> 
-       <p>Contact Number: {{contact}}</p> 
-       <p>Available Day: {{day}}</p>
-       <p>Available Time: {{time}}</p> 
-       <button class="text-gray-50  hover:bg-red-700 bg-red-500 m-5 px-5 py-3" onClick="location.href='/dashboard/bookAppointments/doctors/book/{{id}}'">Book</button>
+         {{/mesg2}}
+         {{#mesg1}}
+        <div class="col-md-8">
+          <div class="card" style="width: 55rem; margin-top: 1rem">
+            <div class="card-body text-center">
+              <i class="fas fa-window-close text-danger" style="font-size: 4rem; margin-bottom:0.5rem;"></i>
+              <p class="card-text">Sorry!<br> No doctors available in this department right now.</p>
+            </div>
+          </div>
+        </div>
+        {{/mesg1}}
+       </div> 
     </div>
-    {{/mesg2}}
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fixed-plugin">
+    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2" href="/">
+     <i class="fas fa-clinic-medical py-2"></i>
+    </a>
+  </div>
+  <!--   Core JS Files   -->
+  <script src="/assets/js/core/popper.min.js"></script>
+  <script src="/assets/js/core/bootstrap.min.js"></script>
+  <script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="/assets/js/argon-dashboard.min.js?v=2.0.2"></script>
 </body>
 
 </html>
