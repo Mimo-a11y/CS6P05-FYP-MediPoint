@@ -1,17 +1,98 @@
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediPoint-Card Search</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/icon.png">
+  <title>
+    MediPoint - OPD Card Search
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="/assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="/assets/css/argon-dashboard.css?v=2.0.2" rel="stylesheet" />
 </head>
-<body class="bg-blue-200">
+<body class="g-sidenav-show bg-gray-100">
+    <div class="position-absolute w-100 min-height-300 top-0 bg-gradient-success">
+        <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 text-center mx-auto">
+            <h2 class="text-white mb-2 mt-5"><i class="fas fa-file-medical"></i> Medical Records</h2>
+            <p class="text-lead text-white">You can search for the Out Patient Record file (OPD) Cards of any patient in this section.</p>
+          </div>
+        </div>
+      </div>
+  </div>
+ <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
+    <div class="sidenav-header text-center mt-4">
+      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <a href="/" class="text-center">
+       <img src="/assets/img/logofinal.png" alt="logo" height="90px" width="90px" class="shadow-lg rounded-circle">
+      </a>
+    </div>
+    <hr class="horizontal dark mt-4">
+    <div class="collapse navbar-collapse w-auto " id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-tv-2 text-success text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Medical History</h6>
+        </li>
+        {{#doctor}}
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard/incomingVisits/{{D_ID}}">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-single-copy-04 text-success text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Incoming Visits</span>
+          </a>
+        </li>
+        {{/doctor}}
+        <li class="nav-item">
+          <a class="nav-link active " href="/dashboard/searchOPDdetails">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-books text-success text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Medical Records</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="sidenav-footer mx-3 ">
+      <div class="card card-plain shadow-none" id="sidenavCard">
+        <img class="w-50" src="/assets/img/doctordashboard.png" alt="sidebar_illustration" style="margin-left: 2.5rem;">
+        <div class="card-body text-center p-3 w-100 pt-0">
+          <div class="docs-info">
+            <h6 class="mb-0">Clinic hours completed?</h6>
+            
+          </div>
+        </div>
+      </div> 
+      <form action="/logout" method="POST">
+              <button class="btn btn-dark btn-sm mb-0 w-100">Logout</button>
+      </form>
+    </div>
+  </aside>
+  <div class="main-content position-relative max-height-vh-100 h-100">
+    <div class="card shadow-lg mx-4 card-profile-bottom text-center">
+      <div class="card-body p-3">
     {{#opdsearchpage}}
-    <h1 class="text-center text-red-500"><b>OPD dashboard</b></h1>
+    <h1><b>OPD dashboard</h1>
 
-    <div class="px-5 py-3 text-center">
-    <h1 class="mb-8"><b>Menu</b></h1>
+    <div>
+    <h1><b>Menu</b></h1>
     <div class="bg-teal-200 text-center">
     <a href="/dashboard/OPD/incomingAppointments">Incoming Appointments</a> &nbsp; &nbsp; &nbsp;
     <a href="/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments">Booked Appointments</a> &nbsp; &nbsp; &nbsp;
@@ -22,7 +103,7 @@
     {{/opdsearchpage}}
 
     {{#doctorsearchpage}}
-        <p class="text-center"><b>DOCTOR SEARCH BOARD</b></p>
+        <p> <i class="fas fa-search"></i> FIND MEDICAL HISTORY</p>
     {{/doctorsearchpage}}
 
     {{#opdsearchpage}}
@@ -36,21 +117,13 @@
     {{/opdsearchpage}}
 
     {{#doctorsearchpage}}
-    <div class= 'text-center mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
+    <div>
         <form action="/dashboard/searchOPDdetails/PatientOPDCardDetails">
-        <label for="cardsearch">Search OPD Card:</label>
-        <input type="search" id="cardsearch" name="cardsearch" placeholder="Search by patient ID" required pattern="^[0-9]+$" title="Please enter a valid patient ID">
-        <input class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2" type="submit">
+        <input type="search" id="cardsearch" name="cardsearch"  class="form-control" placeholder="Enter Patient ID..." required pattern="^[0-9]+$" title="Please enter a valid patient ID. E.g. 1301">
+        <button type="submit" class="btn btn-success mt-3">Search</button>
         </form>
     </div>
     {{/doctorsearchpage}}
-
-    {{#mesg1}}
-         <div class= 'text-center mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
-             <p><b>No OPD Card found!</b>
-             </p>
-         </div>
-    {{/mesg1}}
 
     {{#opdsearchmesg2}}
          <div class= 'text-center mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
@@ -59,26 +132,225 @@
              <p><b>Patient Name:</b>{{Patients.0.User.Full_Name}}</p>
              <p><b>Address: </b>{{Patients.0.P_Address}}</p>
               <p><b>Contact: </b>{{Patients.0.Phone}}</p>
-              <p><b>Consultation Department</b>{{Doctors.0.Dept_Name}}</p>
+              <p><b>Consultation Department:{{Doctors.0.Dept_Name}}</p>
               <p><b>Doctor Name: </b>{{Doctors.0.User.Full_Name}}</p>
               <a href="/dashboard/OPD/cardSearch/PatientOPDCardDetails/dID/{{Doctors.0.D_ID}}/pID/{{Patients.0.P_ID}}" class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-2 py-1 mt-6">View Details</a>
          </div>
     {{/opdsearchmesg2}}
+     {{#mesg1}}
+    <div class="row p-4">
+        <div class="col-lg-12 mb-lg-0 mb-4">
+            <div class="card z-index-2 h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-window-close text-danger" style="font-size: 4rem; margin-bottom:0.5rem;"></i>
+              <p class="card-text">Sorry! <br> No OPD card found for this patient.</p>
+            </div>
+          </div>
+        </div> 
+      </div>
+      {{/mesg1}}
+      </div>
+    </div>
+    <div class="container-fluid py-4">
+      <div class="row">
+     {{#docsearchmesg2}}
+         <div class="col-md-4 mt-3">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <i class="fas fa-file-medical text-dark shadow" style="font-size: 1.5rem; margin-bottom:0.5rem;"></i>
+              <h5 class="card-title">Card Number: {{Card_No}}</h5>
+              <p class="card-text">Patient ID: {{Patients.0.P_ID}}</p>
+              <p class="card-text">Patient Name: {{Patients.0.User.Full_Name}}</p>
+                <h5 class="card-text">Consultation</h5>
+                 <hr>
+                 <p class="card-text">Department: {{Doctors.0.Dept_Name}}</p>
+                 <p class="card-text"><b>Dr.{{Doctors.0.User.Full_Name}}</b></p>
+               <a href="/dashboard/searchOPDdetails/dID/{{Doctors.0.D_ID}}/pID/{{Patients.0.P_ID}}" class="btn btn-success">View Details</a>
+            </div>
+          </div>
+        </div>
+         {{/docsearchmesg2}}
+      </div>
+    </div>
+  </div>
+  <div class="fixed-plugin">
+    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2" href="/">
+     <i class="fas fa-clinic-medical py-2"></i>
+    </a>
+  </div>
+  <!--   Core JS Files   -->
+  <script src="/assets/js/core/popper.min.js"></script>
+  <script src="/assets/js/core/bootstrap.min.js"></script>
+  <script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="/assets/js/plugins/chartjs.min.js"></script>
+  <script>
+      /* chart.js chart examples */
 
-    {{#docsearchmesg2}}
-         <div class= 'text-center mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
-             <p><b>Card Number: </b>{{Card_No}}</p>
-             <p><b>Patient ID: </b>{{Patients.0.P_ID}}</p>
-             <p><b>Patient Name:</b>{{Patients.0.User.Full_Name}}</p>
-             <p><b>Address: </b>{{Patients.0.P_Address}}</p>
-              <p><b>Contact: </b>{{Patients.0.Phone}}</p>
-              <p><b>Consultation Department</b>{{Doctors.0.Dept_Name}}</p>
-              <p><b>Doctor Name: </b>{{Doctors.0.User.Full_Name}}</p>
-              <a href="/dashboard/searchOPDdetails/dID/{{Doctors.0.D_ID}}/pID/{{Patients.0.P_ID}}" class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-2 py-1 mt-6">View Details</a>
-         </div>
-    {{/docsearchmesg2}}
-    <form action="/logout" method="POST">
-        <button class="text-gray-50  hover:bg-teal-700 bg-teal-500 px-5 py-3 mt-6">Logout</button>
-    </form>
+// chart colors
+var colors = ['#007bff','#28a745','#333333','#c3e6cb','#dc3545','#6c757d'];
+
+/* 3 donut charts */
+var donutOptions = {
+  cutoutPercentage: 85, 
+  legend: {position:'bottom', padding:5, labels: {pointStyle:'circle', usePointStyle:true}}
+};
+
+// donut 1
+var chDonutData1 = {
+    labels: ['Bootstrap', 'Popper', 'Other'],
+    datasets: [
+      {
+        backgroundColor: colors.slice(0,3),
+        borderWidth: 0,
+        data: [74, 11, 40]
+      }
+    ]
+};
+
+var chDonut1 = document.getElementById("chDonut1");
+if (chDonut1) {
+  new Chart(chDonut1, {
+      type: 'pie',
+      data: chDonutData1,
+      options: donutOptions
+  });
+}
+
+// donut 2
+var chDonutData2 = {
+    labels: ['Wips', 'Pops', 'Dags'],
+    datasets: [
+      {
+        backgroundColor: colors.slice(0,3),
+        borderWidth: 0,
+        data: [40, 45, 30]
+      }
+    ]
+};
+var chDonut2 = document.getElementById("chDonut2");
+if (chDonut2) {
+  new Chart(chDonut2, {
+      type: 'pie',
+      data: chDonutData2,
+      options: donutOptions
+  });
+}
+
+// donut 3
+var chDonutData3 = {
+    labels: ['Angular', 'React', 'Other'],
+    datasets: [
+      {
+        backgroundColor: colors.slice(0,3),
+        borderWidth: 0,
+        data: [21, 45, 55, 33]
+      }
+    ]
+};
+var chDonut3 = document.getElementById("chDonut3");
+if (chDonut3) {
+  new Chart(chDonut3, {
+      type: 'pie',
+      data: chDonutData3,
+      options: donutOptions
+  });
+}
+
+    var ctx1 = document.getElementById("chart-line").getContext("2d");
+
+    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
+    new Chart(ctx1, {
+      type: "line",
+      data: {
+        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+          label: "Mobile apps",
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 0,
+          borderColor: "#5e72e4",
+          backgroundColor: gradientStroke1,
+          borderWidth: 3,
+          fill: true,
+          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+          maxBarThickness: 6
+
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+        scales: {
+          y: {
+            grid: {
+              drawBorder: false,
+              display: true,
+              drawOnChartArea: true,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              padding: 10,
+              color: '#fbfbfb',
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+          x: {
+            grid: {
+              drawBorder: false,
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              color: '#ccc',
+              padding: 20,
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+        },
+      },
+    });
+  </script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="/assets/js/argon-dashboard.min.js?v=2.0.2"></script>
 </body>
 </html>

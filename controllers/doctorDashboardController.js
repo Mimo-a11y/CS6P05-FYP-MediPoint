@@ -346,7 +346,7 @@ const getIndividualOpdCardDetailsByDoc = async (req,res) => {
          });
          var cardNumber = [];
          cardNumber[0] = {Card_No: getopdCard[0].Card_No, D_ID: req.params.did, P_ID: req.params.pid};
-         return res.status(200).render('OPDcardDetails', {mesg1: patient, mesg2: doctor, docsearchmesg4: getopdCard, mesg5: cardNumber});
+         return res.status(200).render('OPDCardDetailsDoctor', {mesg1: patient, mesg2: doctor, docsearchmesg4: getopdCard, mesg5: cardNumber});
 
     }catch(e){
         console.log(e);
@@ -372,9 +372,9 @@ const getVisitDetailsByDoc = async (req,res) => {
             where: {Pres_ID: healthLog.PrescriptionPresID},
         }); 
         if(healthLog.BP === null && healthLog.Pulse === null && healthLog.Temperature === null && healthLog.Symptoms_Exp === null && healthLog.Diagnosis === null && healthLog.LabReportReportID === null && healthLog.PrescriptionPresID === null){
-            return res.render('patientVisitDetails', {mesg8: true});
+            return res.render('patientVisitDetailsByDoc', {mesg8: true});
         }else{
-            return res.render('patientVisitDetails', {mesg2: healthLog, mesg3: labReports, mesg4: medicines, mesg5:true});
+            return res.render('patientVisitDetailsByDoc', {mesg2: healthLog, mesg3: labReports, mesg4: medicines, mesg5:true});
         }
 
     }catch(e){
