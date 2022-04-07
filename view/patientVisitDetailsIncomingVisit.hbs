@@ -85,62 +85,61 @@
       <div class="row">
           <nav aria-label="breadcrumb mt-0">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-               <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:history.back()">Incoming Visits</a></li>
+               <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:history.go(-2)">Incoming Visits</a></li>
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:history.back()">OPD Card detail</a></li>
              <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Visit Details</li>
           </ol>
         </nav>
-        <h3>Patient Visit Detail</h3>
+        <h3 class="mb-3">Patient Visit Detail</h3>
   {{#mesg1}}
-        <div class='mt-8 ml-8 border border-gray-600 rounded-md bg-teal-200 text-center'>
-            <p><b>Log the health status</b></p>
+  <p style="font-size:larger"><i class="fas fa-laptop-medical text-success"></i> Please log in the Health Status for this visit</p>
+   <hr>
+  <form action="{{Visit_No}}/addVisitDetails" method="POST">
+  <div class="form-group">
+    <label for="bp" class="text-lg text-light text-dark"><i class="fas fa-stethoscope text-danger"></i> Blood Pressure (mm HG)</label>
+    <input type="text" class="form-control" name="bp" id="bp" placeholder="BP" pattern="^\d{1,3}\/\d{1,3}$" title="e.g. 120/80">
+  </div>
+  <div class="form-group">
+    <label for="pulse" class="text-lg text-light text-dark"><i class="fas fa-heartbeat text-danger"></i> Pulse rate (bpm)</label>
+    <input type="text" class="form-control" name="pulse" id="pulse" placeholder="Pulse" pattern="^[0-9]{2,3}$" title="Should be 2 digit or 3 digit numeric value">
+  </div>
+  <div class="form-group">
+    <label for="temp" class="text-lg text-light text-dark"><i class="fas fa-thermometer-half text-danger"></i> Body Temperature (&#176; F)</label>
+        <input type="text"  class="form-control" name="temp" id="temp" placeholder="Temperature" pattern="\d{1,3}\.\d{1,3}?" title="e.g. 98.8, 100.4">
+  </div>
+  <div class="form-group">
+    <label for="sympExp" class="text-lg text-light text-dark"><i class="fas fa-allergies text-danger"></i> Symptoms Experienced</label>
+    <textarea class="form-control" name="sympExp" id="sympExp" rows="3" placeholder="Log the Symptoms Experienced by the patient" required></textarea>
+  </div>
+  <div class="form-group">
+    <label for="diagnosis" class="text-lg text-light text-dark"><i class="fas fa-diagnoses text-danger"></i> Diagnosis</label>
+    <textarea class="form-control" name="diagnosis" id="diagnosis" rows="3" placeholder="Diagnosis of the disease" required></textarea>
+  </div>
+  <div class="form-group" id="container">
+    <label for="labtests" class="text-lg text-light text-dark"><i class="fas fa-microscope text-danger"></i> Required Lab Tests</label>
+     <input type="text"  class="form-control" name="1" id="labtests" placeholder="Laboratory Test">
+      <a class="btn btn-danger mt-3" href="#" id="add"><span class="text-light">Add</span></a>
+  </div>
+  <p class="text-lg text-light text-dark"><i class="fas fa-pills text-danger"></i> Medicine Prescriptions</p>
+  <div class="form-group" id="prescriptionContainer">
+    <div id="pres" class="bg-gradient-gray p-4 d-flex flex-column shadow rounded">
+                    <input type="text"  class="form-control mb-4" name="medName" id="medName" placeholder="Medicine Name"> 
 
-            <form action="{{Visit_No}}/addVisitDetails" method="POST">
-                <label for="bp">BP</label>
-                <input type="text" name="bp" id="bp" pattern="^\d{1,3}\/\d{1,3}$" title="e.g. 120/80"> mm HG <br> <br>
+                    
+                    <input type="text" name="desc"  class="form-control mb-4" id="desc" placeholder="Usage"> 
 
-                <label for="pulse">Pulse Rate</label>
-                <input type="text" name="pulse" id="pulse" pattern="^[0-9]{2,3}$" title="Should be 2 digit or 3 digit numeric value"> bpm <br> <br>
+                   
+                    <input type="text" name="days" id="days" placeholder="Prescribed for (Days)"  class="form-control mb-4" pattern="^[0-9]+$" title="Please enter numeric value only"> 
 
-                <label for="temp">Body Temperature</label>
-                <input type="text" name="temp" id="temp" pattern="\d{1,3}\.\d{1,3}?" title="e.g. 98.8, 100.4"> &#176; F <br> <br>
-
-                <label for="sympExp">Symptoms experienced by the patient</label> <br>
-                <textarea id="sympExp" name="sympExp" rows="4" cols="50"></textarea> <br> <br>
-
-                <label for="diagnosis">Diagnosis</label> <br>
-                <textarea id="diagnosis" name="diagnosis" rows="4" cols="50"></textarea> <br> <br>
-
-                <div id="container">
-                    <label for="labtests">Required Lab Tests</label> <br>
-                    <input type="text" name="1" id="labtests">
-                    <a class="text-gray-50  hover:bg-red-700 bg-red-500 px-5 py-3 mt-6" id="add">Add</a> <br>
-                    <br>
-                </div>
-
-                <p>Medicine prescriptions</p>
-
-                <div id="prescriptionContainer">
-                <div class="mt-7 border border-gray-600 rounded-md" id="pres">
-                    <label for="medName">Medicine Name</label> 
-                    <input type="text" name="medName" id="medName"> 
-
-                    <label for="desc">Description</label> 
-                    <input type="text" name="desc" id="desc"> 
-
-                    <label for="days">Days</label> 
-                    <input type="text" name="days" id="days"  pattern="^[0-9]+$" title="Please enter numeric value only"> 
-
-                    <label for="duration">Duration</label> 
-                    <input type="text" name="duration" id="duration"  pattern="^[0-9]+$" title="Please enter numeric value only">
-                </div>
-                <a class="text-gray-50 hover:bg-red-700 bg-red-500 px-5 py-3 mt-6" id="presAdd">Add</a> <br>
-                    <br>
-                </div>
-
-                <button class="text-gray-50  hover:bg-sky-700 bg-sky-500 px-5 py-3 mt-6">Save</button>
-            </form>
-        </div>
+                   
+                    <input type="text" name="duration" id="duration" placeholder="Duration (Hours)"  class="form-control mb-4" pattern="^[0-9]+$" title="Please enter numeric value only">
+      </div>
+      <a class="btn btn-danger mt-3" href="#" id="presAdd"><span class="text-light">Add</span></a>
+  </div>
+  <div class="form-group d-flex flex-column mx-5">
+    <button type="submit" class="btn btn-success"><span class="text-light text-lg">Save Details</span></button>
+  </div>
+</form>
         {{/mesg1}}
 
         {{#mesg2}}
@@ -241,20 +240,18 @@
             input.type = "text";
             input.name = number + 1;
             input.id = "labtests";
-            input.classList.add("mt-7");
+            input.classList.add('form-control', 'mt-3', 'mb-2');
+            input.placeholder= "Laboratory Test"
             input.setAttribute("required", "true");
-            var breakTag = document.createElement("br");
             var cancelBtn = document.createElement("a");
             cancelBtn.innerHTML = "Cancel";
             cancelBtn.href = "javascript:cancelItem()";
             cancelBtn.id = "cancelButton";
+            cancelBtn.classList.add('btn', 'btn-dark', 'mt-3', 'text-light', 'mx-3')
 
             wrapper.appendChild(input);
              wrapper.appendChild(cancelBtn);
-             wrapper.appendChild(breakTag);
              wrapper.appendChild(addBtn);
-             wrapper.appendChild(breakTag);
-
              container.appendChild(wrapper);
         }
 
@@ -271,67 +268,61 @@
             var number = parseInt(inputArrays.name);
 
             //
-             var wrapper = document.createElement("div");
+            var wrapper = document.createElement("div");
+            wrapper.classList.add('bg-gradient-gray', 'p-4', 'd-flex' ,'flex-column', 'shadow', 'rounded', 'mt-5')
             var container = document.createElement("div");
             container.id = "pres";
-            container.classList.add('mt-7','border','border-gray-600','rounded-md');
+            //container.classList.add('bg-gradient-gray', 'p-4', 'd-flex' ,'flex-column', 'shadow', 'rounded');
             //
             var cancelBtn = document.createElement("a");
             cancelBtn.innerHTML = "Cancel";
             cancelBtn.href = "javascript:cancelItem()";
             cancelBtn.id = "cancelButton";
+            cancelBtn.classList.add('btn', 'btn-dark', 'mt-3', 'text-light')
             //
-            var medNameLbl = document.createElement("label");
-            medNameLbl.innerHTML = "Medicine Name";
             var medNameInput = document.createElement("input");
             medNameInput.name = "medName";
             medNameInput.id = "medInput";
             medNameInput.setAttribute("required", "true");
+            medNameInput.placeholder= "Medicine Name";
+            medNameInput.classList.add('form-control');
 
-            var descLbl = document.createElement("label");
-            descLbl.innerHTML = "Description";
             var descInput = document.createElement("input");
             descInput.name = "desc";
             descInput.id = "desc";
             descInput.setAttribute("required", "true");
+            descInput.placeholder= "Usage";
+            descInput.classList.add('form-control', 'mt-4');
 
-            var daysLbl = document.createElement("label");
-            daysLbl.innerHTML = "Days";
             var daysInput = document.createElement("input");
             daysInput.name = "days";
             daysInput.id = "days";
             daysInput.pattern = "^[0-9]+$";
             daysInput.title = "Please enter numeric value only";
             daysInput.setAttribute("required", "true");
+            daysInput.placeholder= "Prescribed for (Days)";
+            daysInput.classList.add('form-control', 'mt-4');
 
-            var durationLbl = document.createElement("label");
-            durationLbl.innerHTML = "Duration";
             var durationInput = document.createElement("input");
             durationInput.name = "duration";
             durationInput.id = "duration";
             durationInput.pattern = "^[0-9]+$";
             durationInput.title = "Please enter numeric value only";
             durationInput.setAttribute("required", "true");
+            durationInput.placeholder= "Duration (Hours)";
+            durationInput.classList.add('form-control', 'mt-4');
 
 
             //
-
+             wrapper.appendChild(medNameInput);
+              wrapper.appendChild(descInput);
+              wrapper.appendChild(daysInput);
+             wrapper.appendChild(durationInput);
+            //
+             wrapper.appendChild(cancelBtn);
+            wrapper.appendChild(addBtnPres);
+             container.appendChild(wrapper);
             prescriptionContainer.appendChild(container);
-            container.appendChild(medNameLbl);
-            container.appendChild(medNameInput);
-           
-            container.appendChild(descLbl);
-             container.appendChild(descInput);
-         
-            container.appendChild(daysLbl);
-             container.appendChild(daysInput);
-            
-
-            container.appendChild(durationLbl);
-             container.appendChild(durationInput);
-            //
-            container.appendChild(cancelBtn);
-           container.appendChild(addBtnPres);
         }
         function cancelItem(){
             let cancelBtns = document.querySelectorAll('[id=cancelButton]');
@@ -355,6 +346,5 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="/assets/js/argon-dashboard.min.js?v=2.0.2"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
 </body>
 </html>
