@@ -104,11 +104,45 @@
           </ol>
         </nav>
         <h3>Out Patient Record File</h3>
+        {{#mesg5}}
+    <div class="card" style="width: 55rem; margin-top: 1rem">
+        <div class="card-body">
+              <h5 class="card-title"><i class="fas fa-address-card text-info"></i> Card Details</h5>
+              <hr class="dark mt-1">
+              <p class="card-text">Card Number: {{Card_No}}</p>
+        </div>
+    </div>
+    {{/mesg5}}
+    {{#mesg1}}
+    <div class="card" style="width: 55rem; margin-top: 1rem">
+        <div class="card-body">
+              <h5 class="card-title"><i class="fas fa-user-injured text-info"></i> Patient Details</h5>
+               <hr class="dark mt-1">
+              <p class="card-text">Patient ID: {{P_ID}}</p>
+               <p class="card-text">Patient Name: {{User.Full_Name}}</p>
+                <p class="card-text">Age: {{Age}}</p>
+                <p class="card-text">Gender: {{Gender}}</p>
+        </div>
+    </div>
+    {{/mesg1}}
+     {{#mesg2}}
+    <div class="card" style="width: 55rem; margin-top: 1rem">
+        <div class="card-body">
+              <h5 class="card-title"><i class="fas fa-hospital-symbol text-info"></i> Consultation Department</h5>
+               <hr class="dark mt-1">
+              <p class="card-text">Doctor ID: {{D_ID}}</p>
+               <p class="card-text">Doctor Name: {{User.Full_Name}}</p>
+                <p class="card-text">Department: {{Dept_Name}}</p>
+                <p class="card-text">Day: {{Avl_Day}}</p>
+                <p class="card-text">Time: {{Avl_Time}}</p>
+        </div>
+    </div>
+    {{/mesg2}}
 
     {{#mesg3}}
     <div class="card" style="width: 55rem; margin-top: 1rem">
         <div class="card-body">
-              <h5 class="card-title">Appointment Details</h5>
+              <h5 class="card-title"><i class="fas fa-file-alt text-info"></i> Appointment Details</h5>
                <hr class="dark mt-1">
               <p class="card-text">Appointment Type: {{Patient_Appointment_Details.0.App_Type}}</p>
                <p class="card-text">Payment Status: {{Patient_Appointment_Details.0.Payment_Status}}</p>
@@ -117,7 +151,7 @@
     {{/mesg3}}
 
     
-    <h5 class="card-title mt-4">Follow Up Details</h5>
+    <h5 class="card-title mt-4"><i class="fas fa-info-circle text-info"></i> Follow Up Details</h5>
      <hr class="dark mt-1">
     {{#mesg4}}
     <div>
@@ -157,7 +191,7 @@
                   </div>
                 </div>
                 <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-success shadow-warning text-center rounded-circle">
+                  <div class="icon icon-shape bg-gradient-info shadow-warning text-center rounded-circle">
                     <i class="ni ni-calendar-grid-58 text-lg opacity-10" aria-hidden="true"></i>
                   </div>
                 </div>

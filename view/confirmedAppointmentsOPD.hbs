@@ -122,7 +122,7 @@
               <p class="card-text">Patient Name: {{User.Full_Name}}</b></p>
               <p class="card-text">Address: {{P_Address}}</p>
               <p class="card-text">Contact: {{Phone}}</p>
-             <a  href="/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments/newOPDCard/{{Patient_Appointment_Details.0.App_ID}}/dID/{{Patient_Appointment_Details.0.Patient_Appointments.Doctor_ID}}/pID/{{P_ID}}" class="btn btn-dark"><i class="fas fa-plus-circle"></i> <span class="ms-1 text-light">Make OPD card </span></a>  
+             <a  href="/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments/newOPDCard/{{Patient_Appointment_Details.0.App_ID}}/dID/{{Patient_Appointment_Details.0.Patient_Appointments.Doctor_ID}}/pID/{{P_ID}}" class="btn btn-dark" id="btnLink"><i class="fas fa-plus-circle"></i> <span class="ms-1 text-light">Make OPD card </span></a>  
             </div>
           </div>
         </div>
@@ -178,6 +178,7 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+    
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
