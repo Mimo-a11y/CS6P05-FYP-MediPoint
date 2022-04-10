@@ -642,7 +642,7 @@ const getopdCardSearchPage = async (req,res) => {
         if(req.user.User_Type !== "Clinic"){
             return  res.status(400).render('errorPage', {unauthorized: true});
         }
-        return res.status(200).render('OPDCardSearch', {opdsearchpage: true});
+        return res.status(200).render('OPDCardSearchOPD', {opdsearchpage: true});
 
     }catch(e){
         console.log(e);
@@ -680,9 +680,9 @@ const getopdCardDetails = async (req,res) => {
             ]
          });
          if(opdCard.length === 0){
-            return res.status(200).render('OPDCardSearch', {mesg1: true, opdsearchpage: true});
+            return res.status(200).render('OPDCardSearchOPD', {mesg1: true, opdsearchpage: true});
          }else{
-            return res.status(200).render('OPDCardSearch', {opdsearchmesg2: opdCard, opdsearchpage: true});
+            return res.status(200).render('OPDCardSearchOPD', {opdsearchmesg2: opdCard, opdsearchpage: true});
          }
 
     }catch(e){
@@ -730,7 +730,7 @@ const getIndividualOpdCardDetails = async (req,res) => {
          });
          var cardNumber = [];
          cardNumber[0] = {Card_No: getopdCard[0].Card_No, D_ID: req.params.did, P_ID: req.params.pid};
-         return res.status(200).render('OPDcardDetails', {mesg1: patient, mesg2: doctor, opdsearchmesg4: getopdCard, mesg5: cardNumber});
+         return res.status(200).render('OPDcardDetailsOPD', {mesg1: patient, mesg2: doctor, opdsearchmesg4: getopdCard, mesg5: cardNumber});
 
     }catch(e){
         console.log(e);

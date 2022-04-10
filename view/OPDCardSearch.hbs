@@ -88,33 +88,10 @@
   <div class="main-content position-relative max-height-vh-100 h-100">
     <div class="card shadow-lg mx-4 card-profile-bottom text-center">
       <div class="card-body p-3">
-    {{#opdsearchpage}}
-    <h1><b>OPD dashboard</h1>
-
-    <div>
-    <h1><b>Menu</b></h1>
-    <div class="bg-teal-200 text-center">
-    <a href="/dashboard/OPD/incomingAppointments">Incoming Appointments</a> &nbsp; &nbsp; &nbsp;
-    <a href="/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments">Booked Appointments</a> &nbsp; &nbsp; &nbsp;
-    <a href="/dashboard/OPD/cardSearch">OPD card</a> &nbsp; &nbsp; &nbsp;
-    <a href="/dashboard/OPD/incomingLabTests">LAB tests</a> &nbsp; &nbsp; &nbsp;
-    </div>
-    </div>
-    {{/opdsearchpage}}
 
     {{#doctorsearchpage}}
         <p> <i class="fas fa-search"></i> FIND MEDICAL HISTORY</p>
     {{/doctorsearchpage}}
-
-    {{#opdsearchpage}}
-    <div class= 'text-center mt-8 ml-8 border border-gray-600 rounded-md bg-sky-200'>
-        <form action="/dashboard/OPD/cardSearch/PatientOPDCardDetails">
-        <label for="cardsearch">Search OPD Card:</label>
-        <input type="search" id="cardsearch" name="cardsearch" placeholder="Search by patient ID" required pattern="^[0-9]+$" title="Please enter a valid patient ID">
-        <input class="text-gray-50  hover:bg-red-700 bg-red-500 px-4 py-2 m-2" type="submit">
-        </form>
-    </div>
-    {{/opdsearchpage}}
 
     {{#doctorsearchpage}}
     <div>

@@ -66,19 +66,12 @@ height:50px;
 </div>
 <div class="col-md-6 bg-white p-5">
 <h3 class="pb-3">Login</h3>
-<div class="form-style">
-  <div>
-                        {{#if errors}}
+{{#if errors}}
                         {{#each errors}}
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <span class="alert-text text-light">{{this}}</span>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
+                            <p class="text-xs text-danger">* {{this}}</p>
                         {{/each}}
                         {{/if}}
-  </div>
+<div class="form-style">
 <form action="/login" method="POST">
   <div class="form-group pb-3">    
     <input type="email" name="email" placeholder="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">   

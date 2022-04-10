@@ -5,7 +5,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/icon.png">
   <title>
-    MediPoint - OPD Dashboard
+    MediPoint - OPD Card Search
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -23,13 +23,13 @@
         <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto">
-            <h3 class="text-white mb-2 mt-5"><i class="ni ni-bullet-list-67"></i> Incoming Appointments</h3>
-            <p class="text-lead text-white">Hi, these are the incoming bookings for today at <br> Tarakeshwor Health Clinic.</p>
+            <h2 class="text-white mb-2 mt-5"><i class="fas fa-file-medical"></i> OPD Cards</h2>
+            <p class="text-lead text-white">You can search for the Out Patient Record file (OPD) Cards of any patient in this section.</p>
           </div>
         </div>
       </div>
   </div>
-  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
+ <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
     <div class="sidenav-header text-center mt-4">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a href="/" class="text-center">
@@ -51,7 +51,7 @@
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">OPD Department</h6>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/dashboard/OPD/incomingAppointments">
+          <a class="nav-link" href="/dashboard/OPD/incomingAppointments">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-copy-04 text-success text-sm opacity-10"></i>
             </div>
@@ -67,7 +67,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/dashboard/OPD/cardSearch">
+          <a class="nav-link active " href="/dashboard/OPD/cardSearch">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-books text-success text-sm opacity-10"></i>
             </div>
@@ -99,44 +99,128 @@
       </form>
     </div>
   </aside>
-  <div class="main-content position-relative max-height-vh-100 h-100">
+   <div class="main-content position-relative max-height-vh-100 h-100">
     <div class="card shadow-lg mx-4 card-profile-bottom">
       <div class="card-body p-3">
-        <div class="row gx-4">
-          <div class="col-auto my-auto">
-            <div class="h-100">
-            <div class="container-fluid py-4">
-      <div class="row">
-        <h4>Bookings for today at Tarakeshwor Health CLinic</h4>
-        {{#mesg1}}
-        <div class="col-md-4">
-          <div class="card" style="width: 18rem; margin-top: 2rem">
-            <div class="card-body">
-              <i class="fas fa-user-clock text-dark" style="font-size: 1.5rem; margin-bottom:0.5rem;"></i>
-              <h5 class="card-title">Patient ID: {{P_ID}}</h5>
-              <p class="card-text">Patient Name: {{User.Full_Name}}</b></p>
-              <p class="card-text">Address: {{P_Address}}</p>
-              <p class="card-text">Contact: {{Phone}}</p>
-              <a href="/dashboard/OPD/incomingAppointments/pID/{{P_ID}}/appointmentDetails/appID/{{Patient_Appointment_Details.0.App_ID}}/dID/{{Patient_Appointment_Details.0.Patient_Appointments.Doctor_ID}}" class="btn btn-success">Open</a>
-            </div>
-          </div>
+           <nav aria-label="breadcrumb mt-0">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:history.back()">OPD Cards</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">OPD Card detail</li>
+          </ol>
+        </nav>
+        <h4 class="mt-3">Out Patient Record File</h4>
+        {{#mesg5}}
+    <div class="card" style="width: 55rem; margin-top: 1rem">
+        <div class="card-body">
+              <h5 class="card-title"><i class="fas fa-address-card text-success"></i> Card Details</h5>
+              <hr class="dark mt-1">
+              <p class="card-text">Card Number: {{Card_No}}</p>
         </div>
-        {{/mesg1}}
-        {{#mesg2}}
-        <div class="col-md-8">
-          <div class="card" style="width: 55rem; margin-top: 1rem">
-            <div class="card-body text-center">
-              <i class="fas fa-cannabis text-success" style="font-size: 4rem; margin-bottom:0.5rem;"></i>
-              <p class="card-text">There are no Incoming Appointments for today!</p>
-            </div>
-          </div>
-        </div>
-        {{/mesg2}}
-      </div>
     </div>
-            </div>
-          </div>  
+    {{/mesg5}}
+     {{#mesg1}}
+    <div class="card" style="width: 55rem; margin-top: 1rem">
+        <div class="card-body">
+              <h5 class="card-title"><i class="fas fa-user-injured text-success"></i> Patient Details</h5>
+               <hr class="dark mt-1">
+              <p class="card-text">Patient ID: {{P_ID}}</p>
+               <p class="card-text">Patient Name: {{User.Full_Name}}</p>
+                <p class="card-text">Age: {{Age}}</p>
+                <p class="card-text">Gender: {{Gender}}</p>
         </div>
+    </div>
+    {{/mesg1}}
+     {{#mesg2}}
+    <div class="card" style="width: 55rem; margin-top: 1rem">
+        <div class="card-body">
+              <h5 class="card-title"><i class="fas fa-hospital-symbol text-success"></i> Consultation Department</h5>
+               <hr class="dark mt-1">
+              <p class="card-text">Doctor ID: {{D_ID}}</p>
+               <p class="card-text">Doctor Name: {{User.Full_Name}}</p>
+                <p class="card-text">Department: {{Dept_Name}}</p>
+                <p class="card-text">Day: {{Avl_Day}}</p>
+                <p class="card-text">Time: {{Avl_Time}}</p>
+        </div>
+    </div>
+    {{/mesg2}}
+    <div class="card" style="width: 55rem; margin-top: 1rem">
+        <div class="card-body">
+        <div class="row">
+       {{#opdsearchmesg4}}
+         <div class="col-xl-3 col-sm-6 mt-3">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <h5 class="font-weight-bolder">
+                      Visit No. {{Visit_No}}
+                    </h5>
+                    <p class="mb-0">
+                      <span class="text-success text-sm font-weight-bolder">Visit Date</span><br> {{Visit_Date}}
+                    </p>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-success shadow-warning text-center rounded-circle">
+                    <i class="ni ni-calendar-grid-58 text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mt-3">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <h5 class="font-weight-bolder">
+                      Visit No. {{Visit_No}}
+                    </h5>
+                    <p class="mb-0">
+                      <span class="text-success text-sm font-weight-bolder">Visit Date</span><br> {{Visit_Date}}
+                    </p>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-success shadow-warning text-center rounded-circle">
+                    <i class="ni ni-calendar-grid-58 text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mt-3">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <h5 class="font-weight-bolder">
+                      Visit No. {{Visit_No}}
+                    </h5>
+                    <p class="mb-0">
+                      <span class="text-success text-sm font-weight-bolder">Visit Date</span><br> {{Visit_Date}}
+                    </p>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-success shadow-warning text-center rounded-circle">
+                    <i class="ni ni-calendar-grid-58 text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/opdsearchmesg4}}
+         </div>
+        </div>
+    </div>
+
       </div>
     </div>
   </div>
