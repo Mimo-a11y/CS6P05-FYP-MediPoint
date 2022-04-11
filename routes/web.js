@@ -13,6 +13,7 @@ const opdController = require('../controllers/opdDashboardController');
 const doctorController = require('../controllers/doctorDashboardController');
 const pharmacyController = require('../controllers/pharmacyController');
 const labController = require('../controllers/laboratoryController');
+const chartController = require('../controllers/chartController');
 
 //calling the function from passportLocalController
 initPassportLocal();
@@ -95,6 +96,9 @@ routes.post('/dashboard/Laboratory/LabTestDetails/pID/:pid/reportID/:reportid/te
 
 
 //creating routes for Doctors dashboard
+routes.get('/dashboard/patientAgeChartData', chartController.getPatientAgeData);
+routes.get('/dashboard/patientGenderChartData', chartController.getPatientGenderData);
+routes.get('/dashboard/patientAppChartData', chartController.getAppData);
 routes.get('/dashboard/incomingVisits/:did', doctorController.getTodaysOPDcard);
 routes.get('/dashboard/incomingVisits/dID/:did/pID/:pid', doctorController.getPatientOpdCard);
 routes.get('/dashboard/incomingVisits/cardNo/:cardno/visitNo/:visitno', doctorController.getVisitDetails);

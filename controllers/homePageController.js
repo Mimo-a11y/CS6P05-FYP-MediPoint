@@ -1,6 +1,8 @@
 const db = require('../models');
 const Patient = db.patients;
 const Doctor = db.doctors;
+const HealthLog = db.Health_Log;
+const sequelize =  require('sequelize');
 
 let getHomePage = async (req,res) => {
     const doctor = await Doctor.findOne({ where: { UserUID: req.user.U_ID } });
