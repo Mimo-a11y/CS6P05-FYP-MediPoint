@@ -68,7 +68,7 @@ const adminJs = new AdminJs({
         },
         actions: {
           delete: {
-            isVisible: (context) => context.record.param('User_Type') !== 'Clinic',
+            isVisible: (context) => context.record.param('User_Type') == 'Doctor',
           },
           bulkDelete: {
             isVisible: false

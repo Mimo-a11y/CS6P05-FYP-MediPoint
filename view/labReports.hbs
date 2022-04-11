@@ -114,8 +114,8 @@
         <h5 class="card-text">Test Number: {{Test_No}}</h5>
          <p class="card-text">Test Name: {{Test_Name}}</p>
           <p class="card-text">Payment Status: {{Test_Pay_Status}}</p>
-          <a href="{{Report_ID}}/ConfirmLabTests/TestNo/{{Test_No}}" class="btn btn-success">confirm</a>
-          <a href="{{Report_ID}}/CancelLabTests/TestNo/{{Test_No}}" class="btn btn-secondary">cancel</a>
+          <a href="{{Report_ID}}/ConfirmLabTests/TestNo/{{Test_No}}" class="btn btn-success" style="width: 10rem; margin-right:1rem;">confirm</a>
+          <a href="{{Report_ID}}/CancelLabTests/TestNo/{{Test_No}}" class="btn btn-secondary" style="width: 10rem;" >cancel</a>
           <hr>
         {{/mesg3}}
         {{#mesg2}}
@@ -131,7 +131,7 @@
               <a href="labTestDetails/reportID/{{Health_Logs.0.LabReportReportID}}" class="btn btn-success">View Details</a>
             </div>
           </div>
-        </div>
+        </div>      
         {{/mesg2}}
         
      {{#mesg1}}
