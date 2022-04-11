@@ -52,9 +52,9 @@ const getPharmacyDashboardPage = async (req,res) => {
             }]
         }).catch((err) => {console.log(err)});
         if(patient.length === 0){
-            return res.status(200).render('pharmacyDashboard', {mesg1: true});
+            return res.status(200).render('pharmacyDashboard', {mesg1: true, incomingMesg: true});
         }else{
-            return res.status(200).render('pharmacyDashboard', {mesg2: patient});
+            return res.status(200).render('pharmacyDashboard', {mesg2: patient, incomingMesg: true});
         }
 
     }catch(e){
@@ -75,9 +75,9 @@ const getPresDetails = async (req,res) => {
             attributes: ['Pres_ID', 'Medicine_Name', 'Pres_No', 'Med_Pay_Status', 'Description', 'Duration', 'Days']
         });
         if(medicines.length === 0){
-            return res.status(200).render('pharmacyDashboard', {mesg4:true});
+            return res.status(200).render('pharmacyDashboard', {mesg4:true, incomingMesg: true});
         }else{
-            return res.status(200).render('pharmacyDashboard', {mesg3: medicines});
+            return res.status(200).render('pharmacyDashboard', {mesg3: medicines, incomingMesg: true});
         }
 
     }catch(e){
@@ -341,9 +341,9 @@ const getConfirmedPrescriptions = async (req,res) => {
             }]
         }).catch((err) => {console.log(err)});
         if(patient.length === 0){
-            return res.status(200).render('pharmacyDashboard', {mesg5: true});
+            return res.status(200).render('pharmacyDashboard', {mesg5: true, confirmedMesg: true});
         }else{
-            return res.status(200).render('pharmacyDashboard', {mesg6: patient});
+            return res.status(200).render('pharmacyDashboard', {mesg6: patient, confirmedMesg: true});
         }
 
     }catch(e){

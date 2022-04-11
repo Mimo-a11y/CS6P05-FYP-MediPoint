@@ -122,13 +122,13 @@
         <div class="col-md-4">
           <div class="card" style="width: 18rem; margin-top: 2rem">
             <div class="card-body">
-             <i class="fas fa-user-clock" style="font-size: 1.5rem; margin-bottom:0.5rem;"></i>
+             <i class="fas fa-user-clock text-success" style="font-size: 1.5rem; margin-bottom:0.5rem;"></i>
               <h5 class="card-title">Patient ID: {{P_ID}}</h5>
               <p class="card-text">Patient Name: {{User.Full_Name}}</b></p>
               <p class="card-text">Card_No: {{Health_Logs.0.Card_No}}</p>
               <p class="card-text">Visit_No: {{Health_Logs.0.Visit_No}}</p>
               <p class="card-text">Reffered By: Dr. {{Health_Logs.0.Doctors.0.User.Full_Name}}</p>
-              <a href="labTestDetails/reportID/{{Health_Logs.0.LabReportReportID}}" class="btn btn-success">View Details</a>
+              <a href="labTestDetails/reportID/{{Health_Logs.0.LabReportReportID}}" class="btn btn-dark">View Details</a>
             </div>
           </div>
         </div>      
