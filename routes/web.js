@@ -37,6 +37,11 @@ routes.get('/signUp', signUpController.getSignUpPage);
 routes.post('/signUp', auth.validateSignUp, signUpController.createNewUser);
 routes.post('/logout', loginController.postLogOut);
 
+//creating routes for about us page
+routes.get('/aboutUs', (req,res) => {
+        res.render('aboutUs');
+})
+
 //creating routers for symptom recorder
 routes.get('/dashboard/Symptoms',sympRecorderController.getSymptomsRecorderPage);
 routes.post('/dashboard/Symptoms', sympRecorderController.recordSymptoms);
