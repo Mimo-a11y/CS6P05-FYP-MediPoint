@@ -110,11 +110,35 @@
                <p class="card-text">Appointment Time: <br>{{time}}</p>
                 <p class="card-text">Type: {{type}} Appointment</p>
                  <p class="card-text">Payment Status: {{pay}}</p>
-              <a class="btn btn-secondary" href="/dashboard/upcomingAppointments/cancelBookings/{{id}}">Cancel appointment</a>
+                 <!-- Button trigger modal -->
+<button type="button" class="btn btn-secondary ms-3" data-toggle="modal" data-target="#exampleModal">
+  Cancel Appointment
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Appointment Cancellation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to cancel this appointment?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <a href="/dashboard/upcomingAppointments/cancelBookings/{{id}}" class="btn btn-primary">Yes</a>
+      </div>
+    </div>
+  </div>
+</div>
             </div>
           </div>
         </div>
-        {{/mesg1}}
+{{/mesg1}}
         {{#mesg2}}
         <div class="col-md-8">
           <div class="card" style="width: 58rem; margin-top: 1rem">
@@ -142,6 +166,9 @@
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
