@@ -281,7 +281,7 @@ transporter.sendMail(mailOptions, function(error, info){
 }
 //---------------------------------------------------------------------------------------//
 
-//confirm lab test payment
+//confirm medicine payment
 const cancelPrescriptionsDetails = async (req,res) => {
     try{
         if(req.user.User_Type !== "Clinic"){

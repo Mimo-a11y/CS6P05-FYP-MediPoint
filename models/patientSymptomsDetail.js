@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 
         },
         Symptom_Time:{
-            type: DataTypes.STRING,
+            type: DataTypes.TIME,
             allowNull:false
         },
         Symptom_Date:{

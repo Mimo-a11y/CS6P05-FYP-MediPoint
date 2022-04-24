@@ -144,10 +144,29 @@ const adminJs = new AdminJs({
     }
 
   }
+},
+{
+  resource: db.Patient_Appointment_Detail,
+  options:{
+    actions:{
+      new:{
+        isVisible: false
+      },
+      delete:{
+        isVisible:false
+      },
+      bulkDelete:{
+        isVisible:false
+      },
+      edit:{
+        isVisible: false
+      }
+    }
+  }
 }
 ],
   branding: {
-    companyName: 'Medipoint',
+    companyName: 'Medipoint - Admin panel',
     softwareBrothers: false,
     logo: false
   },

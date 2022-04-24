@@ -4,7 +4,7 @@
    <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/icon.png">
+  <link rel="icon" type="image/png" href="/assets/img/icon.png">
   <title>
     MediPoint - Pharmacy Dashboard
   </title>
@@ -174,7 +174,7 @@
               <p class="card-text">Patient Name: {{User.Full_Name}}</p>
               <p class="card-text">Card_No: {{Health_Logs.0.Card_No}}</p>
               <p class="card-text">Visit_No: {{Health_Logs.0.Visit_No}}</p>
-              <p class="card-text">Reffered By: <b>Dr. {{Health_Logs.0.Doctors.0.User.Full_Name}}</b></p>
+              <p class="card-text">Reffered By: <br> <b>Dr. {{Health_Logs.0.Doctors.0.User.Full_Name}}</b></p>
               <a href="prescriptionsDetails/pID/{{P_ID}}/presID/{{Health_Logs.0.PrescriptionPresID}}" class="btn btn-dark">Open</a>
             </div>
           </div>

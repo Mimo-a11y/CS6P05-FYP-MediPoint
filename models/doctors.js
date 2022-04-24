@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull:false
         },
         Avl_Time:{
-            type: DataTypes.STRING,
+            type: DataTypes.ENUM('4PM-6PM', '10AM-12PM'),
             allowNull:false
         },
         Dept_Name:{
