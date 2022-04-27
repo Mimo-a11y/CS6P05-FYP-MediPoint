@@ -1,11 +1,12 @@
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="/assets/img/icon.png">
   <title>
-   MediPoint - Sign up
+    MediPoint - Sign up
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -18,15 +19,18 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="/assets/css/argon-dashboard.css?v=2.0.2" rel="stylesheet" />
 </head>
+
 <body class="">
   <main class="main-content  mt-0">
-    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('/assets/img/signupfinal.jpg'); background-position:center; background-size:cover; background-repeat:no-repeat">
+    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg"
+      style="background-image: url('/assets/img/signupfinal.jpg'); background-position:center; background-size:cover; background-repeat:no-repeat">
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto">
             <h1 class="text-white mb-2 mt-5">Welc<i class="fa fa-heartbeat text-white" aria-hidden="true"></i>me</h1>
-            <p class="text-lead text-white">Upgrade your medical care with MediPoint <br> Get started with your free account now</p>
+            <p class="text-lead text-white">Upgrade your medical care with MediPoint <br> Get started with your free
+              account now</p>
           </div>
         </div>
       </div>
@@ -37,7 +41,8 @@
           <div class="card z-index-0">
             <div class="card-header text-center pt-4">
               <h5>Sign Up</h5>
-               <img src="/assets/img/logofinal.png" alt="logo" height="100px" width="100px" class="shadow-lg rounded-circle">
+              <img src="/assets/img/logofinal.png" alt="logo" height="100px" width="100px"
+                class="shadow-lg rounded-circle">
             </div>
             <div class="row px-xl-5 px-sm-4 px-3">
               <div class="mt-2 position-relative text-center">
@@ -48,17 +53,17 @@
             </div>
             <div class="card-body">
               <div>
-            {{#if errors}}
-            {{#each errors}}
+                {{#if errors}}
+                {{#each errors}}
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <span class="alert-text text-light">{{this}}</span>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-            {{/each}}
-            {{/if}}
-        </div>
+                  <span class="alert-text text-light">{{this}}</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                {{/each}}
+                {{/if}}
+              </div>
               <form role="form" action="/signUp" method="POST">
                 <div class="mb-3">
                   <input type="text" name="name" class="form-control" placeholder="Name" aria-label="Name" required>
@@ -67,15 +72,18 @@
                   <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email" required>
                 </div>
                 <div class="mb-3">
-                  <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password" required>
+                  <input type="password" name="password" class="form-control" placeholder="Password"
+                    aria-label="Password" required>
                 </div>
                 <div class="mb-3">
-                  <input type="password" name="Cpassword" class="form-control" placeholder="Confrim Password" aria-label="Confirm Password" required>
+                  <input type="password" name="Cpassword" class="form-control" placeholder="Confrim Password"
+                    aria-label="Confirm Password" required>
                 </div>
                 <div class="text-center">
                   <button class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>
                 </div>
-                <p class="text-sm mt-3 mb-0">Already have an account? <a href="/login" class="text-dark font-weight-bolder">Sign in</a></p>
+                <p class="text-sm mt-3 mb-0">Already have an account? <a href="/login"
+                    class="text-dark font-weight-bolder">Sign in</a></p>
               </form>
             </div>
           </div>
@@ -89,7 +97,8 @@
       <div class="row">
         <div class="col-8 mx-auto text-center mt-1">
           <p class="mb-0 text-secondary">
-            Copyright © <script>
+            Copyright ©
+            <script>
               document.write(new Date().getFullYear())
             </script> MediPoint Inc.
           </p>
@@ -117,4 +126,5 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/argon-dashboard.min.js?v=2.0.2"></script>
 </body>
+
 </html>

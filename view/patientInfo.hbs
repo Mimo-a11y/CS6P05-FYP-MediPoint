@@ -1,11 +1,12 @@
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="/assets/img/icon.png">
   <title>
-   MediPoint - Patient Information
+    MediPoint - Patient Information
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -18,12 +19,14 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="/assets/css/argon-dashboard.css?v=2.0.2" rel="stylesheet" />
 </head>
+
 <body class="">
   <main class="main-content  mt-0">
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur"
+      data-scroll="false">
       <div class="container-fluid py-1 px-3">
-          <img src="/assets/img/medlogo.png" alt="logo" height="60px" width="60px" class="shadow-lg rounded-circle">
-           <span class="ms-2 font-weight-light text-white mt-2"><small><em>Innovating your health care</em></small></span>
+        <img src="/assets/img/medlogo.png" alt="logo" height="60px" width="60px" class="shadow-lg rounded-circle">
+        <span class="ms-2 font-weight-light text-white mt-2"><small><em>Innovating your health care</em></small></span>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             <li class="nav-item d-flex align-items-center">
@@ -37,16 +40,17 @@
               </a>
             </li>
           </div>
-          </div>
-            <li class="nav-item d-flex align-items-center mt-2">
-               <form action="/logout" method="POST">
-                  <button class="btn btn-secondary btn-sm  mb-0 w-100"> <i class="fa fa-user me-sm-1"></i> Logout</button>
-                </form>
-            </li>
         </div>
+        <li class="nav-item d-flex align-items-center mt-2">
+          <form action="/logout" method="POST">
+            <button class="btn btn-secondary btn-sm  mb-0 w-100"> <i class="fa fa-user me-sm-1"></i> Logout</button>
+          </form>
+        </li>
+      </div>
       </div>
     </nav>
-    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('/assets/img/healthcare.jpg'); background-position:left; background-size:contain; background-repeat:no-repeat">
+    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg"
+      style="background-image: url('/assets/img/healthcare.jpg'); background-position:left; background-size:contain; background-repeat:no-repeat">
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container">
         <div class="row justify-content-center">
@@ -62,7 +66,8 @@
         <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
           <div class="card z-index-0">
             <div class="card-header text-center pt-4">
-               <img src="/assets/img/logofinal.png" alt="logo" height="100px" width="100px" class="shadow-lg rounded-circle">
+              <img src="/assets/img/logofinal.png" alt="logo" height="100px" width="100px"
+                class="shadow-lg rounded-circle">
             </div>
             <div class="row px-xl-5 px-sm-4 px-3">
               <div class="mt-2 position-relative text-center">
@@ -74,20 +79,25 @@
             <div class="card-body">
               <form role="form" action="/addPatient" method="POST">
                 <div class="mb-3">
-                  <input type="text" name="age" id="age" class="form-control" placeholder="Enter your Age" aria-label="Age" required pattern="^[0-9]+$" title="Age must be entered in numbers. e.g. 20">
+                  <input type="text" name="age" id="age" class="form-control" placeholder="Enter your Age"
+                    aria-label="Age" required pattern="^[0-9]+$" title="Age must be entered in numbers. e.g. 20">
                 </div>
                 <p>Choose your Gender</p>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="customRadioInline1" name="gender" value="Male" class="custom-control-input" checked>
-                    <label class="custom-control-label" for="customRadioInline1">Male</label> &nbsp;
-                    <input type="radio" id="customRadioInline2" name="gender" value="Female" class="custom-control-input">
-                    <label class="custom-control-label" for="customRadioInline2">Female</label>
+                  <input type="radio" id="customRadioInline1" name="gender" value="Male" class="custom-control-input"
+                    checked>
+                  <label class="custom-control-label" for="customRadioInline1">Male</label> &nbsp;
+                  <input type="radio" id="customRadioInline2" name="gender" value="Female" class="custom-control-input">
+                  <label class="custom-control-label" for="customRadioInline2">Female</label>
                 </div>
                 <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Enter the name of your city" aria-label="Address" name="pAddress" id="pAddress" required>
+                  <input type="text" class="form-control" placeholder="Enter the name of your city" aria-label="Address"
+                    name="pAddress" id="pAddress" required>
                 </div>
                 <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Enter your Phone number" aria-label="Phone" name="phone" id="phone" required pattern="^[0-9]+$" title="Characters are not allowed in Phone Numbers">
+                  <input type="text" class="form-control" placeholder="Enter your Phone number" aria-label="Phone"
+                    name="phone" id="phone" required pattern="^[0-9]+$"
+                    title="Characters are not allowed in Phone Numbers">
                 </div>
                 <div class="text-center">
                   <button class="btn bg-gradient-dark w-100 my-4 mb-2">Proceed</button>
@@ -118,4 +128,5 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/argon-dashboard.min.js?v=2.0.2"></script>
 </body>
+
 </html>

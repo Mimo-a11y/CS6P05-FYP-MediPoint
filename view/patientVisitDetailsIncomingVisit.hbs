@@ -1,6 +1,7 @@
 <html lang="en">
+
 <head>
-   <meta charset="utf-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="/assets/img/icon.png">
@@ -18,22 +19,26 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="/assets/css/argon-dashboard.css?v=2.0.2" rel="stylesheet" />
 </head>
+
 <body class="g-sidenav-show bg-gray-100">
-   <div class="position-absolute w-100 min-height-300 top-0 bg-gradient-success">
-        <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-5 text-center mx-auto">
-            <h3 class="text-white mb-2 mt-5"><i class="fas fa-notes-medical"></i> Incoming Visits</h3>
-            <p class="text-lead text-white">Hi! Here are your Incoming visits for today.<br> Happy diagnosing!</p>
-          </div>
+  <div class="position-absolute w-100 min-height-300 top-0 bg-gradient-success">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 text-center mx-auto">
+          <h3 class="text-white mb-2 mt-5"><i class="fas fa-notes-medical"></i> Incoming Visits</h3>
+          <p class="text-lead text-white">Hi! Here are your Incoming visits for today.<br> Happy diagnosing!</p>
         </div>
       </div>
+    </div>
   </div>
-  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
+  <aside
+    class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 "
+    id="sidenav-main">
     <div class="sidenav-header text-center mt-4">
-      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+        aria-hidden="true" id="iconSidenav"></i>
       <a href="/" class="text-center">
-       <img src="/assets/img/logofinal.png" alt="logo" height="90px" width="90px" class="shadow-lg rounded-circle">
+        <img src="/assets/img/logofinal.png" alt="logo" height="90px" width="90px" class="shadow-lg rounded-circle">
       </a>
     </div>
     <hr class="horizontal dark mt-4">
@@ -41,7 +46,8 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="/dashboard">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Dashboard</span>
@@ -52,7 +58,8 @@
         </li>
         <li class="nav-item">
           <a class="nav-link active" href="">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-copy-04 text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Incoming Visits</span>
@@ -66,12 +73,12 @@
         <div class="card-body text-center p-3 w-100 pt-0">
           <div class="docs-info">
             <h6 class="mb-0">Clinic hours completed?</h6>
-            
+
           </div>
         </div>
-      </div> 
+      </div>
       <form action="/logout" method="POST">
-              <button class="btn btn-dark btn-sm mb-0 w-100">Logout</button>
+        <button class="btn btn-dark btn-sm mb-0 w-100">Logout</button>
       </form>
     </div>
   </aside>
@@ -81,135 +88,155 @@
         <div class="row gx-4">
           <div class="col-auto my-auto">
             <div class="h-100">
-            <div class="container-fluid py-4">
-      <div class="row">
-          <nav aria-label="breadcrumb mt-0">
-          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-               <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:history.go(-2)">Incoming Visits</a></li>
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:history.back()">OPD Card detail</a></li>
-             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Visit Details</li>
-          </ol>
-        </nav>
-        <h3 class="mb-3">Patient Visit Detail</h3>
-  {{#mesg1}}
-  <p style="font-size:larger"><i class="fas fa-laptop-medical text-success"></i> Please log in the Health Status for this visit</p>
-   <hr>
-  <form action="{{Visit_No}}/addVisitDetails" method="POST">
-  <div class="form-group">
-    <label for="bp" class="text-lg text-light text-dark"><i class="fas fa-stethoscope text-danger"></i> Blood Pressure (mm HG)</label>
-    <input type="text" class="form-control" name="bp" id="bp" placeholder="BP" pattern="^\d{1,3}\/\d{1,3}$" title="e.g. 120/80">
-  </div>
-  <div class="form-group">
-    <label for="pulse" class="text-lg text-light text-dark"><i class="fas fa-heartbeat text-danger"></i> Pulse rate (bpm)</label>
-    <input type="text" class="form-control" name="pulse" id="pulse" placeholder="Pulse" pattern="^[0-9]{2,3}$" title="Should be 2 digit or 3 digit numeric value">
-  </div>
-  <div class="form-group">
-    <label for="temp" class="text-lg text-light text-dark"><i class="fas fa-thermometer-half text-danger"></i> Body Temperature (&#176; F)</label>
-        <input type="text"  class="form-control" name="temp" id="temp" placeholder="Temperature" pattern="\d{1,3}\.\d{1,3}?" title="e.g. 98.8, 100.4">
-  </div>
-  <div class="form-group">
-    <label for="sympExp" class="text-lg text-light text-dark"><i class="fas fa-allergies text-danger"></i> Symptoms Experienced</label>
-    <textarea class="form-control" name="sympExp" id="sympExp" rows="3" placeholder="Log the Symptoms Experienced by the patient" required></textarea>
-  </div>
-  <div class="form-group">
-    <label for="diagnosis" class="text-lg text-light text-dark"><i class="fas fa-diagnoses text-danger"></i> Diagnosis</label>
-    <textarea class="form-control" name="diagnosis" id="diagnosis" rows="3" placeholder="Diagnosis of the disease" required></textarea>
-  </div>
-  <div class="form-group" id="container">
-    <label for="labtests" class="text-lg text-light text-dark"><i class="fas fa-microscope text-danger"></i> Required Lab Tests</label>
-     <input type="text"  class="form-control" name="1" id="labtests" placeholder="Laboratory Test">
-      <a class="btn btn-danger mt-3" href="#" id="add"><span class="text-light">Add</span></a>
-  </div>
-  <p class="text-lg text-light text-dark"><i class="fas fa-pills text-danger"></i> Medicine Prescriptions</p>
-  <div class="form-group" id="prescriptionContainer">
-    <div id="pres" class="bg-gradient-gray p-4 d-flex flex-column shadow rounded">
-                    <input type="text"  class="form-control mb-4" name="medName" id="medName" placeholder="Medicine Name"> 
+              <div class="container-fluid py-4">
+                <div class="row">
+                  <nav aria-label="breadcrumb mt-0">
+                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                      <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark"
+                          href="javascript:history.go(-2)">Incoming Visits</a></li>
+                      <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark"
+                          href="javascript:history.back()">OPD Card detail</a></li>
+                      <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Visit Details</li>
+                    </ol>
+                  </nav>
+                  <h3 class="mb-3">Patient Visit Detail</h3>
+                  {{#mesg1}}
+                  <p style="font-size:larger"><i class="fas fa-laptop-medical text-success"></i> Please log in the
+                    Health Status for this visit</p>
+                  <hr>
+                  <form action="{{Visit_No}}/addVisitDetails" method="POST">
+                    <div class="form-group">
+                      <label for="bp" class="text-lg text-light text-dark"><i
+                          class="fas fa-stethoscope text-danger"></i> Blood Pressure (mm HG)</label>
+                      <input type="text" class="form-control" name="bp" id="bp" placeholder="BP"
+                        pattern="^\d{1,3}\/\d{1,3}$" title="e.g. 120/80">
+                    </div>
+                    <div class="form-group">
+                      <label for="pulse" class="text-lg text-light text-dark"><i
+                          class="fas fa-heartbeat text-danger"></i> Pulse rate (bpm)</label>
+                      <input type="text" class="form-control" name="pulse" id="pulse" placeholder="Pulse"
+                        pattern="^[0-9]{2,3}$" title="Should be 2 digit or 3 digit numeric value">
+                    </div>
+                    <div class="form-group">
+                      <label for="temp" class="text-lg text-light text-dark"><i
+                          class="fas fa-thermometer-half text-danger"></i> Body Temperature (&#176; F)</label>
+                      <input type="text" class="form-control" name="temp" id="temp" placeholder="Temperature"
+                        pattern="\d{1,3}\.\d{1,3}?" title="e.g. 98.8, 100.4">
+                    </div>
+                    <div class="form-group">
+                      <label for="sympExp" class="text-lg text-light text-dark"><i
+                          class="fas fa-allergies text-danger"></i> Symptoms Experienced</label>
+                      <textarea class="form-control" name="sympExp" id="sympExp" rows="3"
+                        placeholder="Log the Symptoms Experienced by the patient" required></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="diagnosis" class="text-lg text-light text-dark"><i
+                          class="fas fa-diagnoses text-danger"></i> Diagnosis</label>
+                      <textarea class="form-control" name="diagnosis" id="diagnosis" rows="3"
+                        placeholder="Diagnosis of the disease" required></textarea>
+                    </div>
+                    <div class="form-group" id="container">
+                      <label for="labtests" class="text-lg text-light text-dark"><i
+                          class="fas fa-microscope text-danger"></i> Required Lab Tests</label>
+                      <input type="text" class="form-control" name="1" id="labtests" placeholder="Laboratory Test">
+                      <a class="btn btn-danger mt-3" href="#" id="add"><span class="text-light">Add</span></a>
+                    </div>
+                    <p class="text-lg text-light text-dark"><i class="fas fa-pills text-danger"></i> Medicine
+                      Prescriptions</p>
+                    <div class="form-group" id="prescriptionContainer">
+                      <div id="pres" class="bg-gradient-gray p-4 d-flex flex-column shadow rounded">
+                        <input type="text" class="form-control mb-4" name="medName" id="medName"
+                          placeholder="Medicine Name">
 
-                    
-                    <input type="text" name="desc"  class="form-control mb-4" id="desc" placeholder="Usage"> 
 
-                   
-                    <input type="text" name="days" id="days" placeholder="Prescribed for (Days)"  class="form-control mb-4" pattern="^[0-9]+$" title="Please enter numeric value only"> 
+                        <input type="text" name="desc" class="form-control mb-4" id="desc" placeholder="Usage">
 
-                   
-                    <input type="text" name="duration" id="duration" placeholder="Duration (Hours)"  class="form-control mb-4" pattern="^[0-9]+$" title="Please enter numeric value only">
-      </div>
-      <a class="btn btn-danger mt-3" href="#" id="presAdd"><span class="text-light">Add</span></a>
-  </div>
-  <div class="form-group d-flex flex-column mx-5">
-    <button type="submit" class="btn btn-success"><span class="text-light text-lg">Save Details</span></button>
-  </div>
-</form>
-        {{/mesg1}}
 
-        {{#mesg2}}
-        <div class="card" style="width: 55rem; margin-top: 1rem">
-        <div class="card-body">
-              <h5 class="card-title"> <i class="far fa-file-alt text-success"></i> Visit Details</h5>
-              <hr class="dark mt-1">
-              <p class="card-text">Visit No: {{Visit_No}}</p>
-              <p class="card-text">Visit Date: {{Visit_Date}}</p>
-              <h5 class="card-title"><i class="fas fa-stethoscope text-success"></i> Vitals</h5>
-              <hr class="dark mt-1">
-              <p class="card-text">BP: {{BP}}</p>
-              <p class="card-text">Pulse rate: {{Pulse}}</p>
-            <p class="card-text">Body temperature: {{Temperature}}</p>
-            <p class="card-text">Symptoms Experienced: {{Symptoms_Exp}}</p>
-            <p class="card-text">Diagnosis: {{Diagnosis}}</p>
-        </div>
-        </div>
-        {{/mesg2}}
+                        <input type="text" name="days" id="days" placeholder="Prescribed for (Days)"
+                          class="form-control mb-4" pattern="^[0-9]+$" title="Please enter numeric value only">
 
-        {{#mesg5}}
-         <h5 class="card-title mt-3">Lab Test Details</h5>
-        <hr class="dark mt-1">
-        {{/mesg5}}
-        
-        {{#mesg3}}
-        <div class="card" style="width: 55rem; margin-top: 1rem">
-        <div class="card-body">
-              <h5 class="card-title"><i class="fas fa-vial text-success"></i> {{Test_Name}}</h5>
-              <p class="card-text">Payment Status: {{Test_Pay_Status}}</p>
-              <p class="card-text">Test Completed: {{Test_Done}}</p>
-               {{#if (isAvailable File_Data) }}
-                          <a class="btn btn-dark" href="/dashboard/incomingVisits/downloadLabReports/{{File_Data}}">{{File_Data}}</a>
-                {{else}}
-                          <p class="card-text">Report: {{File_Data}}</p>
-                {{/if}}
-        </div>
-        </div>
-        {{/mesg3}}
 
-        {{#mesg5}}
-        <h5 class="card-title mt-3">Medicine Details</h5>
-        <hr class="dark mt-1">
-        {{/mesg5}}
+                        <input type="text" name="duration" id="duration" placeholder="Duration (Hours)"
+                          class="form-control mb-4" pattern="^[0-9]+$" title="Please enter numeric value only">
+                      </div>
+                      <a class="btn btn-danger mt-3" href="#" id="presAdd"><span class="text-light">Add</span></a>
+                    </div>
+                    <div class="form-group d-flex flex-column mx-5">
+                      <button type="submit" class="btn btn-success"><span class="text-light text-lg">Save
+                          Details</span></button>
+                    </div>
+                  </form>
+                  {{/mesg1}}
 
-        {{#mesg4}}
-        <div class="card" style="width: 55rem; margin-top: 1rem">
-        <div class="card-body">
-              <h5 class="card-title"><i class="fas fa-pills text-success"></i> {{Medicine_Name}}</h5>
-              <p class="card-text">Description: {{Description}}</p>
-              <p class="card-text">Prescribed for <b>{{Days}}</b> days.</p>
-               <p class="card-text">To be taken in the duration of <b>{{Duration}}</b> Hours.</p>
-                <p class="card-text">Payment Status: {{Med_Pay_Status}}</p>
-                 <p class="card-text">Medicine Received: {{Received}}</p>
-              
-        </div>
-        </div>
-        {{/mesg4}}
+                  {{#mesg2}}
+                  <div class="card" style="width: 55rem; margin-top: 1rem">
+                    <div class="card-body">
+                      <h5 class="card-title"> <i class="far fa-file-alt text-success"></i> Visit Details</h5>
+                      <hr class="dark mt-1">
+                      <p class="card-text">Visit No: {{Visit_No}}</p>
+                      <p class="card-text">Visit Date: {{Visit_Date}}</p>
+                      <h5 class="card-title"><i class="fas fa-stethoscope text-success"></i> Vitals</h5>
+                      <hr class="dark mt-1">
+                      <p class="card-text">BP: {{BP}}</p>
+                      <p class="card-text">Pulse rate: {{Pulse}}</p>
+                      <p class="card-text">Body temperature: {{Temperature}}</p>
+                      <p class="card-text">Symptoms Experienced: {{Symptoms_Exp}}</p>
+                      <p class="card-text">Diagnosis: {{Diagnosis}}</p>
+                    </div>
+                  </div>
+                  {{/mesg2}}
 
-      </div>
-    </div>
+                  {{#mesg5}}
+                  <h5 class="card-title mt-3">Lab Test Details</h5>
+                  <hr class="dark mt-1">
+                  {{/mesg5}}
+
+                  {{#mesg3}}
+                  <div class="card" style="width: 55rem; margin-top: 1rem">
+                    <div class="card-body">
+                      <h5 class="card-title"><i class="fas fa-vial text-success"></i> {{Test_Name}}</h5>
+                      <p class="card-text">Payment Status: {{Test_Pay_Status}}</p>
+                      <p class="card-text">Test Completed: {{Test_Done}}</p>
+                      {{#if (isAvailable File_Data) }}
+                      <a class="btn btn-dark"
+                        href="/dashboard/incomingVisits/downloadLabReports/{{File_Data}}">{{File_Data}}</a>
+                      {{else}}
+                      <p class="card-text">Report: {{File_Data}}</p>
+                      {{/if}}
+                    </div>
+                  </div>
+                  {{/mesg3}}
+
+                  {{#mesg5}}
+                  <h5 class="card-title mt-3">Medicine Details</h5>
+                  <hr class="dark mt-1">
+                  {{/mesg5}}
+
+                  {{#mesg4}}
+                  <div class="card" style="width: 55rem; margin-top: 1rem">
+                    <div class="card-body">
+                      <h5 class="card-title"><i class="fas fa-pills text-success"></i> {{Medicine_Name}}</h5>
+                      <p class="card-text">Description: {{Description}}</p>
+                      <p class="card-text">Prescribed for <b>{{Days}}</b> days.</p>
+                      <p class="card-text">To be taken in the duration of <b>{{Duration}}</b> Hours.</p>
+                      <p class="card-text">Payment Status: {{Med_Pay_Status}}</p>
+                      <p class="card-text">Medicine Received: {{Received}}</p>
+
+                    </div>
+                  </div>
+                  {{/mesg4}}
+
+                </div>
+              </div>
             </div>
-          </div>  
+          </div>
         </div>
       </div>
     </div>
   </div>
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2" href="/">
-     <i class="fas fa-clinic-medical py-2"></i>
+      <i class="fas fa-clinic-medical py-2"></i>
     </a>
   </div>
   <!--   Core JS Files   -->
@@ -218,121 +245,121 @@
   <script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="/assets/js/plugins/chartjs.min.js"></script>
-  
+
   <script>
-        let addBtn = document.getElementById('add');
-        let addBtnPres = document.getElementById('presAdd');
-        addBtn.addEventListener('click', addTests);
-        addBtnPres.addEventListener('click', addPrescriptions);
+    let addBtn = document.getElementById('add');
+    let addBtnPres = document.getElementById('presAdd');
+    addBtn.addEventListener('click', addTests);
+    addBtnPres.addEventListener('click', addPrescriptions);
 
-        function addTests() {
-            var firstInput = document.getElementById('labtests');
-            firstInput.setAttribute("required", "true");
+    function addTests() {
+      var firstInput = document.getElementById('labtests');
+      firstInput.setAttribute("required", "true");
 
-            var container = document.getElementById("container");
-            //container.removeChild(addBtn);
+      var container = document.getElementById("container");
+      //container.removeChild(addBtn);
 
-            var inputArrays = [...document.querySelectorAll('#labtests')].pop();
-            var number = parseInt(inputArrays.name);
+      var inputArrays = [...document.querySelectorAll('#labtests')].pop();
+      var number = parseInt(inputArrays.name);
 
-            var wrapper = document.createElement("div");
-            var input = document.createElement("input");
-            input.type = "text";
-            input.name = number + 1;
-            input.id = "labtests";
-            input.classList.add('form-control', 'mt-3', 'mb-2');
-            input.placeholder= "Laboratory Test"
-            input.setAttribute("required", "true");
-            var cancelBtn = document.createElement("a");
-            cancelBtn.innerHTML = "Cancel";
-            cancelBtn.href = "javascript:cancelItem()";
-            cancelBtn.id = "cancelButton";
-            cancelBtn.classList.add('btn', 'btn-dark', 'mt-3', 'text-light', 'mx-3')
+      var wrapper = document.createElement("div");
+      var input = document.createElement("input");
+      input.type = "text";
+      input.name = number + 1;
+      input.id = "labtests";
+      input.classList.add('form-control', 'mt-3', 'mb-2');
+      input.placeholder = "Laboratory Test"
+      input.setAttribute("required", "true");
+      var cancelBtn = document.createElement("a");
+      cancelBtn.innerHTML = "Cancel";
+      cancelBtn.href = "javascript:cancelItem()";
+      cancelBtn.id = "cancelButton";
+      cancelBtn.classList.add('btn', 'btn-dark', 'mt-3', 'text-light', 'mx-3')
 
-            wrapper.appendChild(input);
-             wrapper.appendChild(cancelBtn);
-             wrapper.appendChild(addBtn);
-             container.appendChild(wrapper);
-        }
+      wrapper.appendChild(input);
+      wrapper.appendChild(cancelBtn);
+      wrapper.appendChild(addBtn);
+      container.appendChild(wrapper);
+    }
 
-        function addPrescriptions() {
-            var medInput = document.getElementById('medName').setAttribute("required", "true");
-            var descInput = document.getElementById('desc').setAttribute("required", "true");
-            var daysInput = document.getElementById('days').setAttribute("required", "true");
-            var durationInput = document.getElementById('duration').setAttribute("required", "true");
+    function addPrescriptions() {
+      var medInput = document.getElementById('medName').setAttribute("required", "true");
+      var descInput = document.getElementById('desc').setAttribute("required", "true");
+      var daysInput = document.getElementById('days').setAttribute("required", "true");
+      var durationInput = document.getElementById('duration').setAttribute("required", "true");
 
-            var prescriptionContainer = document.getElementById("prescriptionContainer");
-            //prescriptionContainer.removeChild(addBtnPres);
+      var prescriptionContainer = document.getElementById("prescriptionContainer");
+      //prescriptionContainer.removeChild(addBtnPres);
 
-            var inputArrays = [...document.querySelectorAll('#pres')].pop();
-            var number = parseInt(inputArrays.name);
+      var inputArrays = [...document.querySelectorAll('#pres')].pop();
+      var number = parseInt(inputArrays.name);
 
-            //
-            var wrapper = document.createElement("div");
-            wrapper.classList.add('bg-gradient-gray', 'p-4', 'd-flex' ,'flex-column', 'shadow', 'rounded', 'mt-5')
-            var container = document.createElement("div");
-            container.id = "pres";
-            //container.classList.add('bg-gradient-gray', 'p-4', 'd-flex' ,'flex-column', 'shadow', 'rounded');
-            //
-            var cancelBtn = document.createElement("a");
-            cancelBtn.innerHTML = "Cancel";
-            cancelBtn.href = "javascript:cancelItem()";
-            cancelBtn.id = "cancelButton";
-            cancelBtn.classList.add('btn', 'btn-dark', 'mt-3', 'text-light')
-            //
-            var medNameInput = document.createElement("input");
-            medNameInput.name = "medName";
-            medNameInput.id = "medInput";
-            medNameInput.setAttribute("required", "true");
-            medNameInput.placeholder= "Medicine Name";
-            medNameInput.classList.add('form-control');
+      //
+      var wrapper = document.createElement("div");
+      wrapper.classList.add('bg-gradient-gray', 'p-4', 'd-flex', 'flex-column', 'shadow', 'rounded', 'mt-5')
+      var container = document.createElement("div");
+      container.id = "pres";
+      //container.classList.add('bg-gradient-gray', 'p-4', 'd-flex' ,'flex-column', 'shadow', 'rounded');
+      //
+      var cancelBtn = document.createElement("a");
+      cancelBtn.innerHTML = "Cancel";
+      cancelBtn.href = "javascript:cancelItem()";
+      cancelBtn.id = "cancelButton";
+      cancelBtn.classList.add('btn', 'btn-dark', 'mt-3', 'text-light')
+      //
+      var medNameInput = document.createElement("input");
+      medNameInput.name = "medName";
+      medNameInput.id = "medInput";
+      medNameInput.setAttribute("required", "true");
+      medNameInput.placeholder = "Medicine Name";
+      medNameInput.classList.add('form-control');
 
-            var descInput = document.createElement("input");
-            descInput.name = "desc";
-            descInput.id = "desc";
-            descInput.setAttribute("required", "true");
-            descInput.placeholder= "Usage";
-            descInput.classList.add('form-control', 'mt-4');
+      var descInput = document.createElement("input");
+      descInput.name = "desc";
+      descInput.id = "desc";
+      descInput.setAttribute("required", "true");
+      descInput.placeholder = "Usage";
+      descInput.classList.add('form-control', 'mt-4');
 
-            var daysInput = document.createElement("input");
-            daysInput.name = "days";
-            daysInput.id = "days";
-            daysInput.pattern = "^[0-9]+$";
-            daysInput.title = "Please enter numeric value only";
-            daysInput.setAttribute("required", "true");
-            daysInput.placeholder= "Prescribed for (Days)";
-            daysInput.classList.add('form-control', 'mt-4');
+      var daysInput = document.createElement("input");
+      daysInput.name = "days";
+      daysInput.id = "days";
+      daysInput.pattern = "^[0-9]+$";
+      daysInput.title = "Please enter numeric value only";
+      daysInput.setAttribute("required", "true");
+      daysInput.placeholder = "Prescribed for (Days)";
+      daysInput.classList.add('form-control', 'mt-4');
 
-            var durationInput = document.createElement("input");
-            durationInput.name = "duration";
-            durationInput.id = "duration";
-            durationInput.pattern = "^[0-9]+$";
-            durationInput.title = "Please enter numeric value only";
-            durationInput.setAttribute("required", "true");
-            durationInput.placeholder= "Duration (Hours)";
-            durationInput.classList.add('form-control', 'mt-4');
+      var durationInput = document.createElement("input");
+      durationInput.name = "duration";
+      durationInput.id = "duration";
+      durationInput.pattern = "^[0-9]+$";
+      durationInput.title = "Please enter numeric value only";
+      durationInput.setAttribute("required", "true");
+      durationInput.placeholder = "Duration (Hours)";
+      durationInput.classList.add('form-control', 'mt-4');
 
 
-            //
-             wrapper.appendChild(medNameInput);
-              wrapper.appendChild(descInput);
-              wrapper.appendChild(daysInput);
-             wrapper.appendChild(durationInput);
-            //
-             wrapper.appendChild(cancelBtn);
-            wrapper.appendChild(addBtnPres);
-             container.appendChild(wrapper);
-            prescriptionContainer.appendChild(container);
-        }
-        function cancelItem(){
-            let cancelBtns = document.querySelectorAll('[id=cancelButton]');
-            cancelBtns.forEach(btn => {
-                btn.addEventListener('click', function handleClick(event) {
-                    console.log(event.target.parentElement.remove());
-                });
-            });
-        }
-    </script>
+      //
+      wrapper.appendChild(medNameInput);
+      wrapper.appendChild(descInput);
+      wrapper.appendChild(daysInput);
+      wrapper.appendChild(durationInput);
+      //
+      wrapper.appendChild(cancelBtn);
+      wrapper.appendChild(addBtnPres);
+      container.appendChild(wrapper);
+      prescriptionContainer.appendChild(container);
+    }
+    function cancelItem() {
+      let cancelBtns = document.querySelectorAll('[id=cancelButton]');
+      cancelBtns.forEach(btn => {
+        btn.addEventListener('click', function handleClick(event) {
+          console.log(event.target.parentElement.remove());
+        });
+      });
+    }
+  </script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -347,4 +374,5 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="/assets/js/argon-dashboard.min.js?v=2.0.2"></script>
 </body>
+
 </html>

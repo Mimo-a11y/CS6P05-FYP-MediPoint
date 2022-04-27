@@ -1,5 +1,7 @@
 const db = require('../models');
-const { Op } = require("sequelize");
+const {
+    Op
+} = require("sequelize");
 let nodemailer = require('nodemailer');
 
 
@@ -14,34 +16,36 @@ const DoctorOPD = db.Doctor_OPD;
 const Prescription = db.Prescriptions;
 
 //get the pharmacy dashboard page
-const getPharmacyDashboardPage = async (req,res) => {
-    try{
-        if(req.user.User_Type !== "Clinic"){
-            return  res.status(400).render('errorPage', {unauthorized: true});
+const getPharmacyDashboardPage = async (req, res) => {
+    try {
+        if (req.user.User_Type !== "Clinic") {
+            return res.status(400).render('errorPage', {
+                unauthorized: true
+            });
         }
         const patient = await Patient.findAll({
             attributes: ['P_ID'],
             include: [{
                 model: User,
-                attributes:['Full_Name']
-            },{
+                attributes: ['Full_Name']
+            }, {
                 model: HealthLog,
-                attributes:['Card_No', 'Visit_No', 'PrescriptionPresID'],
-                where: {Visit_Date: new Date().toISOString().slice(0, 10)},
-                include:[{
+                attributes: ['Card_No', 'Visit_No', 'PrescriptionPresID'],
+                where: {
+                    Visit_Date: new Date().toISOString().slice(0, 10)
+                },
+                include: [{
                     model: Prescription,
-                    where:{
+                    where: {
                         Pres_No: 1,
-                        [Op.not]: [
-                            {
-                              Medicine_Name: {
+                        [Op.not]: [{
+                            Medicine_Name: {
                                 [Op.like]: 'N/A'
-                              }
                             }
-                          ]
+                        }]
                     },
-                    attributes:['Pres_ID', 'Pres_No', 'Medicine_Name']
-                },{
+                    attributes: ['Pres_ID', 'Pres_No', 'Medicine_Name']
+                }, {
                     model: Doctor,
                     attributes: ['D_ID'],
                     include: [{
@@ -50,77 +54,113 @@ const getPharmacyDashboardPage = async (req,res) => {
                     }]
                 }]
             }]
-        }).catch((err) => {console.log(err)});
-        if(patient.length === 0){
-            return res.status(200).render('pharmacyDashboard', {mesg1: true, incomingMesg: true});
-        }else{
-            return res.status(200).render('pharmacyDashboard', {mesg2: patient, incomingMesg: true});
+        }).catch((err) => {
+            console.log(err)
+        });
+        if (patient.length === 0) {
+            return res.status(200).render('pharmacyDashboard', {
+                mesg1: true,
+                incomingMesg: true
+            });
+        } else {
+            return res.status(200).render('pharmacyDashboard', {
+                mesg2: patient,
+                incomingMesg: true
+            });
         }
 
-    }catch(e){
+    } catch (e) {
         console.log(e);
-        return res.status(404).render('errorPage', {error: true});
+        return res.status(404).render('errorPage', {
+            error: true
+        });
     }
 }
 //-----------------------------------------------------------------------------//
 
 //get prescriptions details
-const getPresDetails = async (req,res) => {
-    try{
-        if(req.user.User_Type !== "Clinic"){
-            return  res.status(400).render('errorPage', {unauthorized: true});
+const getPresDetails = async (req, res) => {
+    try {
+        if (req.user.User_Type !== "Clinic") {
+            return res.status(400).render('errorPage', {
+                unauthorized: true
+            });
         }
         let medicines = await Prescription.findAll({
-            where: {Pres_ID: req.params.presid, Med_Pay_Status: 'Unpaid', Received: 'N/A'},
+            where: {
+                Pres_ID: req.params.presid,
+                Med_Pay_Status: 'Unpaid',
+                Received: 'N/A'
+            },
             attributes: ['Pres_ID', 'Medicine_Name', 'Pres_No', 'Med_Pay_Status', 'Description', 'Duration', 'Days']
         });
-        if(medicines.length === 0){
-            return res.status(200).render('pharmacyDashboard', {mesg4:true, incomingMesg: true});
-        }else{
-            return res.status(200).render('pharmacyDashboard', {mesg3: medicines, incomingMesg: true});
+        if (medicines.length === 0) {
+            return res.status(200).render('pharmacyDashboard', {
+                mesg4: true,
+                incomingMesg: true
+            });
+        } else {
+            return res.status(200).render('pharmacyDashboard', {
+                mesg3: medicines,
+                incomingMesg: true
+            });
         }
 
-    }catch(e){
+    } catch (e) {
         console.log(e);
-        return res.status(404).render('errorPage', {error: true});
+        return res.status(404).render('errorPage', {
+            error: true
+        });
     }
 }
 //------------------------------------------------------------------------------------------------//
 
 //confirm medicine payment
-const confirmPrescriptionsDetails = async (req,res) => {
-    try{
-        if(req.user.User_Type !== "Clinic"){
-            return  res.status(400).render('errorPage', {unauthorized: true});
+const confirmPrescriptionsDetails = async (req, res) => {
+    try {
+        if (req.user.User_Type !== "Clinic") {
+            return res.status(400).render('errorPage', {
+                unauthorized: true
+            });
         }
-        await Prescription.update(
-            {Med_Pay_Status: "Paid", Received: 'Yes'},
-            {where: {Pres_ID: req.params.presid, Pres_No: req.params.presno}}
-        );
+        await Prescription.update({
+            Med_Pay_Status: "Paid",
+            Received: 'Yes'
+        }, {
+            where: {
+                Pres_ID: req.params.presid,
+                Pres_No: req.params.presno
+            }
+        });
 
         //FOR EMAIL
         const patient = await Patient.findOne({
-            attributes:['P_ID'],
-            where: {P_ID: req.params.pid},
-            include:[{
+            attributes: ['P_ID'],
+            where: {
+                P_ID: req.params.pid
+            },
+            include: [{
                 model: User,
-                attributes:['Full_Name', 'Email']
+                attributes: ['Full_Name', 'Email']
             }]
         });
         const medicine = await Prescription.findOne({
-            attributes:['Pres_No', 'Medicine_Name', 'Description', 'Days', 'Duration'],
-            where: {Pres_ID: req.params.presid, Pres_No: req.params.presno}
+            attributes: ['Pres_No', 'Medicine_Name', 'Description', 'Days', 'Duration'],
+            where: {
+                Pres_ID: req.params.presid,
+                Pres_No: req.params.presno
+            }
         })
         // e-mail message options
-  let mailOptions = {
-    from: {
-        name: 'MediPoint',
-        address: 'medipoint72@gmail.com'
-    },
-    to: patient.User.Email,
-    subject: 'Medicine reminder',
-    text: `Hello ${patient.User.Full_Name}, below are your medicine details \n Medicine Name: ${medicine.Medicine_Name} Prescription no: ${medicine.Pres_No}`,
-    html: ` 
+        let mailOptions = {
+            from: {
+                name: 'MediPoint',
+                address: 'medipoint72@gmail.com'
+            },
+            to: patient.User.Email,
+            subject: 'Medicine reminder',
+            text: `Hello ${patient.User.Full_Name}, below are your medicine details \n Medicine Name: ${medicine.Medicine_Name} Prescription no: ${medicine.Pres_No}`,
+            html: ` 
 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout:fixed;background-color:#f9f9f9" id="bodyTable">
 	<tbody>
 		<tr>
@@ -253,84 +293,96 @@ const confirmPrescriptionsDetails = async (req,res) => {
 			</td>
 		</tr>
 	</tbody>
-</table>`    
-};
+</table>`
+        };
 
-// e-mail transport configuration
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'medipoint72@gmail.com',
-      pass: 'ysmokjcjpkjblwil'
-    }
-});
+        // e-mail transport configuration
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'medipoint72@gmail.com',
+                pass: 'ysmokjcjpkjblwil'
+            }
+        });
 
-transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-});
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
         return res.redirect(req.get('referer'));
 
-    }catch(e){
+    } catch (e) {
         console.log(e);
-        return res.status(404).render('errorPage', {error: true});
+        return res.status(404).render('errorPage', {
+            error: true
+        });
     }
 }
 //---------------------------------------------------------------------------------------//
 
 //confirm medicine payment
-const cancelPrescriptionsDetails = async (req,res) => {
-    try{
-        if(req.user.User_Type !== "Clinic"){
-            return  res.status(400).render('errorPage', {unauthorized: true});
+const cancelPrescriptionsDetails = async (req, res) => {
+    try {
+        if (req.user.User_Type !== "Clinic") {
+            return res.status(400).render('errorPage', {
+                unauthorized: true
+            });
         }
-        await Prescription.update(
-            {Received: 'No'},
-            {where: {Pres_ID: req.params.presid, Pres_No: req.params.presno}}
-        );
+        await Prescription.update({
+            Received: 'No'
+        }, {
+            where: {
+                Pres_ID: req.params.presid,
+                Pres_No: req.params.presno
+            }
+        });
         return res.redirect(req.get('referer'));
 
-    }catch(e){
+    } catch (e) {
         console.log(e);
-        return res.status(404).render('errorPage', {error: true});
+        return res.status(404).render('errorPage', {
+            error: true
+        });
     }
 }
 //---------------------------------------------------------------------------//
 
 //get confirmed prescriptions
-const getConfirmedPrescriptions = async (req,res) => {
-    try{
-        if(req.user.User_Type !== "Clinic"){
-            return  res.status(400).render('errorPage', {unauthorized: true});
+const getConfirmedPrescriptions = async (req, res) => {
+    try {
+        if (req.user.User_Type !== "Clinic") {
+            return res.status(400).render('errorPage', {
+                unauthorized: true
+            });
         }
         const patient = await Patient.findAll({
             attributes: ['P_ID'],
             include: [{
                 model: User,
-                attributes:['Full_Name']
-            },{
+                attributes: ['Full_Name']
+            }, {
                 model: HealthLog,
-                attributes:['Card_No', 'Visit_No', 'PrescriptionPresID'],
-                where: {Visit_Date: new Date().toISOString().slice(0, 10)},
-                include:[{
+                attributes: ['Card_No', 'Visit_No', 'PrescriptionPresID'],
+                where: {
+                    Visit_Date: new Date().toISOString().slice(0, 10)
+                },
+                include: [{
                     model: Prescription,
-                    where:{
+                    where: {
                         Pres_No: 1,
                         Med_Pay_Status: 'Paid',
                         Received: 'Yes',
-                        [Op.not]: [
-                            {
-                              Medicine_Name: {
+                        [Op.not]: [{
+                            Medicine_Name: {
                                 [Op.like]: 'N/A'
-                              }
                             }
-                          ]
+                        }]
                     },
-                    attributes:['Pres_ID', 'Pres_No', 'Medicine_Name', 'Med_Pay_Status', 'Received']
-                },{
+                    attributes: ['Pres_ID', 'Pres_No', 'Medicine_Name', 'Med_Pay_Status', 'Received']
+                }, {
                     model: Doctor,
                     attributes: ['D_ID'],
                     include: [{
@@ -339,16 +391,26 @@ const getConfirmedPrescriptions = async (req,res) => {
                     }]
                 }]
             }]
-        }).catch((err) => {console.log(err)});
-        if(patient.length === 0){
-            return res.status(200).render('pharmacyDashboard', {mesg5: true, confirmedMesg: true});
-        }else{
-            return res.status(200).render('pharmacyDashboard', {mesg6: patient, confirmedMesg: true});
+        }).catch((err) => {
+            console.log(err)
+        });
+        if (patient.length === 0) {
+            return res.status(200).render('pharmacyDashboard', {
+                mesg5: true,
+                confirmedMesg: true
+            });
+        } else {
+            return res.status(200).render('pharmacyDashboard', {
+                mesg6: patient,
+                confirmedMesg: true
+            });
         }
 
-    }catch(e){
+    } catch (e) {
         console.log(e);
-        return res.status(404).render('errorPage', {error: true});
+        return res.status(404).render('errorPage', {
+            error: true
+        });
     }
 }
 

@@ -19,18 +19,18 @@ const chartController = require('../controllers/chartController');
 initPassportLocal();
 
 //creating routes for the home page
-routes.get('/', (req,res) => {
+routes.get('/', (req, res) => {
         res.render('mainHomePage');
 })
 routes.get('/dashboard', loginController.checkLoggedIn, homePageController.getHomePage);
-routes.post('/addPatient',loginController.checkLoggedIn, homePageController.addNewPatient );
+routes.post('/addPatient', loginController.checkLoggedIn, homePageController.addNewPatient);
 //creating routes for the login page
 routes.get('/login', loginController.checkLoggedOut, loginController.getLoginPage);
-routes.post('/login', passport.authenticate("local", {   //setting local passport strategy
+routes.post('/login', passport.authenticate("local", { //setting local passport strategy
         successRedirect: "/dashboard",
-        failureRedirect: "/login", 
+        failureRedirect: "/login",
         successFlash: true,
-        failureFlash: true    
+        failureFlash: true
 }));
 
 //creating routes for the sign up page
@@ -39,12 +39,12 @@ routes.post('/signUp', auth.validateSignUp, signUpController.createNewUser);
 routes.post('/logout', loginController.postLogOut);
 
 //creating routes for about us page
-routes.get('/aboutUs', (req,res) => {
+routes.get('/aboutUs', (req, res) => {
         res.render('aboutUs');
 })
 
 //creating routers for symptom recorder
-routes.get('/dashboard/Symptoms',sympRecorderController.getSymptomsRecorderPage);
+routes.get('/dashboard/Symptoms', sympRecorderController.getSymptomsRecorderPage);
 routes.post('/dashboard/Symptoms', sympRecorderController.recordSymptoms);
 routes.get('/dashboard/Symptoms/:sympID', sympRecorderController.deleteSymptoms);
 
@@ -66,7 +66,7 @@ routes.get('/dashboard/myMedicalRecords/downloadLabReports/:file(*)', medicalRec
 
 
 //creating routes for OPD dashboard
-routes.get('/dashboard/OPD/incomingAppointments',opdController.getOpdDashboardPage);
+routes.get('/dashboard/OPD/incomingAppointments', opdController.getOpdDashboardPage);
 routes.get('/dashboard/OPD/incomingAppointments/pID/:pid/appointmentDetails/appID/:appid/dID/:did', opdController.getAppDetail);
 routes.get('/dashboard/OPD/incomingAppointments/pID/:pid/appointmentDetails/appID/:appid/dID/:id/remove', opdController.deleteAppointments);
 routes.get('/dashboard/OPD/incomingAppointments/pID/:pid/appointmentDetails/appID/:appid/dID/:id/confirm', opdController.updateAppointments);
@@ -83,7 +83,7 @@ routes.get('/dashboard/OPD/cardSearch/PatientOPDCardDetails', opdController.geto
 routes.get('/dashboard/OPD/cardSearch/PatientOPDCardDetails/dID/:did/pID/:pid', opdController.getIndividualOpdCardDetails);
 
 //creating routes for pharmacy dashboard
-routes.get('/dashboard/Pharmacy/incomingPrescriptions',pharmacyController.getPharmacyDashboardPage);
+routes.get('/dashboard/Pharmacy/incomingPrescriptions', pharmacyController.getPharmacyDashboardPage);
 routes.get('/dashboard/Pharmacy/prescriptionsDetails/pID/:pid/presID/:presid', pharmacyController.getPresDetails);
 routes.get('/dashboard/Pharmacy/prescriptionsDetails/pID/:pid/presID/:presid/ConfirmPrescriptions/PresNo/:presno', pharmacyController.confirmPrescriptionsDetails);
 routes.get('/dashboard/Pharmacy/prescriptionsDetails/pID/:pid/presID/:presid/CancelPrescriptions/PresNo/:presno', pharmacyController.cancelPrescriptionsDetails);
@@ -111,9 +111,10 @@ routes.get('/dashboard/searchOPDdetails/PatientOPDCardDetails/cardNo/:cardno/vis
 routes.get('/dashboard/searchOPDdetails/downloadLabReports/:file(*)', doctorController.downloadLabReports);
 
 //handling invalid routes
-routes.get('*', (req,res) => {
-        res.status(404).render('errorPage', {error:true});
+routes.get('*', (req, res) => {
+        res.status(404).render('errorPage', {
+                error: true
+        });
 })
 //exporting
 module.exports = routes;
-

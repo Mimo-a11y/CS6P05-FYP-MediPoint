@@ -1,6 +1,7 @@
 <html lang="en">
+
 <head>
-   <meta charset="utf-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="/assets/img/icon.png">
@@ -18,22 +19,26 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="/assets/css/argon-dashboard.css?v=2.0.2" rel="stylesheet" />
 </head>
+
 <body class="g-sidenav-show bg-gray-100">
-   <div class="position-absolute w-100 min-height-300 top-0 bg-gradient-success">
-        <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-5 text-center mx-auto">
-            <h3 class="text-white mb-2 mt-5"><i class="fas fa-notes-medical"></i> Incoming Visits</h3>
-            <p class="text-lead text-white">Hi! Here are your Incoming visits for today.<br> Happy diagnosing!</p>
-          </div>
+  <div class="position-absolute w-100 min-height-300 top-0 bg-gradient-success">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 text-center mx-auto">
+          <h3 class="text-white mb-2 mt-5"><i class="fas fa-notes-medical"></i> Incoming Visits</h3>
+          <p class="text-lead text-white">Hi! Here are your Incoming visits for today.<br> Happy diagnosing!</p>
         </div>
       </div>
+    </div>
   </div>
-  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
+  <aside
+    class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 "
+    id="sidenav-main">
     <div class="sidenav-header text-center mt-4">
-      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+        aria-hidden="true" id="iconSidenav"></i>
       <a href="/" class="text-center">
-       <img src="/assets/img/logofinal.png" alt="logo" height="90px" width="90px" class="shadow-lg rounded-circle">
+        <img src="/assets/img/logofinal.png" alt="logo" height="90px" width="90px" class="shadow-lg rounded-circle">
       </a>
     </div>
     <hr class="horizontal dark mt-4">
@@ -41,7 +46,8 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="/dashboard">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Dashboard</span>
@@ -52,7 +58,8 @@
         </li>
         <li class="nav-item">
           <a class="nav-link active" href="">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-copy-04 text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Incoming Visits</span>
@@ -66,12 +73,12 @@
         <div class="card-body text-center p-3 w-100 pt-0">
           <div class="docs-info">
             <h6 class="mb-0">Clinic hours completed?</h6>
-            
+
           </div>
         </div>
-      </div> 
+      </div>
       <form action="/logout" method="POST">
-              <button class="btn btn-dark btn-sm mb-0 w-100">Logout</button>
+        <button class="btn btn-dark btn-sm mb-0 w-100">Logout</button>
       </form>
     </div>
   </aside>
@@ -81,44 +88,46 @@
         <div class="row gx-4">
           <div class="col-auto my-auto">
             <div class="h-100">
-            <div class="container-fluid py-4">
-      <div class="row">
-        <h3>Patient OPD Cards</h3>
-    {{#mesg2}}
-    <div class="col-md-8">
-          <div class="card" style="width: 55rem; margin-top: 1rem">
-            <div class="card-body text-center">
-              <i class="fas fa-cannabis text-success" style="font-size: 4rem; margin-bottom:0.5rem;"></i>
-              <p class="card-text">There are no incoming visits for you today!</p>
+              <div class="container-fluid py-4">
+                <div class="row">
+                  <h3>Patient OPD Cards</h3>
+                  {{#mesg2}}
+                  <div class="col-md-8">
+                    <div class="card" style="width: 55rem; margin-top: 1rem">
+                      <div class="card-body text-center">
+                        <i class="fas fa-cannabis text-success" style="font-size: 4rem; margin-bottom:0.5rem;"></i>
+                        <p class="card-text">There are no incoming visits for you today!</p>
+                      </div>
+                    </div>
+                  </div>
+                  {{/mesg2}}
+                  {{#mesg1}}
+                  <div class="col-md-4">
+                    <div class="card" style="width: 18rem; margin-top: 2rem">
+                      <div class="card-body">
+                        <i class="fas fa-file-medical text-dark shadow"
+                          style="font-size: 1.5rem; margin-bottom:0.5rem;"></i>
+                        <h5 class="card-title">Card Number: {{Card_No}}</h5>
+                        <p class="card-text">Visit Number: {{Visit_No}}</p>
+                        <p class="card-text">Visit Date: {{Visit_Date}}</p>
+                        <p class="card-text">Patient ID: {{Patients.0.P_ID}}</p>
+                        <a href="/dashboard/incomingVisits/dID/{{Doctors.0.D_ID}}/pID/{{Patients.0.P_ID}}"
+                          class="btn btn-success">View Details</a>
+                      </div>
+                    </div>
+                  </div>
+                  {{/mesg1}}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-    {{/mesg2}}
-        {{#mesg1}}
-        <div class="col-md-4">
-          <div class="card" style="width: 18rem; margin-top: 2rem">
-            <div class="card-body">
-              <i class="fas fa-file-medical text-dark shadow" style="font-size: 1.5rem; margin-bottom:0.5rem;"></i>
-              <h5 class="card-title">Card Number: {{Card_No}}</h5>
-              <p class="card-text">Visit Number: {{Visit_No}}</p>
-              <p class="card-text">Visit Date: {{Visit_Date}}</p>
-              <p class="card-text">Patient ID: {{Patients.0.P_ID}}</p>
-              <a href="/dashboard/incomingVisits/dID/{{Doctors.0.D_ID}}/pID/{{Patients.0.P_ID}}" class="btn btn-success">View Details</a>
-            </div>
-          </div>
-        </div>
-        {{/mesg1}}
-      </div>
-    </div>
-            </div>
-          </div>  
         </div>
       </div>
     </div>
   </div>
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2" href="/">
-     <i class="fas fa-clinic-medical py-2"></i>
+      <i class="fas fa-clinic-medical py-2"></i>
     </a>
   </div>
   <!--   Core JS Files   -->
@@ -128,77 +137,77 @@
   <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="/assets/js/plugins/chartjs.min.js"></script>
   <script>
-      /* chart.js chart examples */
+    /* chart.js chart examples */
 
-// chart colors
-var colors = ['#007bff','#28a745','#333333','#c3e6cb','#dc3545','#6c757d'];
+    // chart colors
+    var colors = ['#007bff', '#28a745', '#333333', '#c3e6cb', '#dc3545', '#6c757d'];
 
-/* 3 donut charts */
-var donutOptions = {
-  cutoutPercentage: 85, 
-  legend: {position:'bottom', padding:5, labels: {pointStyle:'circle', usePointStyle:true}}
-};
+    /* 3 donut charts */
+    var donutOptions = {
+      cutoutPercentage: 85,
+      legend: { position: 'bottom', padding: 5, labels: { pointStyle: 'circle', usePointStyle: true } }
+    };
 
-// donut 1
-var chDonutData1 = {
-    labels: ['Bootstrap', 'Popper', 'Other'],
-    datasets: [
-      {
-        backgroundColor: colors.slice(0,3),
-        borderWidth: 0,
-        data: [74, 11, 40]
-      }
-    ]
-};
+    // donut 1
+    var chDonutData1 = {
+      labels: ['Bootstrap', 'Popper', 'Other'],
+      datasets: [
+        {
+          backgroundColor: colors.slice(0, 3),
+          borderWidth: 0,
+          data: [74, 11, 40]
+        }
+      ]
+    };
 
-var chDonut1 = document.getElementById("chDonut1");
-if (chDonut1) {
-  new Chart(chDonut1, {
-      type: 'pie',
-      data: chDonutData1,
-      options: donutOptions
-  });
-}
+    var chDonut1 = document.getElementById("chDonut1");
+    if (chDonut1) {
+      new Chart(chDonut1, {
+        type: 'pie',
+        data: chDonutData1,
+        options: donutOptions
+      });
+    }
 
-// donut 2
-var chDonutData2 = {
-    labels: ['Wips', 'Pops', 'Dags'],
-    datasets: [
-      {
-        backgroundColor: colors.slice(0,3),
-        borderWidth: 0,
-        data: [40, 45, 30]
-      }
-    ]
-};
-var chDonut2 = document.getElementById("chDonut2");
-if (chDonut2) {
-  new Chart(chDonut2, {
-      type: 'pie',
-      data: chDonutData2,
-      options: donutOptions
-  });
-}
+    // donut 2
+    var chDonutData2 = {
+      labels: ['Wips', 'Pops', 'Dags'],
+      datasets: [
+        {
+          backgroundColor: colors.slice(0, 3),
+          borderWidth: 0,
+          data: [40, 45, 30]
+        }
+      ]
+    };
+    var chDonut2 = document.getElementById("chDonut2");
+    if (chDonut2) {
+      new Chart(chDonut2, {
+        type: 'pie',
+        data: chDonutData2,
+        options: donutOptions
+      });
+    }
 
-// donut 3
-var chDonutData3 = {
-    labels: ['Angular', 'React', 'Other'],
-    datasets: [
-      {
-        backgroundColor: colors.slice(0,3),
-        borderWidth: 0,
-        data: [21, 45, 55, 33]
-      }
-    ]
-};
-var chDonut3 = document.getElementById("chDonut3");
-if (chDonut3) {
-  new Chart(chDonut3, {
-      type: 'pie',
-      data: chDonutData3,
-      options: donutOptions
-  });
-}
+    // donut 3
+    var chDonutData3 = {
+      labels: ['Angular', 'React', 'Other'],
+      datasets: [
+        {
+          backgroundColor: colors.slice(0, 3),
+          borderWidth: 0,
+          data: [21, 45, 55, 33]
+        }
+      ]
+    };
+    var chDonut3 = document.getElementById("chDonut3");
+    if (chDonut3) {
+      new Chart(chDonut3, {
+        type: 'pie',
+        data: chDonutData3,
+        options: donutOptions
+      });
+    }
 
     var ctx1 = document.getElementById("chart-line").getContext("2d");
 
@@ -296,4 +305,5 @@ if (chDonut3) {
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="/assets/js/argon-dashboard.min.js?v=2.0.2"></script>
 </body>
+
 </html>

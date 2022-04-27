@@ -1,7 +1,7 @@
 <html lang="en">
 
 <head>
-   <meta charset="utf-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="/assets/img/icon.png">
@@ -19,64 +19,74 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="/assets/css/argon-dashboard.css?v=2.0.2" rel="stylesheet" />
 </head>
+
 <body class="g-sidenav-show bg-gray-100">
-    {{#incomingMesg}}
-    <div class="position-absolute w-100 min-height-300 top-0 bg-gradient-success">
-        <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-5 text-center mx-auto">
-            <h3 class="text-white mb-2 mt-5"><i class="fas fa-file-prescription"></i> Incoming Prescriptions</h3>
-            <p class="text-lead text-white">Hi, these are the incoming Medicine precriptions for today at <br> Tarakeshwor Health Clinic</p>
-          </div>
+  {{#incomingMesg}}
+  <div class="position-absolute w-100 min-height-300 top-0 bg-gradient-success">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 text-center mx-auto">
+          <h3 class="text-white mb-2 mt-5"><i class="fas fa-file-prescription"></i> Incoming Prescriptions</h3>
+          <p class="text-lead text-white">Hi, these are the incoming Medicine precriptions for today at <br> Tarakeshwor
+            Health Clinic</p>
         </div>
       </div>
+    </div>
   </div>
   {{/incomingMesg}}
   {{#confirmedMesg}}
-   <div class="position-absolute w-100 min-height-300 top-0 bg-gradient-success">
-        <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-5 text-center mx-auto">
-            <h3 class="text-white mb-2 mt-5"><i class="fas fa-check-square"></i> Confirmed Prescriptions</h3>
-            <p class="text-lead text-white">Hi, these are the verified Medicine precriptions for today at <br> Tarakeshwor Health Clinic</p>
-          </div>
+  <div class="position-absolute w-100 min-height-300 top-0 bg-gradient-success">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 text-center mx-auto">
+          <h3 class="text-white mb-2 mt-5"><i class="fas fa-check-square"></i> Confirmed Prescriptions</h3>
+          <p class="text-lead text-white">Hi, these are the verified Medicine precriptions for today at <br> Tarakeshwor
+            Health Clinic</p>
         </div>
       </div>
+    </div>
   </div>
   {{/confirmedMesg}}
-  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
+  <aside
+    class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 "
+    id="sidenav-main">
     <div class="sidenav-header text-center mt-4">
-      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+        aria-hidden="true" id="iconSidenav"></i>
       <a href="/" class="text-center">
-       <img src="/assets/img/logofinal.png" alt="logo" height="90px" width="90px" class="shadow-lg rounded-circle">
+        <img src="/assets/img/logofinal.png" alt="logo" height="90px" width="90px" class="shadow-lg rounded-circle">
       </a>
     </div>
     <hr class="horizontal dark mt-4">
     <div class="collapse navbar-collapse w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
-          <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" href="/dashboard">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
-         <li class="nav-item mt-3">
+        <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Medicine Prescriptions</h6>
         </li>
         {{#incomingMesg}}
-            <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link active" href="/dashboard/Pharmacy/incomingPrescriptions">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-copy-04 text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Incoming Prescriptions</span>
           </a>
         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="/dashboard/OPD/incomingPrescriptions/prescriptionDetailsDetails/confirmedPrescriptions">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link"
+            href="/dashboard/OPD/incomingPrescriptions/prescriptionDetailsDetails/confirmedPrescriptions">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-check-bold text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Confirmed Prescriptions</span>
@@ -86,15 +96,18 @@
         {{#confirmedMesg}}
         <li class="nav-item">
           <a class="nav-link" href="/dashboard/Pharmacy/incomingPrescriptions">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-copy-04 text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Incoming Prescriptions</span>
           </a>
         </li>
-         <li class="nav-item">
-          <a class="nav-link active" href="/dashboard/OPD/incomingPrescriptions/prescriptionDetailsDetails/confirmedPrescriptions">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link active"
+            href="/dashboard/OPD/incomingPrescriptions/prescriptionDetailsDetails/confirmedPrescriptions">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-check-bold text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Confirmed Prescriptions</span>
@@ -109,12 +122,12 @@
         <div class="card-body text-center p-3 w-100 pt-0">
           <div class="docs-info">
             <h6 class="mb-0">Clinic hours completed?</h6>
-            
+
           </div>
         </div>
-      </div> 
+      </div>
       <form action="/logout" method="POST">
-              <button class="btn btn-dark btn-sm mb-0 w-100">Logout</button>
+        <button class="btn btn-dark btn-sm mb-0 w-100">Logout</button>
       </form>
     </div>
   </aside>
@@ -124,117 +137,126 @@
         <div class="row gx-4">
           <div class="col-auto my-auto">
             <div class="h-100">
-            <div class="container-fluid py-4">
-      <div class="row">
-          {{#incomingMesg}}
-        <h5><i class="fas fa-tablets text-success"></i> Medicine Prescriptions for today</h5>
-        <hr>
-        {{/incomingMesg}}
-         {{#confirmedMesg}}
-        <h5><i class="fas fa-tablets text-success"></i> Confirmed prescriptions for today</h5>
-        <hr>
-        {{/confirmedMesg}}
-        {{#mesg1}}
-             <div class="col-md-8">
-          <div class="card" style="width: 55rem; margin-top: 1rem">
-            <div class="card-body text-center">
-              <i class="fas fa-cannabis text-success" style="font-size: 4rem; margin-bottom:0.5rem;"></i>
-              <p class="card-text">There are no incoming medicine presciptions for today! <br> Please come back later.</p>
-            </div>
-          </div>
-        </div>
-        {{/mesg1}}
-         {{#mesg4}}
-             <div class="col-md-8">
-          <div class="card" style="width: 55rem; margin-top: 1rem">
-            <div class="card-body text-center">
-              <i class="fas fa-clipboard-check text-success" style="font-size: 4rem; margin-bottom:0.5rem;"></i>
-              <p class="card-text">All medicine prescription for this patient has already been checked out. <br> Please check the Confirmed Prescriptions tab.</p>
-            </div>
-          </div>
-        </div>
-        {{/mesg4}}
-         {{#mesg5}}
-             <div class="col-md-8">
-          <div class="card" style="width: 55rem; margin-top: 1rem">
-            <div class="card-body text-center">
-             <i class="fas fa-info-circle text-success" style="font-size: 4rem; margin-bottom:0.5rem;"></i>
-              <p class="card-text">No med prescriptions cofirmed for today! <br> Please confirm Medicines from the Incoming Prescriptions tab.</p>
-            </div>
-          </div>
-        </div>
-        {{/mesg5}}
+              <div class="container-fluid py-4">
+                <div class="row">
+                  {{#incomingMesg}}
+                  <h5><i class="fas fa-tablets text-success"></i> Medicine Prescriptions for today</h5>
+                  <hr>
+                  {{/incomingMesg}}
+                  {{#confirmedMesg}}
+                  <h5><i class="fas fa-tablets text-success"></i> Confirmed prescriptions for today</h5>
+                  <hr>
+                  {{/confirmedMesg}}
+                  {{#mesg1}}
+                  <div class="col-md-8">
+                    <div class="card" style="width: 55rem; margin-top: 1rem">
+                      <div class="card-body text-center">
+                        <i class="fas fa-cannabis text-success" style="font-size: 4rem; margin-bottom:0.5rem;"></i>
+                        <p class="card-text">There are no incoming medicine presciptions for today! <br> Please come
+                          back later.</p>
+                      </div>
+                    </div>
+                  </div>
+                  {{/mesg1}}
+                  {{#mesg4}}
+                  <div class="col-md-8">
+                    <div class="card" style="width: 55rem; margin-top: 1rem">
+                      <div class="card-body text-center">
+                        <i class="fas fa-clipboard-check text-success"
+                          style="font-size: 4rem; margin-bottom:0.5rem;"></i>
+                        <p class="card-text">All medicine prescription for this patient has already been checked out.
+                          <br> Please check the Confirmed Prescriptions tab.</p>
+                      </div>
+                    </div>
+                  </div>
+                  {{/mesg4}}
+                  {{#mesg5}}
+                  <div class="col-md-8">
+                    <div class="card" style="width: 55rem; margin-top: 1rem">
+                      <div class="card-body text-center">
+                        <i class="fas fa-info-circle text-success" style="font-size: 4rem; margin-bottom:0.5rem;"></i>
+                        <p class="card-text">No med prescriptions cofirmed for today! <br> Please confirm Medicines from
+                          the Incoming Prescriptions tab.</p>
+                      </div>
+                    </div>
+                  </div>
+                  {{/mesg5}}
 
-        {{#mesg2}}
-        <div class="col-md-4">
-          <div class="card" style="width: 18rem; margin-top: 2rem">
-            <div class="card-body">
-           <i class="fas fa-user-clock text-success" style="font-size: 2rem; margin-bottom:0.5rem;"></i>
-              <h5 class="card-title">Patient ID: {{P_ID}}</h5>
-              <p class="card-text">Patient Name: {{User.Full_Name}}</p>
-              <p class="card-text">Card_No: {{Health_Logs.0.Card_No}}</p>
-              <p class="card-text">Visit_No: {{Health_Logs.0.Visit_No}}</p>
-              <p class="card-text">Reffered By: <br> <b>Dr. {{Health_Logs.0.Doctors.0.User.Full_Name}}</b></p>
-              <a href="prescriptionsDetails/pID/{{P_ID}}/presID/{{Health_Logs.0.PrescriptionPresID}}" class="btn btn-dark">Open</a>
+                  {{#mesg2}}
+                  <div class="col-md-4">
+                    <div class="card" style="width: 18rem; margin-top: 2rem">
+                      <div class="card-body">
+                        <i class="fas fa-user-clock text-success" style="font-size: 2rem; margin-bottom:0.5rem;"></i>
+                        <h5 class="card-title">Patient ID: {{P_ID}}</h5>
+                        <p class="card-text">Patient Name: {{User.Full_Name}}</p>
+                        <p class="card-text">Card_No: {{Health_Logs.0.Card_No}}</p>
+                        <p class="card-text">Visit_No: {{Health_Logs.0.Visit_No}}</p>
+                        <p class="card-text">Reffered By: <br> <b>Dr. {{Health_Logs.0.Doctors.0.User.Full_Name}}</b></p>
+                        <a href="prescriptionsDetails/pID/{{P_ID}}/presID/{{Health_Logs.0.PrescriptionPresID}}"
+                          class="btn btn-dark">Open</a>
+                      </div>
+                    </div>
+                  </div>
+                  {{/mesg2}}
+                  {{#mesg3}}
+                  <h5 class="card-text">Medicine Number: {{Pres_No}}</h5>
+                  <p class="card-text">Medicine Name: {{Medicine_Name}}</p>
+                  <p class="card-text">Description:</b>{{Description}}</p>
+                  <p class="card-text">Prescribed for {{Days}} Days</p>
+                  <p class="card-text">To be taken in the duration of {{Duration}} hours</p>
+                  <p class="card-text">Payment Status: {{Med_Pay_Status}}</p>
+                  <a href="{{Pres_ID}}/ConfirmPrescriptions/PresNo/{{Pres_No}}" class="btn btn-success"
+                    style="width: 10rem; margin-right:1rem;">confirm</a>
+                  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    data-bs-whatever="{{Pres_ID}}/CancelPrescriptions/PresNo/{{Pres_No}}"
+                    style="width: 10rem; margin-right:1rem;">Cancel</button>
+                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Prescription</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <p>Are you sure you want to cancel this prescription?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                          <a class="btn btn-primary" id="yesBtn">Yes</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                  {{/mesg3}}
+                  {{#mesg6}}
+                  <div class="col-md-4">
+                    <div class="card" style="width: 18rem; margin-top: 2rem">
+                      <div class="card-body">
+                        <i class="fas fa-check-circle text-success" style="font-size: 2rem; margin-bottom:0.5rem;"></i>
+                        <h5 class="card-title">Patient ID: {{P_ID}}</h5>
+                        <p class="card-text">Patient Name: {{User.Full_Name}}</p>
+                        <p class="card-text">Card_No: {{Health_Logs.0.Card_No}}</p>
+                        <p class="card-text">Visit_No: {{Health_Logs.0.Visit_No}}</p>
+                        <p class="card-text">Reffered By: <br> <b>Dr. {{Health_Logs.0.Doctors.0.User.Full_Name}}</b></p>
+                        <p class="card-text">Payment Status: {{Health_Logs.0.Prescription.Med_Pay_Status}}</b></p>
+                        <p class="card-text">Medicine received: {{Health_Logs.0.Prescription.Received}}</b></p>
+                      </div>
+                    </div>
+                  </div>
+                  {{/mesg6}}
+                </div>
+              </div>
             </div>
           </div>
-        </div>        
-        {{/mesg2}}
-        {{#mesg3}}
-        <h5 class="card-text">Medicine Number: {{Pres_No}}</h5>
-         <p class="card-text">Medicine Name: {{Medicine_Name}}</p>
-          <p class="card-text">Description:</b>{{Description}}</p>
-          <p class="card-text">Prescribed for {{Days}} Days</p>
-          <p class="card-text">To be taken in the duration of {{Duration}} hours</p>
-           <p class="card-text">Payment Status: {{Med_Pay_Status}}</p>
-          <a href="{{Pres_ID}}/ConfirmPrescriptions/PresNo/{{Pres_No}}" class="btn btn-success" style="width: 10rem; margin-right:1rem;">confirm</a>
-          <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="{{Pres_ID}}/CancelPrescriptions/PresNo/{{Pres_No}}" style="width: 10rem; margin-right:1rem;">Cancel</button>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Prescription</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure you want to cancel this prescription?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-        <a class="btn btn-primary" id="yesBtn">Yes</a>
-      </div>
-    </div>
-  </div>
-</div>
-          <hr>
-{{/mesg3}}
-        {{#mesg6}}
-        <div class="col-md-4">
-          <div class="card" style="width: 18rem; margin-top: 2rem">
-            <div class="card-body">
-         <i class="fas fa-check-circle text-success" style="font-size: 2rem; margin-bottom:0.5rem;"></i>
-              <h5 class="card-title">Patient ID: {{P_ID}}</h5>
-              <p class="card-text">Patient Name: {{User.Full_Name}}</p>
-              <p class="card-text">Card_No: {{Health_Logs.0.Card_No}}</p>
-              <p class="card-text">Visit_No: {{Health_Logs.0.Visit_No}}</p>
-              <p class="card-text">Reffered By: <b>Dr. {{Health_Logs.0.Doctors.0.User.Full_Name}}</b></p>
-               <p class="card-text">Payment Status: {{Health_Logs.0.Prescription.Med_Pay_Status}}</b></p>
-                <p class="card-text">Medicine received: {{Health_Logs.0.Prescription.Received}}</b></p>
-            </div>
-          </div>
-        </div>          
-        {{/mesg6}}
-      </div>
-    </div>
-            </div>
-          </div>  
         </div>
       </div>
     </div>
   </div>
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2" href="/">
-     <i class="fas fa-clinic-medical py-2"></i>
+      <i class="fas fa-clinic-medical py-2"></i>
     </a>
   </div>
   <!--   Core JS Files   -->
@@ -243,10 +265,16 @@
   <script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="/assets/js/plugins/chartjs.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-<script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+    integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+    integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
+  <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {
@@ -256,21 +284,21 @@
     }
     //modal JS
     var exampleModal = document.getElementById('exampleModal')
-exampleModal.addEventListener('show.bs.modal', function (event) {
-  // Button that triggered the modal
-  var button = event.relatedTarget
-  // Extract info from data-bs-* attributes
-  var recipient = button.getAttribute('data-bs-whatever')
-  // If necessary, you could initiate an AJAX request here
-  // and then do the updating in a callback.
-  //
-  // Update the modal's content.
-  var modalTitle = exampleModal.querySelector('.modal-title')
-  var modalBodyInput = exampleModal.querySelector('.modal-footer a')
-  
-  modalTitle.textContent = 'Medicine Cancellation'
-  modalBodyInput.href = recipient
-})
+    exampleModal.addEventListener('show.bs.modal', function (event) {
+      // Button that triggered the modal
+      var button = event.relatedTarget
+      // Extract info from data-bs-* attributes
+      var recipient = button.getAttribute('data-bs-whatever')
+      // If necessary, you could initiate an AJAX request here
+      // and then do the updating in a callback.
+      //
+      // Update the modal's content.
+      var modalTitle = exampleModal.querySelector('.modal-title')
+      var modalBodyInput = exampleModal.querySelector('.modal-footer a')
+
+      modalTitle.textContent = 'Medicine Cancellation'
+      modalBodyInput.href = recipient
+    })
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>

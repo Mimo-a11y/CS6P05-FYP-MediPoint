@@ -11,7 +11,7 @@ const AdminJsSequelize = require('@adminjs/sequelize');
 const db = require('./models');
 const passwordFeature = require('@adminjs/passwords');
 const argon2 = require('argon2');
-var expressHbs =  require('hbs');
+var expressHbs = require('hbs');
 const upload = require('express-fileupload');
 const path = require('path');
 var cron = require('node-cron');
@@ -36,12 +36,12 @@ app.use(cookieParser("secret"));
 
 //session configuration
 app.use(session({
-    secret: "secret",
-    resave: "true",
-    saveUninitialized: false,
-    cookie: {
-        maxAge:1000 * 60 * 60 * 24 //1 day
-    }
+  secret: "secret",
+  resave: "true",
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 //1 day
+  }
 }));
 
 //app.use(ValidationError());
@@ -58,13 +58,15 @@ AdminJs.registerAdapter(AdminJsSequelize);
 const adminJs = new AdminJs({
   rootPath: '/admin',
   resources: [{
-    resource: db.users,
-    options: {
-       properties: { 
-         Password: { isVisible: false },
-         User_Type: {
-           isDisabled: true
-         },
+      resource: db.users,
+      options: {
+        properties: {
+          Password: {
+            isVisible: false
+          },
+          User_Type: {
+            isDisabled: true
+          },
         },
         actions: {
           delete: {
@@ -73,98 +75,76 @@ const adminJs = new AdminJs({
           bulkDelete: {
             isVisible: false
           },
-          new:{
+          new: {
             before: async (request) => {
-              const {payload} = request;
+              const {
+                payload
+              } = request;
               payload.User_Type = "Doctor"
               return request
             }
           }
         },
-  },
-    features: [passwordFeature({
-      // PasswordsOptions
-      properties: {
-        // to this field will save the hashed password
-        encryptedPassword: 'Password'
       },
-      hash: argon2.hash
-     })],
-  },
-  {resource: db.doctors,
-    options: {
-      actions:{
-        delete:{
-          isVisible: false
+      features: [passwordFeature({
+        // PasswordsOptions
+        properties: {
+          // to this field will save the hashed password
+          encryptedPassword: 'Password'
         },
-        bulkDelete:{
-          isVisible: false
-        },
-        // new: {
-        //   before: async (request) => {
-        //     const {method, payload} = request
-        //     const users = await User.findAll({
-        //       attributes: ["U_ID"], 
-        //       where: {User_Type: 'Patient'} // Your filters here
-        //   })
-        //     // const arr = [];
-        //     // for(let i=0; i<arr.length; i++){
-        //     //   arr[i] = users.User.U_ID;
-        //     // }
-        //     console.log(users);
-        //     if (method === 'post' && payload.UserUID === '1107') {
-        //       console.log('patient added as doc');
-        //       throw new ValidationError({
-        //         UserUID: {
-        //           message: 'cannot be "patient id"',
-        //         },
-        //       }, {
-        //         message: 'something wrong happened',
-        //       })
-        //     }
-        //     return request
-        //   }
-        // }
-      }
- },
-},
-{
-  resource: db.patients,
-  options:{
-    actions:{
-      new:{
-        isVisible: false
+        hash: argon2.hash
+      })],
+    },
+    {
+      resource: db.doctors,
+      options: {
+        actions: {
+          delete: {
+            isVisible: false
+          },
+          bulkDelete: {
+            isVisible: false
+          }
+        }
       },
-      delete:{
-        isVisible:false
-      },
-      bulkDelete:{
-        isVisible:false
-      }
-    }
+    },
+    {
+      resource: db.patients,
+      options: {
+        actions: {
+          new: {
+            isVisible: false
+          },
+          delete: {
+            isVisible: false
+          },
+          bulkDelete: {
+            isVisible: false
+          }
+        }
 
-  }
-},
-{
-  resource: db.Patient_Appointment_Detail,
-  options:{
-    actions:{
-      new:{
-        isVisible: false
-      },
-      delete:{
-        isVisible:false
-      },
-      bulkDelete:{
-        isVisible:false
-      },
-      edit:{
-        isVisible: false
+      }
+    },
+    {
+      resource: db.Patient_Appointment_Detail,
+      options: {
+        actions: {
+          new: {
+            isVisible: false
+          },
+          delete: {
+            isVisible: false
+          },
+          bulkDelete: {
+            isVisible: false
+          },
+          edit: {
+            isVisible: false
+          }
+        }
       }
     }
-  }
-}
-],
+  ],
   branding: {
     companyName: 'Medipoint - Admin panel',
     softwareBrothers: false,
@@ -172,11 +152,11 @@ const adminJs = new AdminJs({
   },
 })
 //admin authentication
-let AdminRouter = AdminJsExpress.buildAuthenticatedRouter (adminJs,{
-  authenticate: async (email,password) => {
-    if(email === admin.email && password === admin.password){
+let AdminRouter = AdminJsExpress.buildAuthenticatedRouter(adminJs, {
+  authenticate: async (email, password) => {
+    if (email === admin.email && password === admin.password) {
       return admin
-    }else{
+    } else {
       return null
     }
   }
@@ -187,7 +167,9 @@ app.use(adminJs.options.rootPath, AdminRouter);
 
 //middlewares
 app.use(Express.json());
-app.use(Express.urlencoded({extended: true}));
+app.use(Express.urlencoded({
+  extended: true
+}));
 
 //enable flash
 app.use(connectFlash());
@@ -200,10 +182,10 @@ app.set("views", "./view");
 app.use(upload());
 
 // register new helper function for handlebars
-expressHbs.handlebars.registerHelper('isAvailable', function(filedata) {
-  if(filedata == 'N/A'){
-      return filedata = false;
-  }else{
+expressHbs.handlebars.registerHelper('isAvailable', function (filedata) {
+  if (filedata == 'N/A') {
+    return filedata = false;
+  } else {
     return filedata = true;
   }
 });
@@ -214,36 +196,42 @@ app.use(passport.session());
 
 //for using external JS file
 //app.use("/JS",Express.static(__dirname + "/JS"));
-app.use("/public/images",Express.static(__dirname + "/public/images"));
+app.use("/public/images", Express.static(__dirname + "/public/images"));
 //app.use("/public/assets",Express.static(__dirname + "/public/assets"));
 
 //routing for home page
 const router = require('./routes/web');
-const { ValidationError } = require('adminjs');
+const {
+  ValidationError
+} = require('adminjs');
 const users = require('./models/users');
 app.use('/', router);
 
 
 //UPCOMING APPOINTMENTS EMAIL
 const setAppointmentReminders = async (req, res) => {
-       var today = new Date();
-        let tomorrow =  new Date();
-        tomorrow.setDate(today.getDate() + 1);
-const appointments = await PatientAppDetail.findAll({
-      where: {Payment_Status: 'Unpaid', App_Date: tomorrow.toISOString().split("T")[0]},
+  var today = new Date();
+  let tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+  const appointments = await PatientAppDetail.findAll({
+    where: {
+      Payment_Status: 'Unpaid',
+      App_Date: tomorrow.toISOString().split("T")[0]
+    },
+    include: [{
+      model: Patient,
       include: [{
-        model: Patient,
-        include: [{
-          model: User,
-          attributes: ['Full_Name', 'Email']
-        }]
-      }
-      ]
+        model: User,
+        attributes: ['Full_Name', 'Email']
+      }]
+    }]
   });
   const doctor = await Doctor.findOne({
-    where:{D_ID: appointments[0].Patients[0].Patient_Appointments.Doctor_ID},
-    attributes:['D_ID'],
-    include:[{
+    where: {
+      D_ID: appointments[0].Patients[0].Patient_Appointments.Doctor_ID
+    },
+    attributes: ['D_ID'],
+    include: [{
       model: User,
       attributes: ['Full_Name']
     }]
@@ -255,19 +243,19 @@ const appointments = await PatientAppDetail.findAll({
       pass: 'ysmokjcjpkjblwil'
     }
   });
-  
+
   cron.schedule('00 45 10 * * *', () => {
-    const sendWishes =  
+    const sendWishes =
       // looping through the users
-     appointments.forEach(appointment => {
+      appointments.forEach(appointment => {
         const mailOptions = {
-        from: {
-          name: 'MediPoint',
-          address: 'medipoint72@gmail.com'
-        },
-        to: appointment.Patients[0].User.Email,
-        subject: `Appointment reminder `,
-        html: ` 
+          from: {
+            name: 'MediPoint',
+            address: 'medipoint72@gmail.com'
+          },
+          to: appointment.Patients[0].User.Email,
+          subject: `Appointment reminder `,
+          html: ` 
 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout:fixed;background-color:#f9f9f9" id="bodyTable">
 	<tbody>
 		<tr>
@@ -400,19 +388,19 @@ const appointments = await PatientAppDetail.findAll({
 			</td>
 		</tr>
 	</tbody>
-</table>`              
-    };
-    return transporter.sendMail(mailOptions, (error, data) => {
-      if (error) {
-          console.log(error)
-          return
-      }else{
-        console.log(data.response);
-      }
+</table>`
+        };
+        return transporter.sendMail(mailOptions, (error, data) => {
+          if (error) {
+            console.log(error)
+            return
+          } else {
+            console.log(data.response);
+          }
+        });
+
+      })
   });
-    
-    }
-   )});
 }
 setAppointmentReminders();
 
@@ -420,5 +408,3 @@ setAppointmentReminders();
 app.listen(process.env.PORT, () => {
   console.log("server is running on port 3000");
 })
-
-
