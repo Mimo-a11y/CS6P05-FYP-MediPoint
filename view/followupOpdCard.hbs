@@ -232,7 +232,7 @@
                               <div class="form-group mt-3">
                                 <label for="example-date-input" class="form-control-label"><span
                                     class="text-lg text-light text-dark">Visit Date</span></label>
-                                <input class="form-control" type="date" value="2018-11-23" id="example-date-input"
+                                <input class="form-control" type="date" id="example-date-input"
                                   name="visitDate" required>
                               </div>
                               <button type="submit" class="btn btn-success">Update</button>
@@ -242,6 +242,14 @@
                         </div>
                       </div>
                       {{/mesg8}}
+                      {{#duplicateUpdate}}
+                        <div class="card mt-4">
+                        <div class="card-body text-center">
+                          <i class="fa fa-info-circle text-success" style="font-size: 4rem; margin-bottom:0.5rem;"></i>
+                          <p class="card-text"><b>The visit number for this patient is already updated.</b></p>
+                        </div>
+                      </div>
+                      {{/duplicateUpdate}}
                       {{#mesg9}}
                       <a href="/dashboard/OPD/incomingAppointments/appointmentDetails/confirmedAppointments"
                         class="btn btn-dark mt-4">Back</a>

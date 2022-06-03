@@ -622,37 +622,76 @@ const followUpUpdate = async (req, res) => {
             D_ID: req.params.did,
             P_ID: req.params.pid
         };
-        //updating the followup visit record
-        let data = {
-            Card_No: req.params.cardno,
-            Visit_No: req.body.visitno,
-            Visit_Date: req.body.visitDate
-        }
-        await HealthLog.create(data);
-        const opdCard = await HealthLog.findAll({
-            attributes: ['Card_No', 'Visit_No', 'Visit_Date'],
+        //checking if visit number is already updated
+        const followUpCardExists = await HealthLog.findAll({
+            attributes: ['Card_No', 'Visit_Date'],
             where: {
-                Card_No: req.params.cardno
-            },
-            include: [{
-                model: Patient,
+                Card_No: getopdCard[0].Card_No,
+                Visit_Date: new Date().toISOString().slice(0, 10)
+            }
+        }
+        );
+        console.log(followUpCardExists);
+        //updating the followup visit record
+        if(followUpCardExists.length == 0){
+            let data = {
+                Card_No: req.params.cardno,
+                Visit_No: req.body.visitno,
+                Visit_Date: (req.body.visitDate == new Date().toISOString().slice(0, 10)) ? req.body.visitDate : new Date().toISOString().slice(0, 10)  
+            }
+            await HealthLog.create(data);
+            const opdCard = await HealthLog.findAll({
+                attributes: ['Card_No', 'Visit_No', 'Visit_Date'],
                 where: {
-                    P_ID: req.params.pid
-                }
-            }, {
-                model: Doctor,
+                    Card_No: req.params.cardno
+                },
+                include: [{
+                    model: Patient,
+                    where: {
+                        P_ID: req.params.pid
+                    }
+                }, {
+                    model: Doctor,
+                    where: {
+                        D_ID: req.params.did
+                    }
+                }]
+            });
+            return res.status(200).render('followupOpdCard', {
+                mesg1: patient,
+                mesg2: doctor,
+                mesg4: appointments,
+                mesg6: opdCard,
+                mesg9: cardNumber
+            });
+        }else{
+            console.log('visit number already updated!');
+            const opdCard = await HealthLog.findAll({
+                attributes: ['Card_No', 'Visit_No', 'Visit_Date'],
                 where: {
-                    D_ID: req.params.did
-                }
-            }]
-        });
-        return res.status(200).render('followupOpdCard', {
-            mesg1: patient,
-            mesg2: doctor,
-            mesg4: appointments,
-            mesg6: opdCard,
-            mesg9: cardNumber
-        });
+                    Card_No: req.params.cardno
+                },
+                include: [{
+                    model: Patient,
+                    where: {
+                        P_ID: req.params.pid
+                    }
+                }, {
+                    model: Doctor,
+                    where: {
+                        D_ID: req.params.did
+                    }
+                }]
+            });
+            return res.status(200).render('followupOpdCard', {
+                mesg1: patient,
+                mesg2: doctor,
+                mesg4: appointments,
+                mesg6: opdCard,
+                mesg9: cardNumber,
+                duplicateUpdate: 'The Visit number for this patient is already updated'
+            } );
+        }
     } catch (e) {
         console.log(e);
         return res.status(404).render('errorPage', {

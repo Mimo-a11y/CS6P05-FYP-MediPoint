@@ -104,6 +104,31 @@ const adminJs = new AdminJs({
           },
           bulkDelete: {
             isVisible: false
+          },
+          new:{
+            before: async (request) => {
+              const {
+                payload
+              } = request;
+              var user = payload.UserUID;
+              var userCheck = await User.findOne({
+                where: {
+                  U_ID: user
+                },
+                attributes: ['User_Type']
+              });
+              if(userCheck.User_Type == 'Doctor'){
+                return request;
+              }else{
+                throw new ValidationError({
+                  name: {
+                    message: 'Something wrong happened',
+                  },
+                }, {
+                  message: 'Cannot add Patient/Clinic as Doctor. Please select a valid User ID.',
+                })
+              }
+            }
           }
         }
       },
