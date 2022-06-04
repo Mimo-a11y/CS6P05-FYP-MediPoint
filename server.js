@@ -269,7 +269,7 @@ const setAppointmentReminders = async (req, res) => {
     }
   });
 
-  cron.schedule('00 45 10 * * *', () => {
+  cron.schedule('00 03 9 * * *', () => {
     const sendWishes =
       // looping through the users
       appointments.forEach(appointment => {
